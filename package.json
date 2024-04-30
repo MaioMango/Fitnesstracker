@@ -20,6 +20,7 @@
     "@angular/router": "^17.0.0",
     "@types/node": "^20.12.7",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "mysql2": "^3.9.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
