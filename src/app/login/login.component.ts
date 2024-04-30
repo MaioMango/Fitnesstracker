@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  email = '';  
+  login = '';  
   password = '';
-
+  showToast = false;  // Neue Eigenschaft
+  specificError = '';
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() { 
-    this.authService.login(this.email, this.password).subscribe(
+    this.showToast = false;  // Toast verstecken
+    this.authService.login(this.login, this.password).subscribe(
       response => {
         console.log('Login erfolgreich:', response);
 
@@ -22,6 +24,9 @@ export class LoginComponent {
       },
       error => {
         console.error('Login fehlgeschlagen:', error);
+        
+        this.specificError = error.error.message;  // Fehlermeldung speichern
+        this.showToast = true;  // Toast anzeigen
       }
     );
   }
