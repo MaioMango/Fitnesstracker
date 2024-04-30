@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { CaloriecalculatorComponent } from './caloriecalculator/caloriecalculator.component';
+import { WeightComponent } from './weight/weight.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CaloriecalculatorComponent } from './caloriecalculator/caloriecalculato
     BmiComponent,
     LoginComponent,
     HomeComponent,
-    CaloriecalculatorComponent
+    CaloriecalculatorComponent,
+    WeightComponent
   ],
   imports: [
     BrowserModule,

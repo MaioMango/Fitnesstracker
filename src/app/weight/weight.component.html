@@ -1,0 +1,23 @@
+<div class="container my-5"> <!-- Bootstrap-Container mit Abstand -->
+    <h2>Gewicht</h2> <!-- Überschrift -->
+    
+    <div class="weight-entry"> <!-- Abschnitt für Gewichtseintrag -->
+      <h5>Gewicht eintragen</h5> <!-- Überschrift kleiner gemacht, um Hierarchie zu betonen -->
+      <form action="#"> <!-- Formular für den Gewichtseintrag -->
+        <div class="mb-3"> <!-- Bootstrap-Abstand -->
+          <label for="weight" class="form-label">Gewicht (kg):</label> <!-- Bootstrap-Label -->
+          <input type="number" id="weight" name="weight" class="form-control" required> <!-- Bootstrap-Form-Control -->
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Datum:</label> <!-- Label für Datum -->
+          <input type="date" id="date" name="date" class="form-control" required> <!-- Formular-Steuerelement -->
+        </div>
+        <button type="submit" class="btn btn-primary">Eintragen</button> <!-- Bootstrap-Schaltfläche -->
+      </form>
+    </div>
+  
+    <div class="weight-chart my-5"> <!-- Abschnitt für das Gewicht-Diagramm -->
+      <canvas id="weightChart" style="width: 100%; height: 400px;"></canvas> <!-- Größe des Diagramms -->
+    </div>
+  </div>
+  
