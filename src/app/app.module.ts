@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
+import { CaloriecalculatorComponent } from './caloriecalculator/caloriecalculator.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HomeComponent } from './home/home.component';
     BmiComponent,
     LoginComponent,
     HomeComponent,
+    CaloriecalculatorComponent
   ],
   imports: [
     BrowserModule,
