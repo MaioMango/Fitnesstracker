@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { CaloriecalculatorComponent } from './caloriecalculator/caloriecalculator.component';
 import { WeightComponent } from './weight/weight.component';
+import { AgbComponent } from './agb/agb.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { WeightComponent } from './weight/weight.component';
     LoginComponent,
     HomeComponent,
     CaloriecalculatorComponent,
-    WeightComponent
+    WeightComponent,
+    AgbComponent,
+    ImprintComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
