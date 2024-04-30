@@ -44,8 +44,8 @@
 
 <footer class="fixed-bottom bg-light text-center py-3">
   <span>
-    &copy; 2024 Fitnesstracker | <a href="#">AGB</a> |
-    <a href="#">Datenschutz</a> | <a href="#">Impressum</a>
+    &copy; 2024 Fitnesstracker | <a [routerLink]="['/agb']">AGB</a> |
+    <a [routerLink]="['/privacy']">Datenschutz</a> | <a [routerLink]="['/imprint']">Impressum</a>
   </span>
 </footer>
 <router-outlet></router-outlet>

@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { BmiComponent } from './bmi/bmi.component';
 import { CaloriecalculatorComponent } from './caloriecalculator/caloriecalculator.component';
 import { WeightComponent } from './weight/weight.component';
+import { AgbComponent } from './agb/agb.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ImprintComponent } from './imprint/imprint.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -12,6 +15,9 @@ const routes: Routes = [
   { path: 'bmi', component: BmiComponent }, 
   { path: 'calories', component: CaloriecalculatorComponent },
   { path: 'weight', component: WeightComponent },
+  { path: 'agb', component: AgbComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'imprint', component: ImprintComponent },
   { path: '**', redirectTo: '' },
 
 ];
