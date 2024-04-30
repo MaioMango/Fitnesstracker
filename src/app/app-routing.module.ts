@@ -8,6 +8,7 @@ import { WeightComponent } from './weight/weight.component';
 import { AgbComponent } from './agb/agb.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ImprintComponent } from './imprint/imprint.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'agb', component: AgbComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'imprint', component: ImprintComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: '' },
 
 ];

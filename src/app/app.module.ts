@@ -15,6 +15,7 @@ import { WeightComponent } from './weight/weight.component';
 import { AgbComponent } from './agb/agb.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     WeightComponent,
     AgbComponent,
     ImprintComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
