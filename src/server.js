@@ -29,16 +29,18 @@ module.exports = connection;
 
 const express = require('express');
 const bodyParser = require('body-parser'); 
+const cors = require('cors');
 
 const app = express();
 
-app.use(body-parser.json());
+app.use(cors());
+app.use(bodyParser.json());
 
 app.get('/users', (req, res) => {
-  connection.query('SELECT * FROM users', (err, results) => {
+  connection.query('SELECT * FROM tmember', (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
-      res.status(500).send('Server-Fehler');
+      res.status(500).send('Server-Fehler users');
     } else {
       res.json(results);
     }
@@ -50,11 +52,11 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10; 
 
 app.post('/register', (req, res) => {
-  const { email, password } = req.body;
-
-  connection.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+  const { login, password } = req.body;
+console.log(login);
+  connection.query('SELECT * FROM tmember WHERE memLogin = ?', [login], (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Server-Fehler' });
+      return res.status(500).json({ message: 'Server-Fehler register' });
     }
 
     if (results.length > 0) {
@@ -66,7 +68,7 @@ app.post('/register', (req, res) => {
         return res.status(500).json({ message: 'Fehler beim Hashen des Passworts' });
       }
 
-      connection.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hash], (err, results) => {
+      connection.query('INSERT INTO tmember (memLogin, memPassword) VALUES (?, ?)', [login, hash], (err, results) => {
         if (err) {
           return res.status(500).json({ message: 'Fehler bei der Registrierung' });
         }
@@ -79,11 +81,11 @@ app.post('/register', (req, res) => {
 
 
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  const { login, password } = req.body;
 
-  connection.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+  connection.query('SELECT * FROM tmember WHERE memLogin = ?', [login], (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Server-Fehler' });
+      return res.status(500).json({ message: 'Server-Fehler login' });
     }
 
     if (results.length === 0) {
@@ -92,9 +94,9 @@ app.post('/login', (req, res) => {
 
     const user = results[0];
 
-    bcrypt.compare(password, user.password, (err, isMatch) => {
+    bcrypt.compare(password, user.memPassword, (err, isMatch) => {
       if (err) {
-        return res.status(500).json({ message: 'Fehler beim Vergleich des Passworts' });
+        return res.status(500).json({ message: 'Fehler beim Vergleichen der Passwörter' });
       }
 
       if (!isMatch) {

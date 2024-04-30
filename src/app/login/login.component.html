@@ -3,13 +3,13 @@
     <div class="col-md-6">
       <form (ngSubmit)="onLogin()">
         <div class="mb-3">
-          <label for="email" class="form-label">E-Mail</label>
+          <label for="login" class="form-label">E-Mail</label>
           <input
-            type="email"
-            id="email"
+            type="text"
+            id="login"
             class="form-control"
-            [(ngModel)]="email"
-            name="email"
+            [(ngModel)]="login"
+            name="login"
             required
           />
         </div>
@@ -32,3 +32,8 @@
     </div>
   </div>
 </div>
+
+<!-- TODO: Toast kommt nur einmal -->
+<ngb-toast id="loginToast" class="bg-danger text-light" header="Fehler" [hidden]="!showToast">
+  {{specificError}}
+</ngb-toast>
