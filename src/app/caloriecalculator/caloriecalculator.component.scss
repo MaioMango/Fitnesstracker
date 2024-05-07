@@ -19,9 +19,16 @@ h2 {
 }
 
 label {
-    display: block;
+    display: inline-block;
     margin-bottom: 10px;
     font-weight: bold;
+}
+
+.genderLabel {
+    margin-right: 10px;
+}
+input[type="radio"]{
+    margin-right: 5px;
 }
 
 input[type="number"],
