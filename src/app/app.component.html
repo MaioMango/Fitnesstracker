@@ -1,28 +1,16 @@
-<header class="bg-light py-3">
+<header class="bg-dark py-3">
   <div class="container">
-    <h1>Fitnesstracker</h1>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" [routerLink]="['/']">Fitnesstracker</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+
+      <div class="collapse navbar-collapse" id="navbarNav" [ngClass]="{'collapse': isCollapsed}">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/barcodescanner']"
-              >Barcodescanner</a
-            >
+            <a class="nav-link" [routerLink]="['/barcodescanner']">Barcodescanner</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/calories']">Kalorien</a>
@@ -42,10 +30,13 @@
   </div>
 </header>
 
-<footer class="fixed-bottom bg-light text-center py-3">
+<footer class="fixed-bottom bg-dark text-white text-center py-3">
   <span>
-    &copy; 2024 Fitnesstracker | <a [routerLink]="['/agb']">AGB</a> |
-    <a [routerLink]="['/privacy']">Datenschutz</a> | <a [routerLink]="['/imprint']">Impressum</a>
+    &copy; 2024 Fitnesstracker |
+    <a class="text-white" [routerLink]="['/agb']">AGB</a> |
+    <a class="text-white" [routerLink]="['/privacy']">Datenschutz</a> |
+    <a class="text-white" [routerLink]="['/imprint']">Impressum</a>
   </span>
 </footer>
+
 <router-outlet></router-outlet>
