@@ -10,12 +10,13 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 export class RegisterComponent {
   login = '';  
   password = '';
-  showToast = false;  // Neue Eigenschaft
+  showToast = false;
   specificError = '';
   constructor(private authService: AuthService, private router: Router) {}
 
   onRegister() { 
-    this.authService.register(this.login, this.password).subscribe(
+    this.showToast = false; 
+    this.authService.login(this.login, this.password).subscribe(
       response => {
         console.log('Registrierung erfolgreich:', response);
 
@@ -23,9 +24,8 @@ export class RegisterComponent {
       },
       error => {
         console.error('Registrierung fehlgeschlagen:', error);
-
-        this.specificError = error.error.message;  // Fehlermeldung speichern
-        this.showToast = true;  // Toast anzeigen
+        this.specificError = error.error.message || 'Unbekannter Fehler';
+        this.showToast = true;
       }
     );
   }

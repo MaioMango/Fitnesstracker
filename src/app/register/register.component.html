@@ -2,16 +2,22 @@
     <h2>Registrierung</h2>
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form (ngSubmit)="onRegister()"> <!-- Event-Handler für Registrierung -->
-          <div class="mb-3"> <!-- Abstand -->
-            <label for="login" class="form-label">E-Mail</label> <!-- Label für E-Mail -->
-            <input type="login" id="login" class="form-control" [(ngModel)]="login" name="login" required> <!-- Eingabe für E-Mail -->
+        <form (ngSubmit)="onRegister()">
+          <div class="mb-3"> 
+            <label for="login" class="form-label">Benutzername</label> 
+            <input type="login" id="login" class="form-control" [(ngModel)]="login" name="login" required>
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Passwort</label> <!-- Label für Passwort -->
-            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required> <!-- Eingabe für Passwort -->
+            <label for="password" class="form-label">Passwort</label> 
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required> 
           </div>
-          <button type="submit" class="btn btn-primary">Registrieren</button> <!-- Schaltfläche für Registrierung -->
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn btn-primary">Registrieren</button>
+            <span>
+              Doch schon einen Account erstellt? 
+              <a href="/login">Zurück zum Login</a>
+            </span>
+          </div>
         </form>
       </div>
     </div>

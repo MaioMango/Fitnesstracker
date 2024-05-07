@@ -10,28 +10,28 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   login = '';  
   password = '';
-  showToast = false;  // Neue Eigenschaft
+  showToast = false;
   specificError = '';
   constructor(private authService: AuthService, private router: Router) {}
 
-  onLogin() { 
-    this.showToast = false;  // Toast verstecken
+  onLogin() {
+    this.showToast = false; 
     this.authService.login(this.login, this.password).subscribe(
-      response => {
+      (response) => {
         console.log('Login erfolgreich:', response);
-
-        this.router.navigate(['/']); 
+        this.router.navigate(['/']);
       },
-      error => {
+      (error) => {
         console.error('Login fehlgeschlagen:', error);
-        
-        this.specificError = error.error.message;  // Fehlermeldung speichern
-        this.showToast = true;  // Toast anzeigen
+        this.specificError = error.error.message || 'Unbekannter Fehler';
+        this.showToast = true; 
       }
     );
   }
 
-  onRegister() { 
-    this.router.navigate(['/register']);
+
+
+  onToastClosed() {
+    this.showToast = false;
   }
 }
