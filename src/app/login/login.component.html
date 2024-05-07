@@ -1,9 +1,10 @@
 <div class="container my-5">
+  <h2>Login</h2>
   <div class="row justify-content-center">
     <div class="col-md-6">
       <form (ngSubmit)="onLogin()">
         <div class="mb-3">
-          <label for="login" class="form-label">E-Mail</label>
+          <label for="login" class="form-label">Benutzername</label>
           <input
             type="text"
             id="login"
@@ -24,10 +25,13 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Anmelden</button>
-        <button type="button" class="btn btn-secondary" (click)="onRegister()">
-          Registrieren
-        </button>
+        <div class="d-flex justify-content-between align-items-center">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <span>
+            Noch keinen Account? 
+            <a href="/register">Hier registrieren</a>
+          </span>
+        </div>
       </form>
     </div>
   </div>
