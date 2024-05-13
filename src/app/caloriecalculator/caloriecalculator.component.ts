@@ -12,8 +12,8 @@ export class CaloriecalculatorComponent {
     const formData = {
       age: parseInt((form.elements.namedItem('age') as HTMLInputElement).value),
       gender: (form.elements.namedItem('Gender') as HTMLInputElement).value,
-      weight: parseInt((form.elements.namedItem('weight') as HTMLInputElement).value),
-      height: parseInt((form.elements.namedItem('height') as HTMLInputElement).value),
+      weight: parseFloat((form.elements.namedItem('weight') as HTMLInputElement).value),
+      height: parseFloat((form.elements.namedItem('height') as HTMLInputElement).value),
       activity: parseFloat((form.elements.namedItem('activity') as HTMLSelectElement).value)
     };
 
