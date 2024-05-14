@@ -20,6 +20,7 @@ export class BarcodescannerComponent {
   onScanSuccess(event: any) {
     this.scannedData = event;
     this.showFoodInfoModal = true;
+    console.log(this.scannedData);
   }
 
   onScanError(error: any) {
