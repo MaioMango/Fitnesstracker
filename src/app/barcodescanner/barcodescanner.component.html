@@ -7,6 +7,6 @@
    </zxing-scanner>
  </div>
  <app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)"></app-food-info-modal>
- <div *ngIf="scannedData">
+ <div class="scanned-data" *ngIf="scannedData">
    <p>Scanned Data: {{ scannedData }}</p>
  </div>
