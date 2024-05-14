@@ -11,12 +11,14 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
+import { ExistingFoodModalComponent } from './existing-food-modal/existing-food-modal.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
   { path: 'login', component: LoginComponent }, 
   { path: 'barcodescanner', component: BarcodescannerComponent }, 
   { path: 'barcodescanner/add', component: FoodInfoModalComponent }, 
+  { path: 'barcodescanner/addmeal', component: ExistingFoodModalComponent }, 
   { path: 'bmi', component: BmiComponent }, 
   { path: 'calories', component: CaloriecalculatorComponent },
   { path: 'weight', component: WeightComponent },
