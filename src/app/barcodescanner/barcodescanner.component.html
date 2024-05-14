@@ -1,6 +1,7 @@
 <div class="scanner-container">
    <zxing-scanner #scanner
      [enable]="true"
+     [formats]="allowedFormats"
      (scanSuccess)="onScanSuccess($event)"
      (scanError)="onScanError($event)">
    </zxing-scanner>
