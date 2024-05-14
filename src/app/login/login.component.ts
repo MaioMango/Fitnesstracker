@@ -29,8 +29,6 @@ export class LoginComponent {
     );
   }
 
-
-
   onToastClosed() {
     this.showToast = false;
   }

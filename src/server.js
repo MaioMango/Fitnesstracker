@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connection = mysql.createConnection({
@@ -104,7 +105,10 @@ app.post('/login', (req, res) => {
         return res.status(400).json({ message: 'Ungültige Anmeldeinformationen' });
       }
 
-      res.status(200).json({ message: 'Login erfolgreich' });
+      // Erstellen Sie ein JWT-Token
+      const token = jwt.sign({ id: user.id, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
+      console.log('Token:', token);
+      res.status(200).json({ message: 'Login erfolgreich', token });
     });
   });
 });

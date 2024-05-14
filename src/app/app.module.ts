@@ -16,7 +16,8 @@ import { AgbComponent } from './agb/agb.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { RegisterComponent } from './register/register.component';
-
+import { JwtModule } from "@auth0/angular-jwt";
+import { jwtDecode } from "jwt-decode";
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    JwtModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
