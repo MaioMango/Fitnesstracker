@@ -124,6 +124,22 @@ app.post('/food', (req, res) => {
   });
 });
 
+
+app.post('/food2user', (req, res) => {
+  const { foodName, kcal, carbs, protein, fat, meal, quantity, userId, date } = req.body;
+
+  connection.query('INSERT INTO food2user (foodName, kcal, carbs, protein, fat, meal, quantity, userId, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                   [foodName, kcal, carbs, protein, fat, meal, quantity, userId, date], 
+                   (err, results) => {
+    if (err) {
+      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+    }
+    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+  });
+});
+
+
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
 });
