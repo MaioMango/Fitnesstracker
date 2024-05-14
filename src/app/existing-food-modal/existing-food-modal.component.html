@@ -2,10 +2,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">{{ foodNameFromDB }}</h5> <!-- Titel aus der Datenbank -->
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title">{{ foodNameFromDB }}</h5>
         </div>
         <div class="modal-body">
           <div class="form-group row">
@@ -36,7 +33,6 @@
             <label for="meal" class="col-sm-3 col-form-label">Mahlzeit:</label>
             <div class="col-sm-9">
               <select class="form-control" id="meal" name="meal" [(ngModel)]="selectedMeal">
-                <!-- Dropdown-Optionen hier -->
                 <option *ngFor="let meal of meals" [value]="meal.id">{{ meal.name }}</option>
               </select>
             </div>
