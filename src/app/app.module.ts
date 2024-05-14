@@ -16,6 +16,7 @@ import { AgbComponent } from './agb/agb.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { RegisterComponent } from './register/register.component';
+import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './register/register.component';
     AgbComponent,
     ImprintComponent,
     PrivacyPolicyComponent,
-    RegisterComponent
+    RegisterComponent,
+    BarcodescannerComponent
   ],
   imports: [
     BrowserModule,
