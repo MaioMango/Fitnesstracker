@@ -1,0 +1,9 @@
+<div class="modal">
+    <h2>Lebensmittelinformationen eingeben</h2>
+    <input type="text" [(ngModel)]="foodName" placeholder="Lebensmittelname">
+    <input type="number" [(ngModel)]="kcal" placeholder="Kcal">
+    <input type="number" [(ngModel)]="carbs" placeholder="Carbs">
+    <input type="number" [(ngModel)]="protein" placeholder="Protein">
+    <input type="number" [(ngModel)]="fat" placeholder="Fett">
+    <button (click)="save()">Speichern</button>
+  </div>

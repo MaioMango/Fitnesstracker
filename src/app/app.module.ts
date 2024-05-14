@@ -18,6 +18,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { RegisterComponent } from './register/register.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     ImprintComponent,
     PrivacyPolicyComponent,
     RegisterComponent,
-    BarcodescannerComponent
+    BarcodescannerComponent,
+    FoodInfoModalComponent
   ],
   imports: [
     BrowserModule,

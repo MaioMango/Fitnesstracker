@@ -1,11 +1,12 @@
-<div class="scanner-container">
+ <div class="scanner-container">
    <zxing-scanner #scanner
-     [enable]="true"
+     [enable]="showScanner"
      [formats]="allowedFormats"
      (scanSuccess)="onScanSuccess($event)"
      (scanError)="onScanError($event)">
    </zxing-scanner>
  </div>
+ <app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)"></app-food-info-modal>
  <div *ngIf="scannedData">
    <p>Scanned Data: {{ scannedData }}</p>
  </div>
