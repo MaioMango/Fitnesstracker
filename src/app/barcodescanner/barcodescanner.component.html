@@ -1,3 +1,10 @@
-<div class="barcode-wrapper">
-   <zxing-scanner></zxing-scanner>
-</div>
+<div class="scanner-container">
+   <zxing-scanner #scanner
+     [enable]="true"
+     (scanSuccess)="onScanSuccess($event)"
+     (scanError)="onScanError($event)">
+   </zxing-scanner>
+ </div>
+ <div *ngIf="scannedData">
+   <p>Scanned Data: {{ scannedData }}</p>
+ </div>
