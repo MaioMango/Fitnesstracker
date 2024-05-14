@@ -31,7 +31,7 @@ fdescribe('BmiComponent', () => {
     component.calculateBMI();
 
     // Überprüfe, ob BMI korrekt berechnet wurde
-    expect(component.bmi).toBeCloseTo(24.22, 2); // Expect BMI auf zwei Dezimalstellen genau
+    expect(component.bmi).toBe(24.22); // Expect BMI auf zwei Dezimalstellen genau
   });
 
   it('should add BMI with date when calculateBMI is called', () => {
