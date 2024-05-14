@@ -13,6 +13,14 @@ export class FoodInfoModalComponent {
   protein: number = 0;
   fat: number = 0;
 
+  closeModal() {
+    this.foodName = '';
+    this.kcal = 0;
+    this.carbs = 0;
+    this.protein = 0;
+    this.fat = 0;
+  }
+
   save() {
     const foodInfo = {
       name: this.foodName,
@@ -22,5 +30,6 @@ export class FoodInfoModalComponent {
       fat: this.fat
     };
     this.foodInfoSaved.emit(foodInfo);
+    this.closeModal();
   }
 }

@@ -1,9 +1,41 @@
-<div class="modal">
-  <h2>Lebensmittelinformationen eingeben</h2>
-  <input type="text" [(ngModel)]="foodName" placeholder="Lebensmittelname">
-  <input type="number" [(ngModel)]="kcal" placeholder="Kcal">
-  <input type="number" [(ngModel)]="carbs" placeholder="Carbs">
-  <input type="number" [(ngModel)]="protein" placeholder="Protein">
-  <input type="number" [(ngModel)]="fat" placeholder="Fett">
-  <button (click)="save()">Speichern</button>
-</div>
+<div class="modal" tabindex="-1" role="dialog" style="display: block;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lebensmittelinformationen eingeben</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="foodName">Lebensmittelname:</label>
+              <input type="text" class="form-control" id="foodName" name="foodName" [(ngModel)]="foodName" required>
+            </div>
+            <div class="form-group">
+              <label for="kcal">Kcal:</label>
+              <input type="number" class="form-control" id="kcal" name="kcal" [(ngModel)]="kcal" required>
+            </div>
+            <div class="form-group">
+              <label for="carbs">Carbs:</label>
+              <input type="number" class="form-control" id="carbs" name="carbs" [(ngModel)]="carbs" required>
+            </div>
+            <div class="form-group">
+              <label for="protein">Protein:</label>
+              <input type="number" class="form-control" id="protein" name="protein" [(ngModel)]="protein" required>
+            </div>
+            <div class="form-group">
+              <label for="fat">Fett:</label>
+              <input type="number" class="form-control" id="fat" name="fat" [(ngModel)]="fat" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Abbrechen</button>
+          <button type="button" class="btn btn-primary" (click)="save()">Speichern</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
