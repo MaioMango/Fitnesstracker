@@ -1,54 +1,53 @@
 <div class="modal" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ foodNameFromDB }}</h5>
-        </div>
-        <div class="modal-body">
-          <div class="form-group row">
-            <label for="kcal" class="col-sm-3 col-form-label">Kcal:</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="kcal" name="kcal" [(ngModel)]="kcal" disabled>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="carbs" class="col-sm-3 col-form-label">Carbs:</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="carbs" name="carbs" [(ngModel)]="carbs" disabled>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="protein" class="col-sm-3 col-form-label">Protein:</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="protein" name="protein" [(ngModel)]="protein" disabled>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="fat" class="col-sm-3 col-form-label">Fat:</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="fat" name="fat" [(ngModel)]="fat" disabled>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="meal" class="col-sm-3 col-form-label">Mahlzeit:</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="meal" name="meal" [(ngModel)]="selectedMeal">
-                <option *ngFor="let meal of meals" [value]="meal.id">{{ meal.name }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="quantity" class="col-sm-3 col-form-label">Gramm:</label>
-            <div class="col-sm-9">
-              <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity">
-            </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ foodNameFromDB }}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row mt-4">
+          <label for="kcal" class="col-sm-3 col-form-label">Kcal:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="kcal" name="kcal" [(ngModel)]="kcal" disabled>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Abbrechen</button>
-          <button type="button" class="btn btn-primary" (click)="save()">Speichern</button>
+        <div class="form-group row mt-4">
+          <label for="carbs" class="col-sm-3 col-form-label">Carbs:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="carbs" name="carbs" [(ngModel)]="carbs" disabled>
+          </div>
         </div>
+        <div class="form-group row mt-4">
+          <label for="protein" class="col-sm-3 col-form-label">Protein:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="protein" name="protein" [(ngModel)]="protein" disabled>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="fat" class="col-sm-3 col-form-label">Fat:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="fat" name="fat" [(ngModel)]="fat" disabled>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="meal" class="col-sm-3 col-form-label">Mahlzeit:</label>
+          <div class="col-sm-9">
+            <select class="form-control" id="meal" name="meal" [(ngModel)]="selectedMeal">
+              <option *ngFor="let meal of meals" [value]="meal.id">{{ meal.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="quantity" class="col-sm-3 col-form-label">Gramm:</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Abbrechen</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Speichern</button>
       </div>
     </div>
   </div>
-  
+</div>
