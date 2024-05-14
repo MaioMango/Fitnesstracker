@@ -110,6 +110,19 @@ app.post('/login', (req, res) => {
 });
 
 
+app.post('/food', (req, res) => {
+  const { foodName, kcal, carbs, protein, fat, meal, quantity } = req.body;
+
+  connection.query('INSERT INTO foods (foodName, kcal, carbs, protein, fat, meal, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+                   [foodName, kcal, carbs, protein, fat, meal, quantity], 
+                   (err, results) => {
+    if (err) {
+      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+    }
+    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+  });
+});
 
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');

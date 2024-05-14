@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,7 +15,7 @@ export class FoodInfoModalComponent {
   protein: number = 0;
   fat: number = 0;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
 
   closeModal() {
@@ -26,16 +27,24 @@ export class FoodInfoModalComponent {
 
     this.router.navigate(['barcodescanner']);
   }
-
   save() {
-    const foodInfo = {
-      name: this.foodName,
+    const foodData = {
+      foodName: this.foodName,
       kcal: this.kcal,
       carbs: this.carbs,
       protein: this.protein,
       fat: this.fat
     };
-    this.foodInfoSaved.emit(foodInfo);
-    this.closeModal();
+
+    this.http.post<any>('http://localhost:3000/food', foodData)
+      .subscribe(
+        (response) => {
+          console.log('Daten erfolgreich gespeichert:', response);
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Fehler beim Speichern der Daten:', error);
+        }
+      );
   }
 }
