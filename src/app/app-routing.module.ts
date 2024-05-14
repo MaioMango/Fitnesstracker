@@ -10,11 +10,13 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
+import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
   { path: 'login', component: LoginComponent }, 
   { path: 'barcodescanner', component: BarcodescannerComponent }, 
+  { path: 'barcodescanner/add', component: FoodInfoModalComponent }, 
   { path: 'bmi', component: BmiComponent }, 
   { path: 'calories', component: CaloriecalculatorComponent },
   { path: 'weight', component: WeightComponent },

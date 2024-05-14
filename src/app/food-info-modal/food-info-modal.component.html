@@ -1,41 +1,51 @@
 <div class="modal" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Lebensmittelinformationen eingeben</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="foodName">Lebensmittelname:</label>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Lebensmittelinformationen eingeben</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group row mt-4">
+            <label for="foodName" class="col-sm-3 col-form-label">Lebensmittelname:</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="foodName" name="foodName" [(ngModel)]="foodName" required>
             </div>
-            <div class="form-group">
-              <label for="kcal">Kcal:</label>
+          </div>
+          <div class="form-group row mt-4">
+            <label for="kcal" class="col-sm-3 col-form-label">Kcal:</label>
+            <div class="col-sm-9">
               <input type="number" class="form-control" id="kcal" name="kcal" [(ngModel)]="kcal" required>
             </div>
-            <div class="form-group">
-              <label for="carbs">Carbs:</label>
+          </div>
+          <div class="form-group row mt-4">
+            <label for="carbs" class="col-sm-3 col-form-label">Carbs:</label>
+            <div class="col-sm-9">
               <input type="number" class="form-control" id="carbs" name="carbs" [(ngModel)]="carbs" required>
             </div>
-            <div class="form-group">
-              <label for="protein">Protein:</label>
+          </div>
+          <div class="form-group row mt-4">
+            <label for="protein" class="col-sm-3 col-form-label">Protein:</label>
+            <div class="col-sm-9">
               <input type="number" class="form-control" id="protein" name="protein" [(ngModel)]="protein" required>
             </div>
-            <div class="form-group">
-              <label for="fat">Fett:</label>
+          </div>
+          <div class="form-group row mt-4 mb-4">
+            <label for="fat" class="col-sm-3 col-form-label">Fett:</label>
+            <div class="col-sm-9">
               <input type="number" class="form-control" id="fat" name="fat" [(ngModel)]="fat" required>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Abbrechen</button>
-          <button type="button" class="btn btn-primary" (click)="save()">Speichern</button>
-        </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Abbrechen</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Speichern</button>
       </div>
     </div>
   </div>
-  
+</div>
+<router-outlet></router-outlet>

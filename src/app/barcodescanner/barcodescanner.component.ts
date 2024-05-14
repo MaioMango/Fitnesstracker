@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
 import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,10 +18,12 @@ export class BarcodescannerComponent {
   showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
 
+  constructor(private router: Router) {}
+
   onScanSuccess(event: any) {
     this.scannedData = event;
     this.showFoodInfoModal = true;
-    console.log(this.scannedData);
+    this.router.navigate(['barcodescanner/add']);
   }
 
   onScanError(error: any) {

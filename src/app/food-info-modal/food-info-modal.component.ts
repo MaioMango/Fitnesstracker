@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-food-info-modal',
@@ -13,12 +14,17 @@ export class FoodInfoModalComponent {
   protein: number = 0;
   fat: number = 0;
 
+  constructor(private router: Router) {}
+
+
   closeModal() {
     this.foodName = '';
     this.kcal = 0;
     this.carbs = 0;
     this.protein = 0;
     this.fat = 0;
+
+    this.router.navigate(['barcodescanner']);
   }
 
   save() {
