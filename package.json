@@ -42,6 +42,7 @@
     "@angular/localize": "^17.3.6",
     "@types/bcryptjs": "^2.4.6",
     "@types/jasmine": "~5.1.0",
+    "angular-cli-ghpages": "^2.0.0-beta.2",
     "concurrently": "^8.2.2",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
