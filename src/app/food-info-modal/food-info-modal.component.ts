@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class FoodInfoModalComponent {
   @Output() foodInfoSaved = new EventEmitter<any>();
+  @Output() closeModalEvent = new EventEmitter<void>();
+
   foodName: string = '';
   kcal: number = 0;
   carbs: number = 0;
@@ -25,7 +27,9 @@ export class FoodInfoModalComponent {
     this.protein = 0;
     this.fat = 0;
 
-    this.router.navigate(['barcodescanner']);
+    this.closeModalEvent.emit();
+
+    //this.router.navigate(['barcodescanner']);
   }
   save() {
     const foodData = {
@@ -46,6 +50,6 @@ export class FoodInfoModalComponent {
           console.error('Fehler beim Speichern der Daten:', error);
         }
       );
-      this.router.navigate(['barcodescanner/addmeal']);
-  }
+      this.foodInfoSaved.emit();
+    }
 }

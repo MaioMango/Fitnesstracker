@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <h2 class="text-center">Lebensmittelscanner <i class="fas fa-info-circle info-icon" title="Info" (click)="openModal()"></i></h2>
+  <h2 class="text-center">Lebensmittelscanner <i class="fas fa-info-circle info-icon" title="Info" (click)="openBarcodeInfoModal()"></i></h2>
   <p class="text-center">Scannen Sie hier den Barcode von Ihrem verzehrten Lebensmittel und fügen Sie es anschliessend
     Ihrer Liste der konsumierten Nahrungsmittel hinzu, um
     den Überblick über Ihre aufgenommenen Kalorien zu behalten:</p>
@@ -8,8 +8,9 @@
       (scanError)="onScanError($event)">
     </zxing-scanner>
   </div>
-  <app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)"></app-food-info-modal>
 
 </div>
 <router-outlet></router-outlet>
-<app-barcode-info-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()"></app-barcode-info-modal>
+<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)" (closeModalEvent)="closeFoodInfoModal()"></app-food-info-modal>
+<app-barcode-info-modal *ngIf="showBarcodeInfoModal" (closeModalEvent)="closeBarcodeInfoModal()"></app-barcode-info-modal>
+<app-existing-food-modal *ngIf="showExistingFoodModal" (closeModalEvent)="closeExistingFoodModal()"></app-existing-food-modal>

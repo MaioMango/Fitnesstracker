@@ -49,7 +49,7 @@ export class ExistingFoodModalComponent {
 
 
   closeModal() {
-    this.router.navigate(['barcodescanner']);
+    this.closeModalEvent.emit();
   }
 
   save() {
@@ -75,5 +75,6 @@ export class ExistingFoodModalComponent {
           console.error('Fehler beim Speichern der Daten:', error);
         }
       );
+      this.closeModalEvent.emit();
   }
 }

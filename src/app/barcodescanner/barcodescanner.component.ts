@@ -15,9 +15,10 @@ export class BarcodescannerComponent {
 
   allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = true;
-  showFoodInfoModal: boolean = false;
+  showFoodInfoModal: boolean = true;
   scannedData: string | null = null;
-  isModalOpen: boolean = false;
+  showBarcodeInfoModal: boolean = false;
+  showExistingFoodModal: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -34,14 +35,23 @@ export class BarcodescannerComponent {
   onFoodInfoSaved(foodInfo: any) {
     console.log('Lebensmittelinformationen gespeichert:', foodInfo);
     this.showFoodInfoModal = false;
+    this.showExistingFoodModal = true;
   }
 
 
-  openModal() {
-    this.isModalOpen = true;
+  openBarcodeInfoModal() {
+    this.showBarcodeInfoModal = true;
   }
 
-  closeModal() {
-    this.isModalOpen = false;
+  closeBarcodeInfoModal() {
+    this.showBarcodeInfoModal = false;
+  }
+
+  closeFoodInfoModal() {
+    this.showFoodInfoModal = false;
+  }
+
+  closeExistingFoodModal() {
+    this.showExistingFoodModal = false;
   }
 }
