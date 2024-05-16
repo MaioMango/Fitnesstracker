@@ -46,5 +46,6 @@ export class FoodInfoModalComponent {
           console.error('Fehler beim Speichern der Daten:', error);
         }
       );
+      this.router.navigate(['barcodescanner/addmeal']);
   }
 }

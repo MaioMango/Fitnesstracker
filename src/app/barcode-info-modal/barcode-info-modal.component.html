@@ -1,0 +1,12 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="instructions">
+            <h5>Informationen zu Anwendung:</h5>
+            <p>1. Scannen Sie den Barcode Ihres Lebensmittels.</p>
+            <p>2. Geben Sie die Nährwerte pro 100g ein und speichern Sie diese.</p>
+            <p>3. Sie werden dann zum nächsten Schritt (Angabe der Konsum-Menge) weitergeleitet.</p>
+            <p>Falls das Lebensmittel schon einmal erfasst wurde, bleibt Ihnen Schritt 2 erspart.</p>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,7 @@ export class BarcodescannerComponent {
   showScanner: boolean = true;
   showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
+  isModalOpen: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -33,5 +34,14 @@ export class BarcodescannerComponent {
   onFoodInfoSaved(foodInfo: any) {
     console.log('Lebensmittelinformationen gespeichert:', foodInfo);
     this.showFoodInfoModal = false;
+  }
+
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 }

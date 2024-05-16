@@ -20,6 +20,7 @@ import { BarcodescannerComponent } from './barcodescanner/barcodescanner.compone
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 import { ExistingFoodModalComponent } from './existing-food-modal/existing-food-modal.component';
+import { BarcodeInfoModalComponent } from './barcode-info-modal/barcode-info-modal.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ExistingFoodModalComponent } from './existing-food-modal/existing-food-
     RegisterComponent,
     BarcodescannerComponent,
     FoodInfoModalComponent,
-    ExistingFoodModalComponent
+    ExistingFoodModalComponent,
+    BarcodeInfoModalComponent
   ],
   imports: [
     BrowserModule,
