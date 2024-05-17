@@ -8,6 +8,7 @@ import { DataService } from '../services/data.service';
 })
 export class AppComponent {
   title = 'Fitnesstracker';
+  isCollapsed = true;
 
   data: any;
 
@@ -17,5 +18,9 @@ export class AppComponent {
     this.dataService.getData().subscribe((response) => {
       this.data = response;
     });
+  }
+
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
