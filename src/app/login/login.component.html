@@ -1,42 +1,32 @@
 <div class="container my-5">
   <h2>Login</h2>
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-10">
       <form (ngSubmit)="onLogin()">
-        <div class="mb-3">
-          <label for="login" class="form-label">Benutzername</label>
-          <input
-            type="text"
-            id="login"
-            class="form-control"
-            [(ngModel)]="login"
-            name="login"
-            required
-          />
+        <div class="form-group row mt-4">
+          <label for="login" class="col-sm-3 col-form-label">Benutzername</label>
+          <div class="col-sm-9">
+            <input type="text" id="login" class="form-control" [(ngModel)]="login" name="login" required />
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Passwort</label>
-          <input
-            type="password"
-            id="password"
-            class="form-control"
-            [(ngModel)]="password"
-            name="password"
-            required
-          />
+        <div class="form-group row mt-4 mb-4">
+          <label for="password" class="col-sm-3 col-form-label">Passwort</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
+          </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <button type="submit" class="btn btn-primary">Login</button>
-          <span>
-            Noch keinen Account? 
-            <a href="/register">Hier registrieren</a>
-          </span>
+        <div class="form-group row mt-4 mb-4">
+          <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </div>
+          <div class="col-sm-9 align-link">
+            <span>Noch keinen Account? <a href="/register">Hier registrieren</a></span>
+          </div>
         </div>
       </form>
     </div>
   </div>
 </div>
-
 <!-- TODO: Toast kommt nur einmal -->
 <ngb-toast id="loginToast" class="bg-danger text-light" header="Fehler" [hidden]="!showToast">
   {{specificError}}
