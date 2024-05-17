@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import e from 'cors';
 
 @Component({
   selector: 'app-existing-food-modal',
   templateUrl: './existing-food-modal.component.html',
   styleUrl: './existing-food-modal.component.scss'
 })
-export class ExistingFoodModalComponent {
+export class ExistingFoodModalComponent implements OnInit{
   @Output() closeModalEvent = new EventEmitter<void>();
   @Output() saveFoodEvent = new EventEmitter<any>();
 
@@ -23,11 +23,34 @@ export class ExistingFoodModalComponent {
     { id: 1, name: 'Frühstück' },
     { id: 2, name: 'Mittagessen' },
     { id: 3, name: 'Abendessen' },
+    { id: 4, name: 'Snack' },
   ];
 
   quantity: number = 100;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.setDefaultMeal();
+  }
+
+  setDefaultMeal() {
+    const currentHour = new Date().getHours();
+    console.log('currentHour:', currentHour);
+    if (currentHour < 10) {
+      this.selectedMeal = 1; //Breakfast
+    } else if (currentHour < 12) {
+      this.selectedMeal = 4; //Snack
+    } else if (currentHour < 14) {
+      this.selectedMeal = 2; //Lunch
+    } else if (currentHour < 18){
+      this.selectedMeal = 4; //Snack
+    } else if (currentHour < 21) {
+      this.selectedMeal = 3; //Dinner
+    } else {
+      this.selectedMeal = 4; //Snack
+    }
+  }
 
   loadFoodData() {
     const foodId = 1;

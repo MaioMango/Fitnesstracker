@@ -10,9 +10,9 @@
 .modal-content {
   background-color: #fefefe;
   padding: 20px;
-  border-radius: 10px;
-  max-width: 40%;
-  max-height: 80%;
+  border-radius: 15px;
+  max-width: 35%;
+  max-height: 85%;
   margin: 20vh auto;
   text-align: left;
   position: relative;
@@ -42,4 +42,13 @@ h5 {
 
 .modal-footer button {
   margin-right: 1rem;
+}
+
+.dropdown-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 3L0 0h4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 8px 10px;
 }

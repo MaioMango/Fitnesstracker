@@ -15,7 +15,7 @@ export class BarcodescannerComponent {
 
   allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = true;
-  showFoodInfoModal: boolean = true;
+  showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
   showBarcodeInfoModal: boolean = false;
   showExistingFoodModal: boolean = false;
@@ -25,7 +25,6 @@ export class BarcodescannerComponent {
   onScanSuccess(event: any) {
     this.scannedData = event;
     this.showFoodInfoModal = true;
-    this.router.navigate(['barcodescanner/add']);
   }
 
   onScanError(error: any) {
