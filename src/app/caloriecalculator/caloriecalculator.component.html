@@ -1,6 +1,6 @@
   <div class="calorie-wrapper my-5">
     <h2 class="text-center">Kalorienrechner</h2>
-    <form id="calorieForm">
+    <form id="calorieForm" ngNativeValidate (ngSubmit)="calculateCalories()">
 
       <div class="form-floating mb-3">
         <input type="number" id="age" name="age" class="form-control" placeholder="Alter" required>
@@ -40,7 +40,7 @@
         <label for="activity">Aktivitätslevel</label>
       </div>
 
-      <button type="button" class="btn btn-primary btn-block" (click)="calculateCalories()">Berechnen</button>
+      <button type="submit" class="btn btn-primary btn-block">Berechnen</button>
     </form>
 
     <div id="result" class="text-center mt-3 font-weight-bold"></div>
