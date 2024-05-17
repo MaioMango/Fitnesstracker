@@ -22,7 +22,9 @@
             <a class="nav-link" [routerLink]="['/weight']">Gewicht</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/login']">Login/Registrieren</a>
+            <a class="nav-link" [routerLink]="isLoggedIn() ? ['/profile'] : ['/login']">
+              {{ isLoggedIn() ? username : 'Login/Registrieren' }}
+            </a>
           </li>
         </ul>
       </div>

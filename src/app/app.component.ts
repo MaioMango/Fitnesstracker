@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { AuthService } from './services/auth.service'; // Import the AuthService class
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,23 @@ export class AppComponent {
   isCollapsed = true;
 
   data: any;
-
-  constructor(private dataService: DataService) {}
+  username: string = ''; // Declare the username property
+  
+  constructor(private dataService: DataService, private authService: AuthService) {} // Declare the authService property in the constructor
 
   ngOnInit() {
     this.dataService.getData().subscribe((response) => {
       this.data = response;
     });
+
+    this.username = this.authService.getUsernameFromToken();
+    console.log('Username:', this.username);
+
+  }
+
+  
+  isLoggedIn(): boolean {
+    return !!this.username;
   }
 
   toggleMenu() {

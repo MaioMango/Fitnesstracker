@@ -1,28 +1,33 @@
 <div class="container my-5">
-    <h2>Registrierung</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form (ngSubmit)="onRegister()">
-          <div class="mb-3"> 
-            <label for="login" class="form-label">Benutzername</label> 
-            <input type="login" id="login" class="form-control" [(ngModel)]="login" name="login" required>
+  <h2>Registrierung</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <form (ngSubmit)="onRegister()">
+        <div class="form-group row mt-4">
+          <label for="login" class="col-sm-3 col-form-label">Benutzername</label>
+          <div class="col-sm-9">
+            <input type="login" id="login" class="form-control" [(ngModel)]="login" name="login" required />
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Passwort</label> 
-            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required> 
+        </div>
+        <div class="form-group row mt-4 mb-4">
+          <label for="password" class="col-sm-3 col-form-label">Passwort</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn btn-primary">Registrieren</button>
-            <span>
-              Doch schon einen Account erstellt? 
-              <a href="/login">Zurück zum Login</a>
-            </span>
+        </div>
+        <div class="form-group row mt-4 mb-4">
+          <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary w-100">Registrieren</button>
           </div>
-        </form>
-      </div>
+          <div class="col-sm-9 align-link">
+            <span>Schon einen Account erstellt? <a href="/login">Hier gehts zum Login</a></span>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>
+
 <ngb-toast id="registerToast" class="bg-danger text-light" header="Fehler" [hidden]="!showToast">
     {{specificError}}
 </ngb-toast>
