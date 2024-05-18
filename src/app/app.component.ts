@@ -23,7 +23,22 @@ export class AppComponent {
 
     this.username = this.authService.getUsernameFromToken();
     console.log('Username:', this.username);
+    this.adjustBodyPadding();
 
+  }
+
+  adjustBodyPadding() {
+    const navbar = document.querySelector('.fixed-top') as HTMLElement;
+    const footer = document.querySelector('.fixed-bottom') as HTMLElement;
+
+    if (navbar && footer) {
+      const navbarHeight = navbar.offsetHeight;
+      const footerHeight = footer.offsetHeight;
+      const body = document.querySelector('body');
+      if (body) {
+        body.setAttribute('style', `padding-top: ${navbarHeight}px; padding-bottom: ${footerHeight}px`);
+      }
+    }
   }
 
   
