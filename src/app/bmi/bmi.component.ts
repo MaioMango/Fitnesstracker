@@ -39,9 +39,15 @@ export class BmiComponent implements OnInit {
 
     const userId = this.authService.getIdFromToken();
     const bmi = this.bmi;
-    const date = this.bmiForm.value.date;
+    const selectedDate = this.bmiForm.value.date;
 
-    const bmiData = { userId, bmi, date };
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+  
+    const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
+    const bmiData = { userId, bmi, date:formattedDate };
 
     this.http.post<any>('http://localhost:3000/bmi', bmiData).subscribe({
       next: (response) => {
