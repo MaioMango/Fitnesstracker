@@ -126,6 +126,32 @@ app.post('/weight', (req, res) => {
 });
 
 
+app.post('/bmi', (req, res) => {
+  const { userId, bmi, date } = req.body;
+
+  connection.query('INSERT INTO tbmi (userKey, bmi, date) VALUES (?, ?, ?)', [userId, bmi, date], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Fehler beim Speichern des BMI in der Datenbank' });
+    }
+
+    res.status(201).json({ message: 'BMI erfolgreich in der Datenbank gespeichert' });
+  });
+});
+
+
+app.post('/calories', (req, res) => {
+  const { userId, calories, date } = req.body;
+
+  connection.query('INSERT INTO tcalories (userKey, calories, date) VALUES (?, ?, ?)', [userId, calories, date], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Fehler beim Speichern der Kalorien in der Datenbank' });
+    }
+
+    res.status(201).json({ message: 'Kalorien erfolgreich in der Datenbank gespeichert' });
+  });
+});
+
+
 app.post('/food', (req, res) => {
   const { foodName, code, kcal, carbs, protein, fat } = req.body;
 
@@ -139,7 +165,6 @@ app.post('/food', (req, res) => {
     res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
   });
 });
-
 
 app.post('/food2user', (req, res) => {
   const { code, meal, quantity, userId, date } = req.body;

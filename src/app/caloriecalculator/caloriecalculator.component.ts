@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-caloriecalculator',
@@ -6,15 +9,27 @@ import { Component } from '@angular/core';
   styleUrl: './caloriecalculator.component.scss'
 })
 export class CaloriecalculatorComponent {
+  calorieForm: FormGroup = new FormGroup({});
+  calories: number = 0;
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.calorieForm = this.formBuilder.group({
+      age: '',
+      gender: 'Male',
+      weight: '',
+      height: '',
+      activity: '1.2',
+      date: new Date().toISOString().split('T')[0]
+    });
+  }
+
   calculateCalories(): void {
-    const form = document.getElementById('calorieForm') as HTMLFormElement;
-    const formData = {
-      age: parseInt((form.elements.namedItem('age') as HTMLInputElement).value),
-      gender: (form.elements.namedItem('Gender') as HTMLInputElement).value,
-      weight: parseFloat((form.elements.namedItem('weight') as HTMLInputElement).value),
-      height: parseFloat((form.elements.namedItem('height') as HTMLInputElement).value),
-      activity: parseFloat((form.elements.namedItem('activity') as HTMLSelectElement).value)
-    };
+    if (!this.calorieForm.valid) {
+      return;
+    }
+    const formData = this.calorieForm.value;
 
     let bmr: number;
     if (formData.gender === 'Male') {
@@ -23,9 +38,27 @@ export class CaloriecalculatorComponent {
       bmr = 447.593 + (9.247 * formData.weight) + (3.098 * formData.height) - (4.330 * formData.age);
     }
 
-    const calories = Math.round(bmr * formData.activity);
-
-    const resultElement = document.getElementById('result') as HTMLElement;
-    resultElement.textContent = `Benötigte Kalorien pro Tag: ${calories}`;
+    this.calories = Math.round(bmr * formData.activity);
   }
+
+  save(): void {
+    if (!this.calorieForm.valid) {
+      return;
+    }
+    this.calculateCalories();
+
+    const userId = this.authService.getIdFromToken();
+    const calories = this.calories;
+    const date = this.calorieForm.value.date;
+
+    const calorieData = { userId, calories, date };
+
+    this.http.post<any>('http://localhost:3000/calories', calorieData).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Fehler beim Speichern der Kalorien:', error);
+      },
+    });  }
 }

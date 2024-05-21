@@ -1,10 +1,10 @@
 <div class="container my-5">
   <h2 class="text-center">Kalorienrechner</h2>
-  <form id="calorieForm" ngNativeValidate (ngSubmit)="calculateCalories()">
+  <form id="calorieForm" [formGroup]="calorieForm" ngNativeValidate>
     <div class="form-group row mt-4">
       <label for="age" class="col-sm-3 col-form-label">Alter:</label>
       <div class="col-sm-9">
-        <input type="number" id="age" name="age" class="form-control" required>
+        <input type="number" id="age" name="age" class="form-control" formControlName="age" required>
       </div>
     </div>
 
@@ -12,11 +12,11 @@
       <label class="col-sm-3 col-form-label">Geschlecht:</label>
       <div class="col-sm-9 d-flex align-items-center">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" id="Male1" name="Gender" value="Male" checked>
-          <label class="form-check-label" for="Male1">Männlich</label>
+          <input class="form-check-input" type="radio" id="Male" name="Gender" value="Male" formControlName="gender" checked>
+          <label class="form-check-label" for="Male">Männlich</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" id="Female" name="Gender" value="Female">
+          <input class="form-check-input" type="radio" id="Female" name="Gender" value="Female" formControlName="gender">
           <label class="form-check-label" for="Female">Weiblich</label>
         </div>
       </div>
@@ -25,21 +25,21 @@
     <div class="form-group row mt-4">
       <label for="height" class="col-sm-3 col-form-label">Grösse:</label>
       <div class="col-sm-9">
-        <input type="number" id="height" name="height" placeholder="cm" class="form-control" required>
+        <input type="number" id="height" name="height" placeholder="cm" class="form-control" formControlName="height" required>
       </div>
     </div>
 
     <div class="form-group row mt-4">
       <label for="weight" class="col-sm-3 col-form-label">Gewicht:</label>
       <div class="col-sm-9">
-        <input type="number" id="weight" name="weight" placeholder="kg" class="form-control" required>
+        <input type="number" id="weight" name="weight" placeholder="kg" class="form-control" formControlName="weight" required>
       </div>
     </div>
 
     <div class="form-group row mt-4">
       <label for="activity" class="col-sm-3 col-form-label">Aktivitätslevel:</label>
       <div class="col-sm-9">
-        <select id="activity" name="activity" class="form-control form-select">
+        <select id="activity" name="activity" class="form-control form-select" formControlName="activity">
           <option value="1.2" title="wenig bis keine Bewegung">Sedentär</option>
           <option value="1.375" title="leichte Übungen/Sport 1-3 Tage/Woche">Leicht aktiv</option>
           <option value="1.55" title="mässige Übungen/Sport 3-5 Tage/Woche">Mässig aktiv</option>
@@ -49,13 +49,22 @@
       </div>
     </div>
 
+    <div class="form-group row mt-2">
+      <label for="date" class="col-sm-3 col-form-label">Datum:</label>
+      <div class="col-sm-9">
+        <input type="date" id="date" formControlName="date" class="form-control" formControlName="date" required>
+      </div>
+    </div>
 
     <div class="form-group row mt-4 mb-4">
-      <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary w-100">Berechnen</button>
+      <div class="col-sm-6">
+        <button type="submit" class="btn btn-outline-primary w-100" (click)="calculateCalories()" >Berechnen</button>
       </div>
+      <div class="col-sm-6">
+       <button type="submit" class="btn btn-primary w-100" (click)="save()" >Speichern</button>
+     </div>
     </div>
   </form>
 
-  <div id="result" class="text-center mt-3 font-weight-bold"></div>
+  <p *ngIf="calories" class="text-center mt-4">Benötigte Kalorien pro Tag: {{ calories }}</p>
 </div>
