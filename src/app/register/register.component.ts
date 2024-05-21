@@ -17,7 +17,7 @@ export class RegisterComponent {
 
   onRegister() { 
     this.showToast = false; 
-    this.authService.login(this.login, this.password).subscribe(
+    this.authService.register(this.login, this.password).subscribe(
       response => {
         console.log('Registrierung erfolgreich:', response);
 

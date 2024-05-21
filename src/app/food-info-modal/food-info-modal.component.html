@@ -1,0 +1,45 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h5>Lebensmittelinformationen pro 100g eingeben</h5>
+    <div class="modal-body">
+      <form>
+        <input type="hidden" name="code" [(ngModel)]="code" value="">
+        <div class="form-group row mt-4">
+          <label for="foodName" class="col-sm-3 col-form-label">Lebensmittelname:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="foodName" name="foodName" [(ngModel)]="foodName" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="kcal" class="col-sm-3 col-form-label">Kcal:</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="kcal" name="kcal" [(ngModel)]="kcal" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="carbs" class="col-sm-3 col-form-label">Kohlenhydrate:</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="carbs" name="carbs" [(ngModel)]="carbs" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="protein" class="col-sm-3 col-form-label">Protein:</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="protein" name="protein" [(ngModel)]="protein" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4 mb-4">
+          <label for="fat" class="col-sm-3 col-form-label">Fett:</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="fat" name="fat" [(ngModel)]="fat" required />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary mx-2" (click)="closeModal()">Abbrechen</button>
+      <button type="button" class="btn btn-primary mx-2" (click)="save()">Speichern</button>
+    </div>
+  </div>
+</div>

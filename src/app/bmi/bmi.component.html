@@ -1,46 +1,42 @@
 <div class="container my-5">
    <h2 class="text-center">BMI Rechner</h2>
-   <form [formGroup]="bmiForm" (ngSubmit)="calculateBMI()" class="bmi-form mt-4">
+   <form ngNativeValidate [formGroup]="bmiForm" class="bmi-form mt-4">
      
      <div class="form-group row mt-4">
-       <label for="age" class="col-sm-3 col-form-label">Alter</label>
+       <label for="age" class="col-sm-3 col-form-label">Alter:</label>
        <div class="col-sm-9">
-         <input type="number" id="age" placeholder="Alter" formControlName="age" class="form-control">
+         <input type="number" id="age" formControlName="age" class="form-control" required>
        </div>
      </div>
  
      <div class="form-group row mt-4">
-       <label class="col-sm-3 col-form-label">Geschlecht:</label>
-       <div class="col-sm-9 d-flex align-items-center">
-         <div class="form-check form-check-inline">
-           <input type="radio" id="male" value="male" formControlName="gender" class="form-check-input">
-           <label for="male" class="form-check-label">Männlich</label>
-         </div>
-         <div class="form-check form-check-inline">
-           <input type="radio" id="female" value="female" formControlName="gender" class="form-check-input">
-           <label for="female" class="form-check-label">Weiblich</label>
-         </div>
-       </div>
-     </div>
- 
-     <div class="form-group row mt-4">
-       <label for="height" class="col-sm-3 col-form-label">Grösse (in cm)</label>
+       <label for="height" class="col-sm-3 col-form-label">Grösse:</label>
        <div class="col-sm-9">
-         <input type="number" id="height" placeholder="Grösse (in cm)" formControlName="height" class="form-control">
+         <input type="number" id="height" placeholder="cm" formControlName="height" class="form-control" required>
        </div>
      </div>
  
      <div class="form-group row mt-4 mb-4">
-       <label for="weight" class="col-sm-3 col-form-label">Gewicht (in kg)</label>
+       <label for="weight" class="col-sm-3 col-form-label">Gewicht:</label>
        <div class="col-sm-9">
-         <input type="number" id="weight" placeholder="Gewicht (in kg)" formControlName="weight" class="form-control">
+         <input type="number" id="weight" placeholder="kg" formControlName="weight" class="form-control" required>
        </div>
      </div>
+
+     <div class="form-group row mt-2">
+      <label for="date" class="col-sm-3 col-form-label">Datum:</label>
+      <div class="col-sm-9">
+        <input type="date" id="date" formControlName="date" class="form-control" required>
+      </div>
+    </div>
  
      <div class="form-group row mt-4 mb-4">
-       <div class="col-sm-12">
-         <button type="submit" class="btn btn-primary w-100">Berechnen</button>
+       <div class="col-sm-6">
+         <button type="submit" class="btn btn-outline-primary w-100" (click)="calculateBMI()" >Berechnen</button>
        </div>
+       <div class="col-sm-6">
+        <button type="submit" class="btn btn-primary w-100" (click)="save()" >Speichern</button>
+      </div>
      </div>
    </form>
  

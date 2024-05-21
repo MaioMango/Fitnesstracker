@@ -16,8 +16,14 @@ import { AgbComponent } from './agb/agb.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { RegisterComponent } from './register/register.component';
+import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
+import { ExistingFoodModalComponent } from './existing-food-modal/existing-food-modal.component';
+import { BarcodeInfoModalComponent } from './barcode-info-modal/barcode-info-modal.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +35,11 @@ import { jwtDecode } from "jwt-decode";
     AgbComponent,
     ImprintComponent,
     PrivacyPolicyComponent,
-    RegisterComponent
+    RegisterComponent,
+    BarcodescannerComponent,
+    FoodInfoModalComponent,
+    ExistingFoodModalComponent,
+    BarcodeInfoModalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +48,7 @@ import { jwtDecode } from "jwt-decode";
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
+    ZXingScannerModule,
     JwtModule,
   ],
   providers: [],
