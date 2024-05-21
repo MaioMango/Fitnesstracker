@@ -1,4 +1,4 @@
-<header class="bg-dark py-3">
+<header class="bg-dark py-3 fixed-top">
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" [routerLink]="['/']">Fitnesstracker</a>
@@ -22,7 +22,9 @@
             <a class="nav-link" [routerLink]="['/weight']">Gewicht</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/login']">Login/Registrieren</a>
+            <a class="nav-link" [routerLink]="isLoggedIn() ? ['/profile'] : ['/login']">
+              {{ isLoggedIn() ? username : 'Login/Registrieren' }}
+            </a>
           </li>
         </ul>
       </div>

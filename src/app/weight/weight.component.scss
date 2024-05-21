@@ -1,0 +1,35 @@
+.container {
+    max-width: 80vh; 
+    margin: 20vh auto;
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 2rem; 
+  }
+  
+  label {
+    margin-bottom: 0.5rem; 
+    font-weight: normal;
+  }
+  
+  input.form-control,
+  select.form-control {
+    height: calc(2.25rem + 2px); 
+    width: 100%; 
+  }
+  
+  #result {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
