@@ -19,8 +19,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.username = this.authService.getUsernameFromToken();
-    console.log('Username:', this.username);
-    console.log('ID:', this.authService.getIdFromToken());
     this.adjustBodyPadding();
   }
 
@@ -46,7 +44,7 @@ export class AppComponent {
       (response) => {
         console.log('Logout erfolgreich:', response);
         this.username = '';
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Fehler beim Logout:', error);
