@@ -126,6 +126,20 @@ app.post('/bmi', (req, res) => {
   });
 });
 
+
+app.post('/calories', (req, res) => {
+  const { userId, calories, date } = req.body;
+
+  connection.query('INSERT INTO tcalories (userKey, calories, date) VALUES (?, ?, ?)', [userId, calories, date], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Fehler beim Speichern der Kalorien in der Datenbank' });
+    }
+
+    res.status(201).json({ message: 'Kalorien erfolgreich in der Datenbank gespeichert' });
+  });
+});
+
+
 app.post('/food', (req, res) => {
   const { foodName, code, kcal, carbs, protein, fat } = req.body;
 
