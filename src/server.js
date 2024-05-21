@@ -114,6 +114,19 @@ app.post('/login', (req, res) => {
 });
 
 
+app.post('/bmi', (req, res) => {
+  const { userId, bmi, date } = req.body;
+
+  connection.query('INSERT INTO tbmi (userKey, bmi, date) VALUES (?, ?, ?)', [userId, bmi, date], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Fehler beim Speichern des BMI in der Datenbank' });
+    }
+
+    res.status(201).json({ message: 'BMI erfolgreich in der Datenbank gespeichert' });
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
