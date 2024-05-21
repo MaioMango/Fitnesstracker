@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-bmi',
   templateUrl: './bmi.component.html',
@@ -12,12 +12,11 @@ export class BmiComponent implements OnInit {
 
   bmi: number = 0;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.bmiForm = this.formBuilder.group({
       age: '',
-      gender: '',
       height: '',
       weight: '',
       date: ''
@@ -25,13 +24,21 @@ export class BmiComponent implements OnInit {
   }
 
   calculateBMI(): void {
+    if (!this.bmiForm.valid) {
+      return;
+    }
     const height = this.bmiForm.value.height / 100; // convert height from cm to m
     const weight = this.bmiForm.value.weight;
-    this.bmi = weight / (height * height);
+    this.bmi = parseFloat((weight / (height * height)).toFixed(2));
   }
 
   save(): void {
-    const userId = '123';
+    if (!this.bmiForm.valid) {
+      return;
+    }
+    this.calculateBMI();
+
+    const userId = this.authService.getIdFromToken();
     const bmi = this.bmi;
     const date = this.bmiForm.value.date;
 
