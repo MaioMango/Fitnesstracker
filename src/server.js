@@ -35,7 +35,10 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 app.get('/users', (req, res) => {
@@ -112,6 +115,12 @@ app.post('/login', (req, res) => {
     });
   });
 });
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('jwt');
+  res.status(200).json({ message: 'Logout erfolgreich' });
+});
+
 
 app.post('/weight', (req, res) => {
   const { userid, weight, date } = req.body;

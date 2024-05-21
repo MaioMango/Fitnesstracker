@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Fitnesstracker';
@@ -13,15 +14,14 @@ export class AppComponent {
 
   data: any;
   username: string = '';
-  
-  constructor(private dataService: DataService, private authService: AuthService) {}
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.username = this.authService.getUsernameFromToken();
     console.log('Username:', this.username);
     console.log('ID:', this.authService.getIdFromToken());
     this.adjustBodyPadding();
-
   }
 
   adjustBodyPadding() {
@@ -33,15 +33,27 @@ export class AppComponent {
       const footerHeight = footer.offsetHeight;
       const body = document.querySelector('body');
       if (body) {
-        body.setAttribute('style', `padding-top: ${navbarHeight}px; padding-bottom: ${footerHeight}px`);
+        body.setAttribute(
+          'style',
+          `padding-top: ${navbarHeight}px; padding-bottom: ${footerHeight}px`
+        );
       }
     }
   }
 
   logout() {
-
+    this.authService.logout().subscribe(
+      (response) => {
+        console.log('Logout erfolgreich:', response);
+        this.username = '';
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Fehler beim Logout:', error);
+      }
+    );
   }
-  
+
   isLoggedIn(): boolean {
     return !!this.username;
   }
