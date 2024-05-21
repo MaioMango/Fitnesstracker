@@ -183,7 +183,7 @@ app.post('/food2user', (req, res) => {
 app.get('/bmi/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  connection.query('SELECT * FROM tbmi WHERE userKey = ?', [userId], (err, results) => {
+  connection.query('SELECT * FROM tbmi WHERE userKey = ? ORDER BY date DESC LIMIT 1', [userId], (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
       res.status(500).send('Server-Fehler BMI');
@@ -196,7 +196,7 @@ app.get('/bmi/:userId', (req, res) => {
 app.get('/weight/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  connection.query('SELECT * FROM tweight WHERE userKey = ?', [userId], (err, results) => {
+  connection.query('SELECT * FROM tweight WHERE userKey = ? ORDER BY date DESC LIMIT 1', [userId], (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
       res.status(500).send('Server-Fehler Gewicht');
@@ -209,7 +209,7 @@ app.get('/weight/:userId', (req, res) => {
 app.get('/calories/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  connection.query('SELECT * FROM tcalories WHERE userKey = ?', [userId], (err, results) => {
+  connection.query('SELECT * FROM tcalories WHERE userKey = ? ORDER BY date DESC LIMIT 1', [userId], (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
       res.status(500).send('Server-Fehler Kalorien');
