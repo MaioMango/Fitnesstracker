@@ -24,6 +24,8 @@ import { BarcodeInfoModalComponent } from './barcode-info-modal/barcode-info-mod
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
 import { ProfileComponent } from './profile/profile.component';
+import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ProfileComponent } from './profile/profile.component';
     BarcodescannerComponent,
     FoodInfoModalComponent,
     ExistingFoodModalComponent,
-    BarcodeInfoModalComponent
+    BarcodeInfoModalComponent,
+    CookieBannerComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,7 @@ import { ProfileComponent } from './profile/profile.component';
     ReactiveFormsModule,
     FormsModule,
     ZXingScannerModule,
-    JwtModule,
+    JwtModule
   ],
   providers: [],
   bootstrap: [AppComponent],

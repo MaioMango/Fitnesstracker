@@ -14,12 +14,17 @@ export class AppComponent {
 
   data: any;
   username: string = '';
+  cookieBannerVisible = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.username = this.authService.getUsernameFromToken();
     this.adjustBodyPadding();
+  }
+
+  onCookiesAccepted(event: boolean) {
+    this.cookieBannerVisible = !event;
   }
 
   adjustBodyPadding() {

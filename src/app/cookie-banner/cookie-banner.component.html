@@ -1,0 +1,12 @@
+<div class="cookie-banner fixed-bottom bg-dark text-light p-3" [ngClass]="{'hidden': !isBannerVisible}">
+    <div class="container d-flex justify-content-between align-items-center">
+      <span>
+        Diese Website verwendet Cookies, um sicherzustellen, dass Sie die bestmögliche Erfahrung auf unserer Website erhalten.
+        <a routerLink="/privacy">Datenschutzerklärung</a> für weitere Informationen.
+      </span>
+      <button class="btn btn-primary btn-sm" (click)="acceptCookies()">
+        <i class="fas fa-cookie-bite mr-2"></i> Cookies akzeptieren
+      </button>
+    </div>
+  </div>
+  
