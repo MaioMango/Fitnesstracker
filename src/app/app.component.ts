@@ -16,9 +16,13 @@ export class AppComponent {
   username: string = '';
   cookieBannerVisible = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit() {
+    const cookiesState = localStorage.getItem('cookiesAccepted');
+    if (cookiesState === 'true') {
+     this.cookieBannerVisible = false;
+   }
     this.username = this.authService.getUsernameFromToken();
     this.adjustBodyPadding();
   }

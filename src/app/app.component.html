@@ -48,5 +48,5 @@
     <a class="text-white" [routerLink]="['/imprint']">Impressum</a>
   </span>
 </footer>
-<app-cookie-banner (cookiesAccepted)="onCookiesAccepted($event)" *ngIf="cookieBannerVisible"></app-cookie-banner>
+<app-cookie-banner (cookiesAccepted)="onCookiesAccepted($event)" *ngIf="cookieBannerVisible && router.url !== '/login' && router.url !== '/profile' && !isLoggedIn()"></app-cookie-banner>
 <router-outlet></router-outlet>
