@@ -9,6 +9,7 @@ import { AgbComponent } from './agb/agb.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '' },
 
 ];

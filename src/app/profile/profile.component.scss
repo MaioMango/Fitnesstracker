@@ -1,0 +1,27 @@
+.container-fluid {
+    padding: 0 15px;
+  }
+  
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-weight: bold;
+    font-size: larger;
+  }
+  
+  .card-text {
+    color: #555;
+  }
+  
+  .list-group-item {
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-item {
+    cursor: pointer !important;
+  }
+  

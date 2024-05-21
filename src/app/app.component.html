@@ -21,10 +21,15 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/weight']">Gewicht</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="isLoggedIn() ? ['/profile'] : ['/login']">
+          <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" ngbDropdownToggle>
               {{ isLoggedIn() ? username : 'Login/Registrieren' }}
             </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+              <a class="dropdown-item" [routerLink]="['/change-password']">Passwort ändern</a>
+              <a class="dropdown-item" [routerLink]="['/profile']">Profil</a>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
           </li>
         </ul>
       </div>

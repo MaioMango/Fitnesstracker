@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { AuthService } from './services/auth.service'; // Import the AuthService class
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +12,9 @@ export class AppComponent {
   isCollapsed = true;
 
   data: any;
-  username: string = ''; // Declare the username property
+  username: string = '';
   
-  constructor(private dataService: DataService, private authService: AuthService) {} // Declare the authService property in the constructor
+  constructor(private dataService: DataService, private authService: AuthService) {}
 
   ngOnInit() {
     this.dataService.getData().subscribe((response) => {
@@ -41,6 +41,9 @@ export class AppComponent {
     }
   }
 
+  logout() {
+
+  }
   
   isLoggedIn(): boolean {
     return !!this.username;

@@ -18,6 +18,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { RegisterComponent } from './register/register.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
+import { ProfileComponent } from './profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { jwtDecode } from "jwt-decode";
     AgbComponent,
     ImprintComponent,
     PrivacyPolicyComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
