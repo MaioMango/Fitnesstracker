@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-weight',
@@ -9,15 +9,26 @@ import { FormBuilder } from '@angular/forms';
   styleUrl: './weight.component.scss'
 })
 export class WeightComponent {
+  weightForm: FormGroup = new FormGroup({});
+  
   weight: number = 0;
-  weightForm: Date = new Date();
+  date: Date = new Date();
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
 
+  ngOnInit(): void {
+    this.weightForm = this.formBuilder.group({
+      weight: '',
+      date: ''
+    });
+  }
 
   save(): void {
+    if (!this.weightForm.valid) {
+      return;
+    }
     const userid = this.authService.getIdFromToken();
-    const weight = this.weight;
-    const date = this.weightForm;
+    const weight = this.weightForm.value.weight;
+    const date = this.weightForm.value.date;
 
     const weightData = { userid, weight, date };
 
