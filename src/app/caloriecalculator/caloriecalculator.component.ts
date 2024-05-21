@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-caloriecalculator',
   templateUrl: './caloriecalculator.component.html',
-  styleUrl: './caloriecalculator.component.scss'
+  styleUrls: ['./caloriecalculator.component.scss']
 })
 export class CaloriecalculatorComponent {
+
   calculateCalories(): void {
     const form = document.getElementById('calorieForm') as HTMLFormElement;
     const formData = {
@@ -28,4 +29,5 @@ export class CaloriecalculatorComponent {
     const resultElement = document.getElementById('result') as HTMLElement;
     resultElement.textContent = `Benötigte Kalorien pro Tag: ${calories}`;
   }
+
 }
