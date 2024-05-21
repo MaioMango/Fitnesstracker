@@ -49,9 +49,16 @@ export class CaloriecalculatorComponent {
 
     const userId = this.authService.getIdFromToken();
     const calories = this.calories;
-    const date = this.calorieForm.value.date;
+    const selectedDate = this.calorieForm.value.date;
 
-    const calorieData = { userId, calories, date };
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+  
+    const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
+  
+    const calorieData = { userId, calories, date: formattedDate };
 
     this.http.post<any>('http://localhost:3000/calories', calorieData).subscribe({
       next: (response) => {
