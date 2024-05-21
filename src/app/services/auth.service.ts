@@ -31,4 +31,12 @@ export class AuthService {
       return decodedJWT.username
     }
   }
+
+  getIdFromToken() {
+    let token = localStorage.getItem('jwt');
+    if (token) {
+      let decodedJWT = JSON.parse(window.atob(token.split('.')[1]));
+      return decodedJWT.id
+    }
+  }
 }

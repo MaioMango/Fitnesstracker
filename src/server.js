@@ -106,7 +106,7 @@ app.post('/login', (req, res) => {
       }
 
       // Erstellen Sie ein JWT-Token
-      const token = jwt.sign({ id: user.id, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.memKey, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
       console.log('Token:', token);
       res.status(200).json({ message: 'Login erfolgreich', token });
     });
@@ -125,6 +125,35 @@ app.post('/weight', (req, res) => {
   });
 });
 
+
+app.post('/food', (req, res) => {
+  const { foodName, code, kcal, carbs, protein, fat } = req.body;
+
+  connection.query('INSERT INTO tfood (fodName, fodCode, fodKcal, fodCarbs, fodProtein, fodFat) VALUES (?, ?, ?, ?, ?, ?)', 
+                   [foodName, code, kcal, carbs, protein, fat], 
+                   (err, results) => {
+    if (err) {
+      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+    }
+    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+  });
+});
+
+
+app.post('/food2user', (req, res) => {
+  const { code, meal, quantity, userId, date } = req.body;
+
+  connection.query('INSERT INTO tfood2user (ftuCode, ftuMeal, ftuQuantity, ftuUser, ftuDate) VALUES (?, ?, ?, ?, ?)', 
+                   [code, meal, quantity, userId, date], 
+                   (err, results) => {
+    if (err) {
+      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+    }
+    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+  });
+});
 
 
 app.listen(3000, () => {
