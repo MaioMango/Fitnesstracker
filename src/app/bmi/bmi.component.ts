@@ -9,17 +9,16 @@ import { AuthService } from '../services/auth.service';
 })
 export class BmiComponent implements OnInit {
   bmiForm: FormGroup = new FormGroup({});
-
   bmi: number = 0;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.bmiForm = this.formBuilder.group({
+        this.bmiForm = this.formBuilder.group({
       age: '',
       height: '',
       weight: '',
-      date: ''
+      date: new Date().toISOString().split('T')[0]
     });
   }
 
