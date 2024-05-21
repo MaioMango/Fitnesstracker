@@ -23,6 +23,7 @@ export class AppComponent {
 
     this.username = this.authService.getUsernameFromToken();
     console.log('Username:', this.username);
+    console.log('ID:', this.authService.getIdFromToken());
     this.adjustBodyPadding();
 
   }

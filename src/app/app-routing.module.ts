@@ -10,10 +10,12 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
   { path: 'login', component: LoginComponent }, 
+  { path: 'barcodescanner', component: BarcodescannerComponent }, 
   { path: 'bmi', component: BmiComponent }, 
   { path: 'calories', component: CaloriecalculatorComponent },
   { path: 'weight', component: WeightComponent },
