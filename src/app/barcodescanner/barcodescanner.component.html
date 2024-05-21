@@ -11,6 +11,6 @@
 
 </div>
 <router-outlet></router-outlet>
-<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)" (closeModalEvent)="closeFoodInfoModal()"></app-food-info-modal>
+<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)" (closeModalEvent)="closeFoodInfoModal()" [code]="scannedData"></app-food-info-modal>
 <app-barcode-info-modal *ngIf="showBarcodeInfoModal" (closeModalEvent)="closeBarcodeInfoModal()"></app-barcode-info-modal>
-<app-existing-food-modal *ngIf="showExistingFoodModal" (closeModalEvent)="closeExistingFoodModal()"></app-existing-food-modal>
+<app-existing-food-modal *ngIf="showExistingFoodModal" (closeModalEvent)="closeExistingFoodModal()" [code]="scannedData"></app-existing-food-modal>

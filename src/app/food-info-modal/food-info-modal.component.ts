@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class FoodInfoModalComponent {
   @Output() foodInfoSaved = new EventEmitter<any>();
   @Output() closeModalEvent = new EventEmitter<void>();
+  @Input() code: string | null = null;
 
   foodName: string = '';
   kcal: number = 0;
@@ -22,6 +23,7 @@ export class FoodInfoModalComponent {
 
   closeModal() {
     this.foodName = '';
+    this.code = '';
     this.kcal = 0;
     this.carbs = 0;
     this.protein = 0;
@@ -34,6 +36,7 @@ export class FoodInfoModalComponent {
   save() {
     const foodData = {
       foodName: this.foodName,
+      code: this.code,
       kcal: this.kcal,
       carbs: this.carbs,
       protein: this.protein,

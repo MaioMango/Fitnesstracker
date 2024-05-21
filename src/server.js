@@ -111,10 +111,10 @@ app.post('/login', (req, res) => {
 
 
 app.post('/food', (req, res) => {
-  const { foodName, kcal, carbs, protein, fat, meal, quantity } = req.body;
+  const { foodName, code, kcal, carbs, protein, fat } = req.body;
 
-  connection.query('INSERT INTO foods (foodName, kcal, carbs, protein, fat, meal, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)', 
-                   [foodName, kcal, carbs, protein, fat, meal, quantity], 
+  connection.query('INSERT INTO tfood (fodName, fodCode, fodKcal, fodCarbs, fodProtein, fodFat) VALUES (?, ?, ?, ?, ?, ?)', 
+                   [foodName, code, kcal, carbs, protein, fat], 
                    (err, results) => {
     if (err) {
       console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
@@ -126,10 +126,10 @@ app.post('/food', (req, res) => {
 
 
 app.post('/food2user', (req, res) => {
-  const { foodName, kcal, carbs, protein, fat, meal, quantity, userId, date } = req.body;
+  const { code, meal, quantity, userId, date } = req.body;
 
-  connection.query('INSERT INTO food2user (foodName, kcal, carbs, protein, fat, meal, quantity, userId, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                   [foodName, kcal, carbs, protein, fat, meal, quantity, userId, date], 
+  connection.query('INSERT INTO tfood2user (ftuCode, ftuMeal, ftuQuantity, ftuUser, ftuDate) VALUES (?, ?, ?, ?, ?)', 
+                   [code, meal, quantity, userId, date], 
                    (err, results) => {
     if (err) {
       console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);

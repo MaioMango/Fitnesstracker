@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import e from 'cors';
 
 @Component({
@@ -10,12 +10,14 @@ import e from 'cors';
 export class ExistingFoodModalComponent implements OnInit{
   @Output() closeModalEvent = new EventEmitter<void>();
   @Output() saveFoodEvent = new EventEmitter<any>();
-
+  @Input() code: string | null = null;
+  
   foodName: string = "";
   kcal: number = 0;
   carbs: number = 0;
   protein: number = 0;
   fat: number = 0;
+  quantity: number = 0;
 
   selectedMeal: number = 0;
 
@@ -26,7 +28,6 @@ export class ExistingFoodModalComponent implements OnInit{
     { id: 4, name: 'Snack' },
   ];
 
-  quantity: number = 100;
 
   constructor(private http: HttpClient) {}
 
@@ -77,15 +78,11 @@ export class ExistingFoodModalComponent implements OnInit{
 
   save() {
     const foodData = {
-      foodName: this.foodName,
-      kcal: this.kcal,
-      carbs: this.carbs,
-      protein: this.protein,
-      fat: this.fat,
+      code: this.code,
       meal: this.selectedMeal,
       quantity: this.quantity,
       userId: 1,
-      date: new Date().toISOString().slice(0, 10)
+      date: new Date(new Date().getTime() + (2 * 60 * 60 * 1000)).toISOString()
     };
 
     this.http.post<any>('http://localhost:3000/food2user', foodData)

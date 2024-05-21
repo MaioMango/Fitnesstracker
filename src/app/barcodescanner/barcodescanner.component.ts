@@ -3,6 +3,7 @@ import { BarcodeFormat } from '@zxing/library';
 import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { Router } from '@angular/router';
+import { scan } from 'rxjs';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
   styleUrl: './barcodescanner.component.scss'
 })
 export class BarcodescannerComponent {
-  @ViewChild('scanner') scanner!: ZXingScannerComponent;
+  @ViewChild(FoodInfoModalComponent, { static: false }) foodInfoModal!: FoodInfoModalComponent;
+  @ViewChild('scanner', { static: false }) scanner!: ZXingScannerComponent;
 
   allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = true;
@@ -24,6 +26,9 @@ export class BarcodescannerComponent {
 
   onScanSuccess(event: any) {
     this.scannedData = event;
+    if (this.foodInfoModal) {
+      this.foodInfoModal.code = this.scannedData;
+    }
     this.showFoodInfoModal = true;
   }
 
@@ -32,6 +37,7 @@ export class BarcodescannerComponent {
   }
 
   onFoodInfoSaved(foodInfo: any) {
+    console.log(this.scannedData);
     console.log('Lebensmittelinformationen gespeichert:', foodInfo);
     this.showFoodInfoModal = false;
     this.showExistingFoodModal = true;
