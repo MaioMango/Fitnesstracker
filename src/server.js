@@ -106,7 +106,7 @@ app.post('/login', (req, res) => {
       }
 
       // Erstellen Sie ein JWT-Token
-      const token = jwt.sign({ id: user.id, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.memKey, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
       console.log('Token:', token);
       res.status(200).json({ message: 'Login erfolgreich', token });
     });
