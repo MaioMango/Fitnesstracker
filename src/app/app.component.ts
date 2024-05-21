@@ -17,10 +17,6 @@ export class AppComponent {
   constructor(private dataService: DataService, private authService: AuthService) {}
 
   ngOnInit() {
-    this.dataService.getData().subscribe((response) => {
-      this.data = response;
-    });
-
     this.username = this.authService.getUsernameFromToken();
     console.log('Username:', this.username);
     console.log('ID:', this.authService.getIdFromToken());

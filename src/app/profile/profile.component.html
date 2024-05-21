@@ -1,40 +1,42 @@
 <div class="container-fluid my-4">
-    <h3 class="text-center mb-4">Willkommen auf deinem Profil {{ username }}</h3>
-  
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h3 class="card-title">Aktuelle Gesundheitswerte</h3>
-            <hr>
-            <p class="card-text">BMI: {{ currentBMI }}</p>
-            <p class="card-text">Aktuelles Gewicht: {{ currentWeight }}</p>
-            <p class="card-text">Empfohlene Kalorien: {{ recommendedCalories }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <label for="selectedDate" class="form-label">Tag auswählen:</label>
-        <input type="date" id="selectedDate" class="form-control mb-4" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">
-      </div>
-    </div>
-  
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div *ngIf="selectedDate">
-          <h3 class="mb-3">Konsumierte Lebensmittel am {{ selectedDate | date: 'dd.MM.yyyy' }}</h3>
-          <ul class="list-group">
-            <li *ngFor="let meal of meals" class="list-group-item">
-              <h5>{{ meal.name }}</h5>
-              <p>Kalorien: {{ meal.calories }}</p>
-              <p>Menge: {{ meal.quantity }}</p>
-            </li>
-          </ul>
+  <h3 class="text-center mb-4">Willkommen auf deinem Profil {{ username }}</h3>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="card-title">Aktuelle Gesundheitswerte</h3>
+          <hr>
+          <p class="card-text">BMI: {{ currentBMI }}</p>
+          <p class="card-text">Aktuelles Gewicht: {{ currentWeight }}</p>
+          <p class="card-text">Empfohlene Kalorien: {{ recommendedCalories }}</p>
         </div>
       </div>
     </div>
   </div>
-  
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <label for="selectedDate" class="form-label">Tag auswählen:</label>
+      <input type="date" id="selectedDate" class="form-control mb-4" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div *ngIf="meals.length > 0">
+        <h3 class="mb-3">Konsumierte Lebensmittel am {{ selectedDate | date: 'dd.MM.yyyy' }}</h3>
+        <ul class="list-group">
+          <li *ngFor="let meal of meals" class="list-group-item">
+            <h5>{{ meal.name }}</h5>
+            <p>Kalorien: {{ meal.calories }}</p>
+            <p>Menge: {{ meal.quantity }}</p>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="meals.length === 0">
+        <p class="text-center">Keine Mahlzeiten für das ausgewählte Datum gefunden.</p>
+      </div>
+    </div>
+  </div>
+</div>

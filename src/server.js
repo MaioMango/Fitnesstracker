@@ -143,6 +143,33 @@ app.post('/food2user', (req, res) => {
   });
 });
 
+app.get('/bmi/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('SELECT * FROM tbmi WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler BMI');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get('/food2user/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('SELECT * FROM tfood2user WHERE ftuUser = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler tfood2user');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');

@@ -6,11 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://localhost:3000/api/data';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+
+  getFood2User(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/food2user/${userId}`);
   }
+
+  getBmiData(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/bmi/${userId}`);
+  }
+  
 }
