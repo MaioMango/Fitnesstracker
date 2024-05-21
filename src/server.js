@@ -113,6 +113,18 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/weight', (req, res) => {
+  const { userid, weight, date } = req.body;
+
+  connection.query('INSERT INTO tweight (userkey, weight, date) VALUES (?, ?, ?)', [userid, weight, date], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Server-Fehler weight' });
+    }
+
+    res.status(201).json({ message: 'Gewicht erfolgreich hinzugefügt' });
+  });
+});
+
 
 
 app.listen(3000, () => {
