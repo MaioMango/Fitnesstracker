@@ -1,11 +1,11 @@
 <div class="container-fluid my-4">
-  <h3 class="text-center mb-4">Willkommen auf deinem Profil {{ username }}</h3>
+  <h2 class="text-center mb-4"><i class="fas fa-user"></i> Willkommen auf deinem Profil {{ username }}!</h2>
 
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card mb-4">
         <div class="card-body">
-          <h3 class="card-title">Aktuelle Gesundheitswerte</h3>
+          <h3 class="card-title">Aktuelle Gesundheitswerte <i class="fas fa-heartbeat"></i></h3>
           <hr>
           <p class="card-text">BMI: {{ currentBMI }}</p>
           <p class="card-text">Aktuelles Gewicht: {{ currentWeight }}</p>
@@ -15,25 +15,42 @@
     </div>
   </div>
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center align-items-center mb-3">
     <div class="col-md-8">
-      <label for="selectedDate" class="form-label">Tag auswählen:</label>
-      <input type="date" id="selectedDate" class="form-control mb-4" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div *ngIf="meals.length > 0">
-        <h3 class="mb-3">Konsumierte Lebensmittel am {{ selectedDate | date: 'dd.MM.yyyy' }}</h3>
-        <ul class="list-group">
-          <li *ngFor="let meal of meals" class="list-group-item">
-            <h5>{{ meal.name }}</h5>
-            <p>Kalorien: {{ meal.calories }}</p>
-            <p>Menge: {{ meal.quantity }}</p>
-          </li>
-        </ul>
-      </div>
+        <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   
+          <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:</h3>
+        <ng-container *ngFor="let meal of meals">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ meal.mealName }}:</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h5>{{ meal.fodName }}</h5>
+                    </div>
+                    <div class="col-md-2">
+                      <p>Gramm/ml: {{ meal.ftuQuantity }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <p>Kalorien: {{ meal.fodKcal }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <p>Kohlenhydrate: {{ meal.fodCarbs }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <p>Protein: {{ meal.fodProtein }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <p>Fett: {{ meal.fodFat }}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ng-container>
+        
       <div *ngIf="meals.length === 0">
         <p class="text-center">Keine Mahlzeiten für das ausgewählte Datum gefunden.</p>
       </div>

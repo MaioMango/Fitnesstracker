@@ -11,9 +11,10 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
 
-  getFood2User(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/food2user/${userId}`);
+  getFood2User(userId: number, date: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/food2user/${userId}/${date}`);
   }
+  
 
   getBmiData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/bmi/${userId}`);

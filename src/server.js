@@ -156,18 +156,29 @@ app.get('/bmi/:userId', (req, res) => {
   });
 });
 
-app.get('/food2user/:userId', (req, res) => {
+app.get('/food2user/:userId/:date', (req, res) => {
   const userId = req.params.userId;
+  const date = req.params.date;
 
-  connection.query('SELECT * FROM tfood2user WHERE ftuUser = ?', [userId], (err, results) => {
-    if (err) {
-      console.error('Fehler bei der SQL-Abfrage:', err);
-      res.status(500).send('Server-Fehler tfood2user');
-    } else {
-      res.json(results);
+  connection.query(` 
+    SELECT fu.ftuKey, fu.ftuUser, fu.ftuDate, f.fodCode, f.fodName, m.mealName, fu.ftuQuantity, f.fodKcal, f.fodCarbs, f.fodProtein, f.fodFat
+    FROM tfood2user fu
+    INNER JOIN tfood f ON fu.ftuCode = f.fodCode
+    LEFT JOIN tmeal m ON fu.ftuMeal = m.mealKey
+    WHERE fu.ftuUser = ? AND DATE(fu.ftuDate) = ?`, 
+    [userId, date], 
+    (err, results) => {
+      if (err) {
+        console.error('Fehler bei der SQL-Abfrage:', err);
+        res.status(500).send('Server-Fehler tfood2user');
+      } else {
+        res.json(results);
+      }
     }
-  });
+  );
 });
+
+
 
 
 
