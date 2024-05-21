@@ -18,7 +18,7 @@ export class WeightComponent {
   ngOnInit(): void {
     this.weightForm = this.formBuilder.group({
       weight: '',
-      date: ''
+      date: new Date().toISOString().split('T')[0]
     });
   }
 
@@ -37,7 +37,7 @@ export class WeightComponent {
         console.log(response);
       },
       error: (error) => {
-        console.error('Fehler beim Speichern des Gewicht:', error);
+        console.error('Fehler beim Speichern des Gewichts:', error);
       },
     });
   }
