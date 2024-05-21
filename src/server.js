@@ -193,6 +193,32 @@ app.get('/bmi/:userId', (req, res) => {
   });
 });
 
+app.get('/weight/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('SELECT * FROM tweight WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Gewicht');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get('/calories/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('SELECT * FROM tcalories WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Kalorien');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.get('/food2user/:userId/:date', (req, res) => {
   const userId = req.params.userId;
   const date = req.params.date;

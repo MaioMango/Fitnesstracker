@@ -14,8 +14,8 @@ export class ProfileComponent implements OnInit {
   selectedDate: string = '';
   confirmPassword: string = '';
   currentBMI!: number;
-  currentWeight: number = 70;
-  recommendedCalories: number = 2000;
+  currentWeight!: number;
+  recommendedCalories!: number;
   meals: any[] = [];
 
   constructor(
@@ -37,6 +37,14 @@ export class ProfileComponent implements OnInit {
 
     this.dataService.getBmiData(this.userId).subscribe((bmiData) => {
       this.currentBMI = bmiData[0].bmi;
+    });
+
+    this.dataService.getWeightData(this.userId).subscribe((weightData) => {
+      this.currentWeight = weightData[0].weight;
+    });
+
+    this.dataService.getCalorieData(this.userId).subscribe((calorieData) => {
+      this.recommendedCalories = calorieData[0].calories;
     });
   }
 
