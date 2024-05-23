@@ -49,9 +49,9 @@ export class BmiComponent implements OnInit {
     } else if (bmi >= 18.5 && bmi < 25) {
       return 'Normalgewicht';
     } else if (bmi >= 25 && bmi <= 29.9) {
-      return 'Übergewicht';
+      return 'Übergewicht -> Präadipositas';
     } else {
-      return 'Adipositas';
+      return 'Übergewicht -> Adipositas';
     }
   }
 
