@@ -26,6 +26,7 @@ import { jwtDecode } from "jwt-decode";
 import { ProfileComponent } from './profile/profile.component';
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { CalorieInfoModalComponent } from './caloriecalculator/calorie-info-modal/calorie-info-modal.component';
+import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { CalorieInfoModalComponent } from './caloriecalculator/calorie-info-moda
     ExistingFoodModalComponent,
     BarcodeInfoModalComponent,
     CookieBannerComponent,
-    CalorieInfoModalComponent
+    CalorieInfoModalComponent,
+    BmiInfoModalComponent
   ],
   imports: [
     BrowserModule,

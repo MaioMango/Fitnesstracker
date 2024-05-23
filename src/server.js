@@ -136,9 +136,9 @@ app.post('/weight', (req, res) => {
 
 
 app.post('/bmi', (req, res) => {
-  const { userId, bmi, date } = req.body;
+  const { userId, bmi, category, date } = req.body;
 
-  connection.query('INSERT INTO tbmi (userKey, bmi, date) VALUES (?, ?, ?)', [userId, bmi, date], (err, results) => {
+  connection.query('INSERT INTO tbmi (userKey, bmi, category, date) VALUES (?, ?, ?, ?)', [userId, bmi, category, date], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Fehler beim Speichern des BMI in der Datenbank' });
     }
