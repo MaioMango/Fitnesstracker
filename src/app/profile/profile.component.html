@@ -5,16 +5,35 @@
     <div class="col-md-8">
       <div class="card mb-4">
         <div class="card-body">
-          <h3 class="card-title">Aktuelle Gesundheitswerte <i class="fas fa-heartbeat"></i></h3>
-          <hr>
-          <p class="card-text">BMI: {{ currentBMI }}</p>
-          <p class="card-text">Aktuelles Gewicht: {{ currentWeight }}kg</p>
-          <p class="card-text">Empfohlene Kalorien: {{ recommendedCalories }}</p>
+          <h3 class="card-title">
+            Aktuelle Gesundheitswerte
+            <i class="fas fa-heartbeat"></i>
+          </h3>
+          <hr />
+          <div class="d-flex justify-content-around align-items-center health-stats">
+            <div>
+              <p class="card-text"><strong>BMI:</strong> {{ currentBMI }}</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>BMI-Kategorie:</strong> {{ currentCategory }}</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>Aktuelles Gewicht:</strong> {{ currentWeight }}kg</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>Empfohlene Kalorien:</strong> {{ recommendedCalories }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
+  
+  
+  
   <div class="row justify-content-center align-items-center mb-3">
     <div class="col-md-8">
         <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   

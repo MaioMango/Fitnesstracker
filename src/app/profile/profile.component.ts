@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   selectedDate: string = '';
   confirmPassword: string = '';
   currentBMI!: number;
+  currentCategory!: string;
   currentWeight!: number;
   recommendedCalories!: number;
   meals: any[] = [];
@@ -21,7 +22,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.username = this.authService.getUsernameFromToken();
@@ -37,6 +38,10 @@ export class ProfileComponent implements OnInit {
 
     this.dataService.getBmiData(this.userId).subscribe((bmiData) => {
       this.currentBMI = bmiData[0].bmi;
+    });
+
+    this.dataService.getBmiData(this.userId).subscribe((CategoryData) => {
+      this.currentCategory = CategoryData[0].category;
     });
 
     this.dataService.getWeightData(this.userId).subscribe((weightData) => {
