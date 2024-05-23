@@ -250,7 +250,48 @@ app.get('/food2user/:userId/:date', (req, res) => {
   );
 });
 
+app.get('/meal', (req, res) => {
+  connection.query('SELECT * FROM tmeal', (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Mahlzeiten');
+    } else {
+      res.json(results);
+    }
+  });
+});
 
+
+app.get('/food/:fodCode', (req, res) => {
+  const fodCode = req.params.fodCode;
+
+  connection.query('SELECT * FROM tfood WHERE fodCode = ?', [fodCode], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Food');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+
+app.put('/food/:fodCode', (req, res) => {
+  const fodCode = req.params.fodCode;
+  const { foodName, kcal, carbs, protein, fat } = req.body;
+
+  connection.query('UPDATE tfood SET fodName = ?, fodKcal = ?, fodCarbs = ?, fodProtein = ?, fodFat = ? WHERE fodCode = ?', 
+                   [foodName, kcal, carbs, protein, fat, fodCode], 
+                   (err) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren der Lebensmittelinformationen:', err);
+      res.status(500).json({ message: 'Fehler beim Aktualisieren der Lebensmittelinformationen' });
+    } else {
+      res.status(200).json({ message: 'Lebensmittelinformationen erfolgreich aktualisiert' });
+    }
+  });
+});
 
 
 

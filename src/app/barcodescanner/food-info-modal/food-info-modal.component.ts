@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { DataService } from '../../../services/data.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-food-info-modal',
@@ -11,48 +11,90 @@ export class FoodInfoModalComponent {
   @Output() foodInfoSaved = new EventEmitter<any>();
   @Output() closeModalEvent = new EventEmitter<void>();
   @Input() code: string | null = null;
+  @Input() isUpdating: boolean | null = null;
 
-  foodName: string = '';
-  kcal: number = 0;
-  carbs: number = 0;
-  protein: number = 0;
-  fat: number = 0;
+  foodInfoForm: FormGroup = new FormGroup({});
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private dataService: DataService, private formBuilder: FormBuilder) { }
 
+  ngOnInit(): void {
+    this.foodInfoForm = this.formBuilder.group({
+      foodName: '',
+      kcal: 0,
+      carbs: 0,
+      protein: 0,
+      fat: 0
+    });
+
+    if (this.code) {
+      this.loadData();
+    }
+  }
 
   closeModal() {
-    this.foodName = '';
-    this.code = '';
-    this.kcal = 0;
-    this.carbs = 0;
-    this.protein = 0;
-    this.fat = 0;
-
     this.closeModalEvent.emit();
-
-    //this.router.navigate(['barcodescanner']);
   }
-  save() {
-    const foodData = {
-      foodName: this.foodName,
-      code: this.code,
-      kcal: this.kcal,
-      carbs: this.carbs,
-      protein: this.protein,
-      fat: this.fat
-    };
 
-    this.http.post<any>('http://localhost:3000/food', foodData)
-      .subscribe(
+  loadData() {
+    const code = this.code;
+    if (code) {
+      this.dataService.getFoodData(code).subscribe(
         (response) => {
-          console.log('Daten erfolgreich gespeichert:', response);
-          this.closeModal();
+          this.foodInfoForm.setValue({
+            foodName: response[0].fodName,
+            kcal: response[0].fodKcal,
+            carbs: response[0].fodCarbs,
+            protein: response[0].fodProtein,
+            fat: response[0].fodFat,
+          });
         },
         (error) => {
-          console.error('Fehler beim Speichern der Daten:', error);
+          console.error('Fehler beim Laden der Lebensmittelinformationen:', error);
         }
       );
-      this.foodInfoSaved.emit();
     }
+  }
+
+  save() {
+    const foodData = {
+      foodName: this.foodInfoForm.value.foodName,
+      code: this.code,
+      kcal: this.foodInfoForm.value.kcal,
+      carbs: this.foodInfoForm.value.carbs,
+      protein: this.foodInfoForm.value.protein,
+      fat: this.foodInfoForm.value.fat,
+    };
+
+    this.dataService.saveFoodData(foodData).subscribe(
+      () => {
+        this.closeModal();
+      },
+      (error) => {
+        console.error('Fehler beim Speichern der Daten:', error);
+      }
+    );
+    this.foodInfoSaved.emit();
+  }
+
+
+  update() {
+    const foodData = {
+      foodName: this.foodInfoForm.value.foodName,
+      code: this.code,
+      kcal: this.foodInfoForm.value.kcal,
+      carbs: this.foodInfoForm.value.carbs,
+      protein: this.foodInfoForm.value.protein,
+      fat: this.foodInfoForm.value.fat,
+    };
+
+    this.dataService.updateFoodData(foodData).subscribe(
+      () => {
+        this.closeModal();
+      },
+      (error) => {
+        console.error('Fehler beim Aktualisieren der Daten:', error);
+      }
+    );
+    this.foodInfoSaved.emit();
+  }
 }

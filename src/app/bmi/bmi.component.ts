@@ -12,7 +12,7 @@ export class BmiComponent implements OnInit {
   bmi: number = 0;
   bmiCategory: string = '';
   showBmiInfoModal: boolean = false;
-  username: string = '';
+  username!: string;
 
   constructor(
     private formBuilder: FormBuilder,

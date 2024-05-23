@@ -14,6 +14,10 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/food2user/${userId}/${date}`);
   }
 
+  getMealData(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/meal`);
+  }
+
   getBmiData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/bmi/${userId}`);
   }
@@ -24,5 +28,21 @@ export class DataService {
 
   getCalorieData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/calories/${userId}`);
+  }
+
+  getFoodData(foodCode: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/food/${foodCode}`);
+  }
+
+  saveFoodData(foodData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/food`, foodData);
+  }
+
+  updateFoodData(foodData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/food/${foodData.code}`, foodData);
+  }
+
+  saveFood2UserData(foodData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/food2user`, foodData);
   }
 }
