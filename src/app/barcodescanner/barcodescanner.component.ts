@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
-import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.component';
+import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { Router } from '@angular/router';
 import { scan } from 'rxjs';

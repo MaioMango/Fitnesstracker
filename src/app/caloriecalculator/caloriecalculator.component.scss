@@ -33,3 +33,21 @@
     font-weight: bold;
   }
   
+
+  .info-icon {
+    font-size: 23px;
+    cursor: pointer;
+  }
+  
+
+  .info-icon:hover::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
