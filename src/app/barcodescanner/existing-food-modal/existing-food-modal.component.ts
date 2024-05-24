@@ -19,6 +19,7 @@ export class ExistingFoodModalComponent implements OnInit {
   existingFoodForm: FormGroup = new FormGroup({});
   foodName: string = "";
   meals: any[] = [];
+  originalFoodData: any = {};
 
   selectedMeal: number = 0;
   showMessage: boolean = false;
@@ -36,6 +37,10 @@ export class ExistingFoodModalComponent implements OnInit {
       meal: [this.selectedMeal, Validators.required],
       quantity: [0, Validators.required]
     });
+    this.existingFoodForm.get('quantity')?.valueChanges.subscribe((quantity) => {
+      this.calculateNutrientValues(quantity);
+    });
+
     this.loadAllData();
   }
 
@@ -50,15 +55,24 @@ export class ExistingFoodModalComponent implements OnInit {
     }
   }
 
+
+
   loadFoodData(foodCode: string) {
     this.dataService.getFoodData(foodCode).subscribe(
       (response) => {
         this.foodName = response[0].fodName;
-        this.existingFoodForm.setValue({
+        this.originalFoodData = {
           kcal: response[0].fodKcal,
           carbs: response[0].fodCarbs,
           protein: response[0].fodProtein,
-          fat: response[0].fodFat,
+          fat: response[0].fodFat
+        };
+
+        this.existingFoodForm.patchValue({
+          kcal: this.roundToOneDecimal(this.originalFoodData.kcal),
+          carbs: this.roundToOneDecimal(this.originalFoodData.carbs),
+          protein: this.roundToOneDecimal(this.originalFoodData.protein),
+          fat: this.roundToOneDecimal(this.originalFoodData.fat),
           meal: this.selectedMeal,
           quantity: 0
         });
@@ -69,6 +83,29 @@ export class ExistingFoodModalComponent implements OnInit {
     );
   }
 
+
+  calculateNutrientValues(quantity: number) {
+    if (quantity > 0) {
+      const factor = quantity / 100;
+      this.existingFoodForm.patchValue({
+        kcal: this.roundToOneDecimal(this.originalFoodData.kcal * factor),
+        carbs: this.roundToOneDecimal(this.originalFoodData.carbs * factor),
+        protein: this.roundToOneDecimal(this.originalFoodData.protein * factor),
+        fat: this.roundToOneDecimal(this.originalFoodData.fat * factor)
+      });
+    } else {
+      this.existingFoodForm.patchValue({
+        kcal: 0,
+        carbs: 0,
+        protein: 0,
+        fat: 0
+      });
+    }
+  }
+
+  roundToOneDecimal(value: number): number {
+    return Math.round(value * 10) / 10;
+  }
 
   setDefaultMeal() {
     const currentHour = new Date().getHours();
