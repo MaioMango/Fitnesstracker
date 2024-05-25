@@ -32,47 +32,60 @@
     </div>
   </div>
   
-  
-  
   <div class="row justify-content-center align-items-center mb-3">
     <div class="col-md-8">
-        <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   
-          <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:</h3>
-        <ng-container *ngFor="let meal of meals">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ meal.mealName }}:</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <h5>{{ meal.fodName }}</h5>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Gramm/ml: {{ meal.ftuQuantity }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Kalorien: {{ meal.fodKcal }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Kohlenhydrate: {{ meal.fodCarbs }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Protein: {{ meal.fodProtein }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Fett: {{ meal.fodFat }}</p>
-                    </div>
+      <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   
+        <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:</h3>
+      
+      <ng-container *ngFor="let mealGroup of groupByMealName(meals)">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ mealGroup.mealName }}:</h5>
+            <hr />
+            <ng-container *ngFor="let meal of mealGroup.meals">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-around align-items-center health-stats w-100">
+                  <div>
+                    <p class="card-text"><strong>{{ meal.fodName }}</strong></p>
                   </div>
-                </li>
-              </ul>
-            </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Gramm/ml:</strong> {{ meal.ftuQuantity }}</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Kalorien:</strong> {{ meal.fodKcal }}</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Kohlenhydrate:</strong> {{ meal.fodCarbs }}</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Protein:</strong> {{ meal.fodProtein }}</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Fett:</strong> {{ meal.fodFat }}</p>
+                  </div>
+                  <div class="divider"></div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Bearbeiten und Löschen">
+                  <button type="button" title="Bearbeiten" class="btn btn-secondary btn-sm mx-auto" (click)="editMeal(meal, mealGroup.meals)"><i class="fas fa-edit"></i></button>
+                  <button type="button" title="Löschen" class="btn btn-danger btn-sm mx-auto" (click)="deleteMeal(meal.ftuKey)"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+              <hr *ngIf="meal !== mealGroup.meals[mealGroup.meals.length - 1]" />
+            </ng-container>
           </div>
-        </ng-container>
-        
+        </div>
+      </ng-container>
+      
       <div *ngIf="meals.length === 0">
         <p class="text-center">Keine Mahlzeiten für das ausgewählte Datum gefunden.</p>
       </div>
     </div>
   </div>
 </div>
+
+<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (closeModalEvent)="closeExistingFoodModal()" [ftuKey]="ftuKey" [ftuQuantity]="ftuQuantity" [meal]="meal"></app-existing-food-modal>

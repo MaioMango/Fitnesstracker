@@ -14,6 +14,9 @@ export class ExistingFoodModalComponent implements OnInit {
   @Output() saveFoodEvent = new EventEmitter<any>();
   @Output() editFoodEvent = new EventEmitter<any>();
   @Input() code: string | null = null;
+  @Input() ftuKey: number | null = null;
+  @Input() ftuQuantity: number | null = null;
+  @Input() meal: string | null = null;
   @ViewChild(FoodInfoModalComponent) foodInfoModal!: FoodInfoModalComponent;
 
   existingFoodForm: FormGroup = new FormGroup({});
@@ -23,6 +26,7 @@ export class ExistingFoodModalComponent implements OnInit {
 
   selectedMeal: number = 0;
   showMessage: boolean = false;
+  userId!: number;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private dataService: DataService) {
 
@@ -52,10 +56,11 @@ export class ExistingFoodModalComponent implements OnInit {
 
     if (this.code) {
       this.loadFoodData(this.code);
+    } else if (this.ftuKey && this.ftuQuantity) {
+      this.setFood2UserMeal();
+      this.loadFood2UserData(this.ftuKey, this.ftuQuantity, this.selectedMeal);
     }
   }
-
-
 
   loadFoodData(foodCode: string) {
     this.dataService.getFoodData(foodCode).subscribe(
@@ -75,6 +80,33 @@ export class ExistingFoodModalComponent implements OnInit {
           fat: this.roundToOneDecimal(this.originalFoodData.fat),
           meal: this.selectedMeal,
           quantity: 0
+        });
+      },
+      (error) => {
+        console.error('Fehler beim Laden der Lebensmittelinformationen:', error);
+      }
+    );
+  }
+
+
+  loadFood2UserData(ftuKey: number, quantity: number, meal: number) {
+    this.dataService.getFoodForProfileUpdate(ftuKey).subscribe(
+      (response) => {
+        this.foodName = response[0].fodName;
+        this.originalFoodData = {
+          kcal: response[0].fodKcal,
+          carbs: response[0].fodCarbs,
+          protein: response[0].fodProtein,
+          fat: response[0].fodFat
+        };
+        
+        this.existingFoodForm.patchValue({
+          kcal: this.roundToOneDecimal(this.originalFoodData.kcal),
+          carbs: this.roundToOneDecimal(this.originalFoodData.carbs),
+          protein: this.roundToOneDecimal(this.originalFoodData.protein),
+          fat: this.roundToOneDecimal(this.originalFoodData.fat),
+          meal: meal ? meal : this.selectedMeal,
+          quantity: quantity ? quantity : 0
         });
       },
       (error) => {
@@ -126,6 +158,19 @@ export class ExistingFoodModalComponent implements OnInit {
     this.existingFoodForm.get('meal')?.setValue(this.selectedMeal);
   }
 
+  setFood2UserMeal() {
+    if (this.meal === 'Frühstück') {
+      this.selectedMeal = 1;
+    } else if (this.meal === 'Mittagessen') {
+      this.selectedMeal = 2;
+    } else if (this.meal === 'Abendessen') {
+      this.selectedMeal = 3;
+    } else if (this.meal === 'Snack') {
+      this.selectedMeal = 4;
+    }   
+    this.existingFoodForm.get('meal')?.setValue(this.selectedMeal);
+  }
+
   closeModal() {
     this.closeModalEvent.emit();
   }
@@ -153,8 +198,33 @@ export class ExistingFoodModalComponent implements OnInit {
   }
 
   editFood() {
-      this.editFoodEvent.emit();
-      this.foodInfoModal?.loadData();
+    this.editFoodEvent.emit();
+    this.foodInfoModal?.loadData();
 
   }
+
+  update() {
+    const foodData = {
+      ftuKey: this.ftuKey,
+      meal: this.existingFoodForm.value.meal,
+      quantity: this.existingFoodForm.value.quantity,
+      date: new Date(new Date().getTime() + (2 * 60 * 60 * 1000)).toISOString()
+    };
+  
+    console.log(foodData);
+  
+    if (foodData.quantity > 0) {
+      this.dataService.updateFood2UserData(foodData).subscribe(
+        (response) => {
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Fehler beim Aktualisieren der Daten:', error);
+        }
+      );
+    } else {
+      this.showMessage = true;
+    }
+  }
+  
 }

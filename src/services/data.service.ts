@@ -34,6 +34,10 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/food/${foodCode}`);
   }
 
+  getFoodForProfileUpdate(ftuKey: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/food2user/${ftuKey}`);
+  }
+
   saveFoodData(foodData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/food`, foodData);
   }
@@ -44,5 +48,13 @@ export class DataService {
 
   saveFood2UserData(foodData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/food2user`, foodData);
+  }
+
+  updateFood2UserData(foodData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/food2user/${foodData.ftuKey}`, foodData);
+  }
+
+  deleteFood2UserData(ftuKey: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/food2user/${ftuKey}`);
   }
 }

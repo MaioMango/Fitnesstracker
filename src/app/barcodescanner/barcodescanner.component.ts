@@ -27,7 +27,7 @@ export class BarcodescannerComponent implements OnInit {
   constructor(private authService: AuthService, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.username = this.authService.getUsernameFromToken()
+    this.username = this.authService.getUsernameFromToken();
   }
 
   isLoggedIn(): boolean {

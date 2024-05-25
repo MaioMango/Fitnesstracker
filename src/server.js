@@ -250,6 +250,27 @@ app.get('/food2user/:userId/:date', (req, res) => {
   );
 });
 
+app.get('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
+
+  connection.query(` 
+    SELECT fu.ftuKey, fu.ftuUser, fu.ftuDate, f.fodCode, f.fodName, m.mealName, fu.ftuQuantity, f.fodKcal, f.fodCarbs, f.fodProtein, f.fodFat
+    FROM tfood2user fu
+    INNER JOIN tfood f ON fu.ftuCode = f.fodCode
+    LEFT JOIN tmeal m ON fu.ftuMeal = m.mealKey
+    WHERE fu.ftuKey = ?`, 
+    [ftuKey], 
+    (err, results) => {
+      if (err) {
+        console.error('Fehler bei der SQL-Abfrage:', err);
+        res.status(500).send('Server-Fehler tfood2user');
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.get('/meal', (req, res) => {
   connection.query('SELECT * FROM tmeal', (err, results) => {
     if (err) {
@@ -275,8 +296,6 @@ app.get('/food/:fodCode', (req, res) => {
   });
 });
 
-
-
 app.put('/food/:fodCode', (req, res) => {
   const fodCode = req.params.fodCode;
   const { foodName, kcal, carbs, protein, fat } = req.body;
@@ -289,6 +308,36 @@ app.put('/food/:fodCode', (req, res) => {
       res.status(500).json({ message: 'Fehler beim Aktualisieren der Lebensmittelinformationen' });
     } else {
       res.status(200).json({ message: 'Lebensmittelinformationen erfolgreich aktualisiert' });
+    }
+  });
+});
+
+app.put('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
+  const { meal, quantity, date } = req.body; 
+
+  connection.query('UPDATE tfood2user SET ftuMeal = ?, ftuQuantity = ?, ftuDate = ? WHERE ftuKey = ?', 
+                   [meal, quantity, date, ftuKey], 
+                   (err) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren der Lebensmittelinformationen:', err);
+      res.status(500).json({ message: 'Fehler beim Aktualisieren der Lebensmittelinformationen' });
+    } else {
+      res.status(200).json({ message: 'Lebensmittelinformationen erfolgreich aktualisiert' });
+    }
+  });
+});
+
+
+app.delete('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
+
+  connection.query('DELETE FROM tfood2user WHERE ftuKey = ?', [ftuKey], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Mahlzeit:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Mahlzeit' });
+    } else {
+      res.status(200).json({ message: 'Mahlzeit erfolgreich gelöscht' });
     }
   });
 });

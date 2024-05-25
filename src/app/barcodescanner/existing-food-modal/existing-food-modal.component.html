@@ -47,8 +47,8 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-warning mx-2" (click)="editFood()">Bearbeiten</button>
       <button type="button" class="btn btn-secondary mx-2" (click)="closeModal()">Abbrechen</button>
-      <button type="button" class="btn btn-primary mx-2" (click)="save()">Speichern</button>
-    </div>
+      <button *ngIf="ftuKey" type="button" class="btn btn-primary mx-2" (click)="update()">Aktualisieren</button>
+      <button *ngIf="!ftuKey" type="button" class="btn btn-primary mx-2" (click)="save()">Speichern</button>    </div>
     <div class="alert alert-warning my-4" *ngIf="showMessage">
       Bitte tragen Sie einen Wert im Gramm/ml-Feld ein.
     </div>

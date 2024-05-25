@@ -8,9 +8,8 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
-
   username: string = '';
-  userId: number = 0;
+  userId!: number;
   selectedDate: string = '';
   confirmPassword: string = '';
   currentBMI!: number;
@@ -18,6 +17,11 @@ export class ProfileComponent implements OnInit {
   currentWeight!: number;
   recommendedCalories!: number;
   meals: any[] = [];
+  showExistingFoodModal: boolean = false;
+  ftuKey: number | null = null;
+  ftuQuantity: number | null = null;
+  meal: string | null = null;
+
 
   constructor(
     private dataService: DataService,
@@ -31,9 +35,19 @@ export class ProfileComponent implements OnInit {
     this.loadData();
   }
 
+  isLoggedIn(): boolean {
+    return !!this.username;
+  }
+
   loadData() {
     this.dataService.getFood2User(this.userId, this.selectedDate).subscribe((data) => {
-      this.meals = data;
+      this.meals = data.map((meal: any) => ({
+        ...meal,
+        fodKcal: this.calculateNutrientValue(meal.fodKcal, meal.ftuQuantity),
+        fodCarbs: this.calculateNutrientValue(meal.fodCarbs, meal.ftuQuantity),
+        fodProtein: this.calculateNutrientValue(meal.fodProtein, meal.ftuQuantity),
+        fodFat: this.calculateNutrientValue(meal.fodFat, meal.ftuQuantity)
+      }));
     });
 
     this.dataService.getBmiData(this.userId).subscribe((bmiData) => {
@@ -53,4 +67,40 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  calculateNutrientValue(value: number, quantity: number): number {
+    return Math.round((value * quantity / 100) * 10) / 10;
+  }
+
+  groupByMealName(meals: any[]): any[] {
+    const groupedMeals = meals.reduce((acc, meal) => {
+      const mealGroup = acc.find((group: any) => group.mealName === meal.mealName);
+      if (mealGroup) {
+        mealGroup.meals.push(meal);
+      } else {
+        acc.push({ mealName: meal.mealName, meals: [meal] });
+      }
+      return acc;
+    }, []);
+    return groupedMeals;
+  }
+
+  editMeal(mealData: any, mealOptions: any) {
+    this.ftuKey = mealData.ftuKey
+    this.ftuQuantity = mealData.ftuQuantity
+    this.meal = mealOptions[0].mealName
+    this.showExistingFoodModal = true
+  }
+
+  deleteMeal(ftuKey: number) {
+    this.dataService.deleteFood2UserData(ftuKey).subscribe(() => {
+      this.loadData();
+    }, (error) => {
+      console.error('Fehler beim Löschen des Eintrags:', error);
+    });
+  }
+
+  closeExistingFoodModal() {
+    this.showExistingFoodModal = false;
+    this.loadData();
+  }
 }
