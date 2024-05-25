@@ -2,6 +2,16 @@ import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../services/auth.service';
 
+interface Meal {
+  mealName: string;
+  fodName: string;
+  ftuQuantity: number;
+  fodKcal: number;
+  fodCarbs: number;
+  fodProtein: number;
+  fodFat: number;
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -83,9 +93,11 @@ export class ProfileComponent implements OnInit {
     return Math.round((value * quantity / 100) * 10) / 10;
   }
 
-  groupByMealName(meals: any[]): any[] {
-    const groupedMeals = meals.reduce((acc, meal) => {
-      const mealGroup = acc.find((group: any) => group.mealName === meal.mealName);
+  groupByMealName(meals: Meal[]): { mealName: string, meals: Meal[] }[] {
+    const mealOrder = ['Frühstück', 'Mittagessen', 'Abendessen', 'Snack'];
+  
+    const groupedMeals = meals.reduce((acc: { mealName: string, meals: Meal[] }[], meal: Meal) => {
+      const mealGroup = acc.find((group) => group.mealName === meal.mealName);
       if (mealGroup) {
         mealGroup.meals.push(meal);
       } else {
@@ -93,9 +105,24 @@ export class ProfileComponent implements OnInit {
       }
       return acc;
     }, []);
-    return groupedMeals;
+  
+    return groupedMeals.sort((a, b) => {
+      return mealOrder.indexOf(a.mealName) - mealOrder.indexOf(b.mealName);
+    });
   }
+  
+  getTotalConsumedCalories(meals: Meal[]): number {
+    return meals.reduce((total, meal) => total + meal.fodKcal, 0);
+  } 
+  
+  getRemainingCalories(recommendedCalories: number, consumedCalories: number): number {
+    return recommendedCalories - consumedCalories;
+  }  
 
+  getRemainingCaloriesColor(remainingCalories: number): string {
+    return remainingCalories >= 0 ? 'text-success' : 'text-danger';
+  }
+    
   handleCodeToUpdate(code: string | null): void {
     this.codeToUpdate = code
   }

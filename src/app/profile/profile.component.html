@@ -51,6 +51,13 @@
             <div>
               <p class="card-text"><strong>Empfohlene Kalorien:</strong> {{ recommendedCalories }}</p>
             </div>
+            <div [ngClass]="getRemainingCaloriesColor(getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)))">
+              <p class="mb-0"><strong>
+                  {{ getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)) >= 0 ? 'Verbleibende Kalorien:' : 'Überschrittene Kalorien:' }}
+                </strong>
+                {{ getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)) }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
