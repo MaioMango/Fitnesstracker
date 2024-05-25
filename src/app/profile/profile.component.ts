@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../services/auth.service';
 
@@ -8,6 +8,9 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
+  @Input() isUpdating: boolean | null = null;
+  @Input() foodCode: boolean | null = null;
+
   username: string = '';
   userId!: number;
   selectedDate: string = '';
@@ -16,12 +19,20 @@ export class ProfileComponent implements OnInit {
   currentCategory!: string;
   currentWeight!: number;
   recommendedCalories!: number;
+  foodName!: string;
   meals: any[] = [];
   showExistingFoodModal: boolean = false;
+  showFoodInfoModal: boolean = false;
+  showConfirmDeleteModal: boolean = false;
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
+  editSuccess: boolean = false;
+  editFail: boolean = false;
   ftuKey: number | null = null;
   ftuQuantity: number | null = null;
   meal: string | null = null;
   ftuDate: string | null = null;
+  codeToUpdate: string | null = null;
 
 
   constructor(
@@ -85,6 +96,10 @@ export class ProfileComponent implements OnInit {
     return groupedMeals;
   }
 
+  handleCodeToUpdate(code: string | null): void {
+    this.codeToUpdate = code
+  }
+
   editMeal(mealData: any, mealOptions: any) {
     this.ftuKey = mealData.ftuKey;
     this.ftuDate = mealData.ftuDate;
@@ -93,16 +108,70 @@ export class ProfileComponent implements OnInit {
     this.showExistingFoodModal = true;
   }
 
-  deleteMeal(ftuKey: number) {
-    this.dataService.deleteFood2UserData(ftuKey).subscribe(() => {
-      this.loadData();
-    }, (error) => {
-      console.error('Fehler beim Löschen des Eintrags:', error);
-    });
+  deleteMeal(meal: any) {
+    this.ftuKey = meal.ftuKey;
+    this.foodName = meal.fodName;
+    this.showConfirmDeleteModal = true;
   }
+
+  confirmDelete() {
+    if (this.ftuKey) {
+      this.showConfirmDeleteModal = false;
+      this.dataService.deleteFood2UserData(this.ftuKey).subscribe(() => {
+        this.loadData();
+        this.deleteSuccess = true;
+        setTimeout(() => {
+          this.deleteSuccess = false;
+        }, 3000);
+      }, (error) => {
+        this.deleteFail = true;
+        setTimeout(() => {
+          this.deleteSuccess = false;
+        }, 3000);
+        console.error('Fehler beim Löschen des Eintrags:', error);
+      });
+    } else {
+      console.error('Fehler: ftuKey ist null oder undefined');
+    }
+  }
+
+  cancelDelete() {
+    this.showConfirmDeleteModal = false;
+  }
+
+showFailMessage() {
+  this.editFail = true;
+  setTimeout(() => {
+    this.editFail = false;
+  }, 3000);    this.loadData();
+}
+
+  closeExistingFoodModalAfterUpdate() {
+    this.showExistingFoodModal = false;
+    this.editSuccess = true;
+    setTimeout(() => {
+      this.editSuccess = false;
+    }, 3000);    this.loadData();
+  }
+
 
   closeExistingFoodModal() {
     this.showExistingFoodModal = false;
     this.loadData();
+  }
+
+  onFoodInfoSaved() {
+    this.showFoodInfoModal = false;
+    this.showExistingFoodModal = true;
+  }
+
+  openFoodInfoModalWithCode() {
+    this.showFoodInfoModal = true;
+    this.closeExistingFoodModal();
+    this.isUpdating = true
+  }
+
+  closeFoodInfoModal() {
+    this.showFoodInfoModal = false;
   }
 }

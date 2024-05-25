@@ -1,6 +1,31 @@
 <div class="container-fluid my-4">
   <h2 class="text-center mb-4"><i class="fas fa-user"></i> Willkommen auf deinem Profil {{ username }}!</h2>
 
+  <div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fas fa-circle-check mx-2"></i>Löschen erfolgreich!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+  <div *ngIf="deleteFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+  <div *ngIf="editSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fas fa-circle-check mx-2"></i>Bearbeiten erfolgreich!
+    <button type="button" class="btn-close" aria-label="Close" (click)="editSuccess = false"></button>
+  </div>
+
+  <div *ngIf="editFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card mb-4">
@@ -31,12 +56,14 @@
       </div>
     </div>
   </div>
-  
+
   <div class="row justify-content-center align-items-center mb-3">
     <div class="col-md-8">
-      <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   
-        <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:</h3>
-      
+      <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am
+        <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2"
+          [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:
+      </h3>
+
       <ng-container *ngFor="let mealGroup of groupByMealName(meals)">
         <div class="card mb-3">
           <div class="card-body">
@@ -50,7 +77,7 @@
                   </div>
                   <div class="divider"></div>
                   <div>
-                    <p class="card-text"><strong>Gramm/ml:</strong> {{ meal.ftuQuantity }}</p>
+                    <p class="card-text"><strong>Menge:</strong> {{ meal.ftuQuantity }}g/ml</p>
                   </div>
                   <div class="divider"></div>
                   <div>
@@ -58,21 +85,23 @@
                   </div>
                   <div class="divider"></div>
                   <div>
-                    <p class="card-text"><strong>Kohlenhydrate:</strong> {{ meal.fodCarbs }}</p>
+                    <p class="card-text"><strong>Kohlenhydrate:</strong> {{ meal.fodCarbs }}g</p>
                   </div>
                   <div class="divider"></div>
                   <div>
-                    <p class="card-text"><strong>Protein:</strong> {{ meal.fodProtein }}</p>
+                    <p class="card-text"><strong>Protein:</strong> {{ meal.fodProtein }}g</p>
                   </div>
                   <div class="divider"></div>
                   <div>
-                    <p class="card-text"><strong>Fett:</strong> {{ meal.fodFat }}</p>
+                    <p class="card-text"><strong>Fett:</strong> {{ meal.fodFat }}g</p>
                   </div>
                   <div class="divider"></div>
                 </div>
                 <div class="btn-group" role="group" aria-label="Bearbeiten und Löschen">
-                  <button type="button" title="Bearbeiten" class="btn btn-secondary btn-sm mx-auto" (click)="editMeal(meal, mealGroup.meals)"><i class="fas fa-edit"></i></button>
-                  <button type="button" title="Löschen" class="btn btn-danger btn-sm mx-auto" (click)="deleteMeal(meal.ftuKey)"><i class="fas fa-trash-alt"></i></button>
+                  <button type="button" title="Bearbeiten" class="btn btn-secondary btn-sm mx-auto"
+                    (click)="editMeal(meal, mealGroup.meals)"><i class="fas fa-edit"></i></button>
+                  <button type="button" title="Löschen" class="btn btn-danger btn-sm mx-auto"
+                    (click)="deleteMeal(meal)"><i class="fas fa-trash-alt"></i></button>
                 </div>
               </div>
               <hr *ngIf="meal !== mealGroup.meals[mealGroup.meals.length - 1]" />
@@ -80,7 +109,7 @@
           </div>
         </div>
       </ng-container>
-      
+
       <div *ngIf="meals.length === 0">
         <p class="text-center">Keine Mahlzeiten für das ausgewählte Datum gefunden.</p>
       </div>
@@ -88,4 +117,27 @@
   </div>
 </div>
 
-<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (closeModalEvent)="closeExistingFoodModal()" [ftuKey]="ftuKey" [ftuQuantity]="ftuQuantity" [ftuDate]="ftuDate" [meal]="meal"></app-existing-food-modal>
+<!------------------------------------------------------------------------------Modals------------------------------------------------------------------------------------------->
+
+<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (editFoodEvent)="openFoodInfoModalWithCode()"
+  (failedEditEvent)="showFailMessage()" (closeModalEvent)="closeExistingFoodModal()"
+  (closeModalAfterUpdateEvent)="closeExistingFoodModalAfterUpdate()"(CodeToUpdateEvent)="handleCodeToUpdate($event)" [ftuKey]="ftuKey" [ftuQuantity]="ftuQuantity"
+  [ftuDate]="ftuDate" [meal]="meal"></app-existing-food-modal>
+
+<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved()"
+  (closeModalEvent)="closeFoodInfoModal()" [isUpdating]="isUpdating" [code]="codeToUpdate"></app-food-info-modal>
+
+
+<div *ngIf="showConfirmDeleteModal" class="modal-overlay" (click)="cancelDelete()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="cancelDelete()">&times;</span>
+    <h5 class="modal-title">Löschen bestätigen</h5>
+    <div class="modal-body">
+      Möchten Sie <strong>{{foodName}}</strong> wirklich löschen?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary mx-2" (click)="cancelDelete()">Abbrechen</button>
+      <button type="button" class="btn btn-danger mx-2" (click)="confirmDelete()">Löschen</button>
+    </div>
+  </div>
+</div>

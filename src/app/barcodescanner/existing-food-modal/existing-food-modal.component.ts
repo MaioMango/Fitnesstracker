@@ -11,8 +11,11 @@ import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.compo
 })
 export class ExistingFoodModalComponent implements OnInit {
   @Output() closeModalEvent = new EventEmitter<void>();
+  @Output() closeModalAfterUpdateEvent = new EventEmitter<void>();
+  @Output() failedEditEvent = new EventEmitter<void>();
   @Output() saveFoodEvent = new EventEmitter<any>();
   @Output() editFoodEvent = new EventEmitter<any>();
+  @Output() CodeToUpdateEvent = new EventEmitter<string | null>();
   @Input() code: string | null = null;
   @Input() ftuKey: number | null = null;
   @Input() ftuQuantity: number | null = null;
@@ -24,6 +27,7 @@ export class ExistingFoodModalComponent implements OnInit {
   foodName: string = "";
   meals: any[] = [];
   originalFoodData: any = {};
+  codeToUpdate: string | null = null;
 
   selectedMeal: number = 0;
   showMessage: boolean = false;
@@ -59,7 +63,6 @@ export class ExistingFoodModalComponent implements OnInit {
       this.meals = data;
       this.setDefaultMeal();
     });
-
     if (this.code) {
       this.loadFoodData(this.code);
     } else if (this.ftuKey && this.ftuQuantity) {
@@ -100,6 +103,7 @@ export class ExistingFoodModalComponent implements OnInit {
     this.dataService.getFoodForProfileUpdate(ftuKey).subscribe(
       (response) => {
         this.foodName = response[0].fodName;
+        this.codeToUpdate = response[0].fodCode;
         this.originalFoodData = {
           kcal: response[0].fodKcal,
           carbs: response[0].fodCarbs,
@@ -183,6 +187,10 @@ export class ExistingFoodModalComponent implements OnInit {
     this.closeModalEvent.emit();
   }
 
+  closeModalAfterUpdate() {
+    this.closeModalAfterUpdateEvent.emit();
+  }
+
   save() {
     const selectedDate = this.existingFoodForm.value.date;
 
@@ -215,6 +223,10 @@ export class ExistingFoodModalComponent implements OnInit {
   }
 
   editFood() {
+    const foodCode = this.codeToUpdate
+    if (this.ftuKey && this.ftuQuantity) {    
+      this.CodeToUpdateEvent.emit(foodCode);
+    }
     this.editFoodEvent.emit();
     this.foodInfoModal?.loadData();
 
@@ -237,14 +249,13 @@ export class ExistingFoodModalComponent implements OnInit {
       date: formattedDate
     };
   
-    console.log(foodData);
-  
     if (foodData.quantity > 0) {
       this.dataService.updateFood2UserData(foodData).subscribe(
         () => {
-          this.closeModal();
+          this.closeModalAfterUpdate();
         },
         (error) => {
+          this.failedEditEvent.emit();
           console.error('Fehler beim Aktualisieren der Daten:', error);
         }
       );
@@ -253,4 +264,18 @@ export class ExistingFoodModalComponent implements OnInit {
     }
   }
   
+  onSubmit() {
+    if (this.existingFoodForm.valid) {
+      if (this.ftuKey) {
+        this.update();
+      } else {
+        this.save();
+      }
+    } else {
+      this.showMessage = true;
+      setTimeout(() => {
+        this.showMessage = false;
+      }, 3000);
+    }
+  }
 }
