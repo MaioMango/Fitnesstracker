@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   ftuKey: number | null = null;
   ftuQuantity: number | null = null;
   meal: string | null = null;
+  ftuDate: string | null = null;
 
 
   constructor(
@@ -85,10 +86,11 @@ export class ProfileComponent implements OnInit {
   }
 
   editMeal(mealData: any, mealOptions: any) {
-    this.ftuKey = mealData.ftuKey
-    this.ftuQuantity = mealData.ftuQuantity
-    this.meal = mealOptions[0].mealName
-    this.showExistingFoodModal = true
+    this.ftuKey = mealData.ftuKey;
+    this.ftuDate = mealData.ftuDate;
+    this.ftuQuantity = mealData.ftuQuantity;
+    this.meal = mealOptions[0].mealName;
+    this.showExistingFoodModal = true;
   }
 
   deleteMeal(ftuKey: number) {

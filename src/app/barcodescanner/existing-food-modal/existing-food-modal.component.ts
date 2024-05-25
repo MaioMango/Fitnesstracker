@@ -17,6 +17,7 @@ export class ExistingFoodModalComponent implements OnInit {
   @Input() ftuKey: number | null = null;
   @Input() ftuQuantity: number | null = null;
   @Input() meal: string | null = null;
+  @Input() ftuDate: string | null = null;
   @ViewChild(FoodInfoModalComponent) foodInfoModal!: FoodInfoModalComponent;
 
   existingFoodForm: FormGroup = new FormGroup({});
@@ -33,11 +34,16 @@ export class ExistingFoodModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.ftuDate) {
+      const date = new Date(this.ftuDate);
+      this.ftuDate = date.toISOString().split('T')[0];
+    }
     this.existingFoodForm = this.formBuilder.group({
       kcal: [{ value: 0, disabled: true }],
       carbs: [{ value: 0, disabled: true }],
       protein: [{ value: 0, disabled: true }],
       fat: [{ value: 0, disabled: true }],
+      date: this.ftuDate ? this.ftuDate : new Date().toISOString().split('T')[0],
       meal: [this.selectedMeal, Validators.required],
       quantity: [0, Validators.required]
     });
@@ -78,6 +84,7 @@ export class ExistingFoodModalComponent implements OnInit {
           carbs: this.roundToOneDecimal(this.originalFoodData.carbs),
           protein: this.roundToOneDecimal(this.originalFoodData.protein),
           fat: this.roundToOneDecimal(this.originalFoodData.fat),
+          date: this.ftuDate ? this.ftuDate : new Date().toISOString().split('T')[0],
           meal: this.selectedMeal,
           quantity: 0
         });
@@ -105,6 +112,7 @@ export class ExistingFoodModalComponent implements OnInit {
           carbs: this.roundToOneDecimal(this.originalFoodData.carbs),
           protein: this.roundToOneDecimal(this.originalFoodData.protein),
           fat: this.roundToOneDecimal(this.originalFoodData.fat),
+          date: this.ftuDate ? this.ftuDate : new Date().toISOString().split('T')[0],
           meal: meal ? meal : this.selectedMeal,
           quantity: quantity ? quantity : 0
         });
@@ -176,12 +184,21 @@ export class ExistingFoodModalComponent implements OnInit {
   }
 
   save() {
+    const selectedDate = this.existingFoodForm.value.date;
+
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+    const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
+
     const foodData = {
       code: this.code,
       meal: this.existingFoodForm.value.meal,
       quantity: this.existingFoodForm.value.quantity,
       userId: this.authService.getIdFromToken(),
-      date: new Date(new Date().getTime() + (2 * 60 * 60 * 1000)).toISOString()
+      date: formattedDate
     };
     if (foodData.quantity > 0) {
       this.dataService.saveFood2UserData(foodData).subscribe(
@@ -204,18 +221,27 @@ export class ExistingFoodModalComponent implements OnInit {
   }
 
   update() {
+    const selectedDate = this.existingFoodForm.value.date;
+
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+    const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
+
     const foodData = {
       ftuKey: this.ftuKey,
       meal: this.existingFoodForm.value.meal,
       quantity: this.existingFoodForm.value.quantity,
-      date: new Date(new Date().getTime() + (2 * 60 * 60 * 1000)).toISOString()
+      date: formattedDate
     };
   
     console.log(foodData);
   
     if (foodData.quantity > 0) {
       this.dataService.updateFood2UserData(foodData).subscribe(
-        (response) => {
+        () => {
           this.closeModal();
         },
         (error) => {
