@@ -57,4 +57,8 @@ export class DataService {
   deleteFood2UserData(ftuKey: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/food2user/${ftuKey}`);
   }
+
+  changePassword(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/change-password`, data);
+  }
 }

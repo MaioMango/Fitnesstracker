@@ -11,6 +11,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
+import { PasswordComponent } from './password/password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'password', component: PasswordComponent },
   { path: '**', redirectTo: '' },
 
 ];

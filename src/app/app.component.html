@@ -29,7 +29,7 @@
               <i class="fas fa-user"></i>  {{ username }}
             </a>
             <div *ngIf="isLoggedIn()" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ngbDropdownMenu>
-              <a class="dropdown-item" [routerLink]="['/change-password']">Passwort ändern</a>
+              <a class="dropdown-item" [routerLink]="['/password']">Passwort ändern</a>
               <a class="dropdown-item" [routerLink]="['/profile']">Profil</a>
               <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
             </div>

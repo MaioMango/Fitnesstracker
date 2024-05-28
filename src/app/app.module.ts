@@ -27,7 +27,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { CalorieInfoModalComponent } from './caloriecalculator/calorie-info-modal/calorie-info-modal.component';
 import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.component';
-
+import { PasswordComponent } from './password/password.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.compo
     BarcodeInfoModalComponent,
     CookieBannerComponent,
     CalorieInfoModalComponent,
-    BmiInfoModalComponent
+    BmiInfoModalComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,9 +62,13 @@ import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.compo
     ReactiveFormsModule,
     FormsModule,
     ZXingScannerModule,
-    JwtModule
+    JwtModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
