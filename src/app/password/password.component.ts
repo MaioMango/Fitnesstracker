@@ -40,7 +40,7 @@ export class PasswordComponent implements OnInit {
 
       this.dataService.changePassword(dataWithUserId).subscribe(
         response => {
-          this.snackBar.open('Passwort erfolgreich geändert', 'Schliessen', {
+          this.snackBar.open(response.message, 'Schliessen', {
             duration: 3000,
             panelClass: ['success-snackbar', 'password-snackbar'],
             horizontalPosition: 'right',
@@ -49,11 +49,7 @@ export class PasswordComponent implements OnInit {
           this.passwordForm.reset();
         },
         error => {
-          let errorMessage = 'Passwort konnte nicht geändert werden';
-          if (error.status === 400) {
-            errorMessage = 'Altes Passwort ist falsch';
-          }
-          this.snackBar.open(errorMessage, 'Schliessen', {
+          this.snackBar.open(error.error.message, 'Schliessen', {
             duration: 3000,
             panelClass: ['error-snackbar', 'password-snackbar'],
             horizontalPosition: 'right',
