@@ -22,6 +22,10 @@
   </div>
 </div>
 
-  <div class="weight-chart my-2">
+<!--   <div class="weight-chart my-2">
     <canvas id="weightChart" style="width: 100%; height: 15vh;"></canvas>
+  </div> -->
+
+  <div class="weight-chart my-2">
+    <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable" [columns]="chart.columns" [options]="chart.options"></google-chart>
   </div>

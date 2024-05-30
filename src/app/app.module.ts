@@ -24,6 +24,7 @@ import { BarcodeInfoModalComponent } from './barcode-info-modal/barcode-info-mod
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
 import { ProfileComponent } from './profile/profile.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     ZXingScannerModule,
     JwtModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

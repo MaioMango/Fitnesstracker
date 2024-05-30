@@ -206,6 +206,20 @@ app.get('/weight/:userId', (req, res) => {
   });
 });
 
+app.get('/weights/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('SELECT * FROM tweight WHERE userKey = ? ORDER BY date ASC', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Gewicht');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
 app.get('/calories/:userId', (req, res) => {
   const userId = req.params.userId;
 
