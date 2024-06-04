@@ -1,29 +1,55 @@
+.scan-area-overlay {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background: linear-gradient(to right, white 5px, transparent 5px) 0 0,
+    linear-gradient(to right, white 5px, transparent 5px) 0 100%,
+    linear-gradient(to left, white 5px, transparent 5px) 100% 0,
+    linear-gradient(to left, white 5px, transparent 5px) 100% 100%,
+    linear-gradient(to bottom, white 5px, transparent 5px) 0 0,
+    linear-gradient(to bottom, white 5px, transparent 5px) 100% 0,
+    linear-gradient(to top, white 5px, transparent 5px) 0 100%,
+    linear-gradient(to top, white 5px, transparent 5px) 100% 100%;
+
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .scanner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // height: 80vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-  .scanned-data {
-    position: fixed;
-    left: 10px;
-  }
+.scanner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 80vh;
+}
 
-  .info-icon {
-    font-size: 23px;
-    cursor: pointer;
-  }
-  
+.scanned-data {
+  position: fixed;
+  left: 10px;
+}
 
-  .info-icon:hover::after {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
-  }
+.info-icon {
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.info-icon:hover::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
