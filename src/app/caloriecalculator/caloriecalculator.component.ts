@@ -13,6 +13,8 @@ export class CaloriecalculatorComponent implements OnInit{
   calories: number = 0;
   showCalorieInfoModal: boolean = false;
   username: string = '';
+  SaveSuccess: boolean = false;
+  SaveFail: boolean = false;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -69,9 +71,17 @@ export class CaloriecalculatorComponent implements OnInit{
     this.http.post<any>('http://localhost:3000/calories', calorieData).subscribe({
       next: (response) => {
         console.log(response);
+        this.SaveSuccess = true;
+        setTimeout(() => {
+          this.SaveSuccess = false;
+        }, 3000);
       },
       error: (error) => {
         console.error('Fehler beim Speichern der Kalorien:', error);
+        this.SaveFail = true;
+        setTimeout(() => {
+          this.SaveFail = false;
+        }, 3000);
       },
     });  }
 
