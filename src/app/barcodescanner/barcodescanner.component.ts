@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
 import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
@@ -14,6 +14,8 @@ import { DataService } from '../../services/data.service';
 export class BarcodescannerComponent implements OnInit {
   @ViewChild(FoodInfoModalComponent) foodInfoModal!: FoodInfoModalComponent;
   @ViewChild('scanner', { static: false }) scanner!: ZXingScannerComponent;
+  @Input() manualBarcode: string | null = null;
+
 
   allowedFormats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = false;
@@ -21,6 +23,7 @@ export class BarcodescannerComponent implements OnInit {
   scannedData: string | null = null;
   showBarcodeInfoModal: boolean = false;
   showExistingFoodModal: boolean = false;
+  showManualBarcodeModal: boolean = false;
   username!: string;
   isUpdating: boolean | null = null;
 
@@ -86,6 +89,10 @@ export class BarcodescannerComponent implements OnInit {
     this.showExistingFoodModal = true;
   }
 
+  onManualBarcodeSaved(barcode: string) {
+    this.checkIfFoodExists(barcode)
+  }
+
 
   openBarcodeInfoModal() {
     this.showBarcodeInfoModal = true;
@@ -108,4 +115,13 @@ export class BarcodescannerComponent implements OnInit {
   closeExistingFoodModal() {
     this.showExistingFoodModal = false;
   }
+
+  closeManualBarcodeInputModal() {
+    this.showManualBarcodeModal = false;
+  }
+
+  openManualBarcodeInputModal() {
+    this.showManualBarcodeModal = true
+  }
+
 }

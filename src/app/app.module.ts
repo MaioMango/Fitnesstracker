@@ -31,6 +31,7 @@ import { PasswordComponent } from './password/password.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ManualBarcodescannerModalComponent } from './barcodescanner/manual-barcodescanner-modal/manual-barcodescanner-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CalorieInfoModalComponent,
     BmiInfoModalComponent,
     PasswordComponent,
+    ManualBarcodescannerModalComponent,
   ],
   imports: [
     BrowserModule,

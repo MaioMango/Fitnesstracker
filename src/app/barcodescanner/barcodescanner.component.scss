@@ -53,3 +53,15 @@
   border-radius: 5px;
   white-space: nowrap;
 }
+
+
+.plain-text-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  color: inherit; 
+  font-size: inherit; 
+  font-family: inherit; 
+}
