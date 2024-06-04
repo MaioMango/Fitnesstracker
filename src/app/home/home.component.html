@@ -30,7 +30,7 @@
       </div>
     </div>
   
-    <div class="my-4">
+    <div *ngIf="!isLoggedIn()" class="my-4">
       <button type="button" class="btn btn-primary btn-lg" routerLink="/login">
         Anmelden/Registrieren
       </button>
