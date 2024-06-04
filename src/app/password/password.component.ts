@@ -11,7 +11,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class PasswordComponent implements OnInit {
   passwordForm: FormGroup;
-
+  SaveSuccess: boolean = false;
+  SaveFail: boolean = false;
+  alertMessage: string = '';
   constructor(
     private fb: FormBuilder, 
     private dataService: DataService, 
@@ -40,21 +42,19 @@ export class PasswordComponent implements OnInit {
 
       this.dataService.changePassword(dataWithUserId).subscribe(
         response => {
-          this.snackBar.open(response.message, 'Schliessen', {
-            duration: 3000,
-            panelClass: ['success-snackbar', 'password-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
+          this.alertMessage = response.message;
+          this.SaveSuccess = true;
+          setTimeout(() => {
+            this.SaveSuccess = false;
+          }, 3000);
           this.passwordForm.reset();
         },
         error => {
-          this.snackBar.open(error.error.message, 'Schliessen', {
-            duration: 3000,
-            panelClass: ['error-snackbar', 'password-snackbar'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
+          this.alertMessage = error.error.message
+          this.SaveFail = true;
+          setTimeout(() => {
+            this.SaveFail = false;
+          }, 3000);
         }
       );
     }
