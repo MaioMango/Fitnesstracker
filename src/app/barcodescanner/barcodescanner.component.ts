@@ -80,7 +80,8 @@ export class BarcodescannerComponent implements OnInit {
   }
 
   onManualBarcodeSaved(barcode: string) {
-    this.checkIfFoodExists(barcode)
+    this.scannedData = barcode;
+    this.checkIfFoodExists(this.scannedData)
   }
 
 
