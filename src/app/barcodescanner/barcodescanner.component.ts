@@ -17,6 +17,7 @@ export class BarcodescannerComponent implements OnInit {
 
   allowedFormats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = true;
+  isScanning: boolean = false;
   showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
   showBarcodeInfoModal: boolean = false;
@@ -27,7 +28,7 @@ export class BarcodescannerComponent implements OnInit {
   constructor(private authService: AuthService, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.username = this.authService.getUsernameFromToken();
+    this.username = this.authService.getUsernameFromToken()
   }
 
   isLoggedIn(): boolean {

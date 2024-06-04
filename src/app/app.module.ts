@@ -24,12 +24,12 @@ import { BarcodeInfoModalComponent } from './barcodescanner/barcode-info-modal/b
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
 import { ProfileComponent } from './profile/profile.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
 import { CalorieInfoModalComponent } from './caloriecalculator/calorie-info-modal/calorie-info-modal.component';
 import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.component';
 import { PasswordComponent } from './password/password.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -63,8 +63,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ZXingScannerModule,
     JwtModule,
+    GoogleChartsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
   ],
   providers: [
     provideAnimationsAsync()
