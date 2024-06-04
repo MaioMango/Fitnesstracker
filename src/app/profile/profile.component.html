@@ -1,15 +1,64 @@
 <div class="container-fluid my-4">
   <h2 class="text-center mb-4"><i class="fas fa-user"></i> Willkommen auf deinem Profil {{ username }}!</h2>
 
+  <div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fas fa-circle-check mx-2"></i>Löschen erfolgreich!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+  <div *ngIf="deleteFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+  <div *ngIf="editSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fas fa-circle-check mx-2"></i>Bearbeiten erfolgreich!
+    <button type="button" class="btn-close" aria-label="Close" (click)="editSuccess = false"></button>
+  </div>
+
+  <div *ngIf="editFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+    <button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+  </div>
+
+
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card mb-4">
         <div class="card-body">
-          <h3 class="card-title">Aktuelle Gesundheitswerte <i class="fas fa-heartbeat"></i></h3>
-          <hr>
-          <p class="card-text">BMI: {{ currentBMI }}</p>
-          <p class="card-text">Aktuelles Gewicht: {{ currentWeight }}kg</p>
-          <p class="card-text">Empfohlene Kalorien: {{ recommendedCalories }}</p>
+          <h3 class="card-title">
+            Aktuelle Gesundheitswerte
+            <i class="fas fa-heartbeat"></i>
+          </h3>
+          <hr />
+          <div class="d-flex justify-content-around align-items-center health-stats">
+            <div>
+              <p class="card-text"><strong>BMI:</strong> {{ currentBMI }}</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>BMI-Kategorie:</strong> {{ currentCategory }}</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>Aktuelles Gewicht:</strong> {{ currentWeight }}kg</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <p class="card-text"><strong>Empfohlene Kalorien:</strong> {{ recommendedCalories }}</p>
+            </div>
+            <div [ngClass]="getRemainingCaloriesColor(getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)))">
+              <p class="mb-0"><strong>
+                  {{ getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)) >= 0 ? 'Verbleibende Kalorien:' : 'Überschrittene Kalorien:' }}
+                </strong>
+                {{ getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)) }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -17,43 +66,85 @@
 
   <div class="row justify-content-center align-items-center mb-3">
     <div class="col-md-8">
-        <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am   
-          <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2" [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:</h3>
-        <ng-container *ngFor="let meal of meals">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ meal.mealName }}:</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <h5>{{ meal.fodName }}</h5>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Gramm/ml: {{ meal.ftuQuantity }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Kalorien: {{ meal.fodKcal }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Kohlenhydrate: {{ meal.fodCarbs }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Protein: {{ meal.fodProtein }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <p>Fett: {{ meal.fodFat }}</p>
-                    </div>
+      <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am
+        <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2"
+          [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:
+      </h3>
+
+      <ng-container *ngFor="let mealGroup of groupByMealName(meals)">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ mealGroup.mealName }}:</h5>
+            <hr />
+            <ng-container *ngFor="let meal of mealGroup.meals">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-around align-items-center health-stats w-100">
+                  <div>
+                    <p class="card-text"><strong>{{ meal.fodName }}</strong></p>
                   </div>
-                </li>
-              </ul>
-            </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Menge:</strong> {{ meal.ftuQuantity }}g/ml</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Kalorien:</strong> {{ meal.fodKcal }}</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Kohlenhydrate:</strong> {{ meal.fodCarbs }}g</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Protein:</strong> {{ meal.fodProtein }}g</p>
+                  </div>
+                  <div class="divider"></div>
+                  <div>
+                    <p class="card-text"><strong>Fett:</strong> {{ meal.fodFat }}g</p>
+                  </div>
+                  <div class="divider"></div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Bearbeiten und Löschen">
+                  <button type="button" title="Bearbeiten" class="btn btn-secondary btn-sm mx-auto"
+                    (click)="editMeal(meal, mealGroup.meals)"><i class="fas fa-edit"></i></button>
+                  <button type="button" title="Löschen" class="btn btn-danger btn-sm mx-auto"
+                    (click)="deleteMeal(meal)"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+              <hr *ngIf="meal !== mealGroup.meals[mealGroup.meals.length - 1]" />
+            </ng-container>
           </div>
-        </ng-container>
-        
+        </div>
+      </ng-container>
+
       <div *ngIf="meals.length === 0">
         <p class="text-center">Keine Mahlzeiten für das ausgewählte Datum gefunden.</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------------------------------------------------Modals------------------------------------------------------------------------------------------->
+
+<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (editFoodEvent)="openFoodInfoModalWithCode()"
+  (failedEditEvent)="showFailMessage()" (closeModalEvent)="closeExistingFoodModal()"
+  (closeModalAfterUpdateEvent)="closeExistingFoodModalAfterUpdate()"(CodeToUpdateEvent)="handleCodeToUpdate($event)" [ftuKey]="ftuKey" [ftuQuantity]="ftuQuantity"
+  [ftuDate]="ftuDate" [meal]="meal"></app-existing-food-modal>
+
+<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved()"
+  (closeModalEvent)="closeFoodInfoModal()" [isUpdating]="isUpdating" [code]="codeToUpdate"></app-food-info-modal>
+
+
+<div *ngIf="showConfirmDeleteModal" class="modal-overlay" (click)="cancelDelete()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="cancelDelete()">&times;</span>
+    <h5 class="modal-title">Löschen bestätigen</h5>
+    <div class="modal-body">
+      Möchten Sie <strong>{{foodName}}</strong> wirklich löschen?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary mx-2" (click)="cancelDelete()">Abbrechen</button>
+      <button type="button" class="btn btn-danger mx-2" (click)="confirmDelete()">Löschen</button>
     </div>
   </div>
 </div>

@@ -30,12 +30,15 @@ connection.connect((err) => {
 module.exports = connection;
 
 const express = require('express');
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 app.get('/users', (req, res) => {
@@ -51,11 +54,11 @@ app.get('/users', (req, res) => {
 
 
 const bcrypt = require('bcrypt');
-const saltRounds = 10; 
+const saltRounds = 10;
 
 app.post('/register', (req, res) => {
   const { login, password } = req.body;
-console.log(login);
+  console.log(login);
   connection.query('SELECT * FROM tmember WHERE memLogin = ?', [login], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Server-Fehler register' });
@@ -113,6 +116,12 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/logout', (req, res) => {
+  res.clearCookie('jwt');
+  res.status(200).json({ message: 'Logout erfolgreich' });
+});
+
+
 app.post('/weight', (req, res) => {
   const { userid, weight, date } = req.body;
 
@@ -127,9 +136,9 @@ app.post('/weight', (req, res) => {
 
 
 app.post('/bmi', (req, res) => {
-  const { userId, bmi, date } = req.body;
+  const { userId, bmi, category, date } = req.body;
 
-  connection.query('INSERT INTO tbmi (userKey, bmi, date) VALUES (?, ?, ?)', [userId, bmi, date], (err, results) => {
+  connection.query('INSERT INTO tbmi (userKey, bmi, category, date) VALUES (?, ?, ?, ?)', [userId, bmi, category, date], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Fehler beim Speichern des BMI in der Datenbank' });
     }
@@ -155,29 +164,29 @@ app.post('/calories', (req, res) => {
 app.post('/food', (req, res) => {
   const { foodName, code, kcal, carbs, protein, fat } = req.body;
 
-  connection.query('INSERT INTO tfood (fodName, fodCode, fodKcal, fodCarbs, fodProtein, fodFat) VALUES (?, ?, ?, ?, ?, ?)', 
-                   [foodName, code, kcal, carbs, protein, fat], 
-                   (err, results) => {
-    if (err) {
-      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
-      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
-    }
-    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
-  });
+  connection.query('INSERT INTO tfood (fodName, fodCode, fodKcal, fodCarbs, fodProtein, fodFat) VALUES (?, ?, ?, ?, ?, ?)',
+    [foodName, code, kcal, carbs, protein, fat],
+    (err, results) => {
+      if (err) {
+        console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+        return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+      }
+      res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+    });
 });
 
 app.post('/food2user', (req, res) => {
   const { code, meal, quantity, userId, date } = req.body;
 
-  connection.query('INSERT INTO tfood2user (ftuCode, ftuMeal, ftuQuantity, ftuUser, ftuDate) VALUES (?, ?, ?, ?, ?)', 
-                   [code, meal, quantity, userId, date], 
-                   (err, results) => {
-    if (err) {
-      console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
-      return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
-    }
-    res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
-  });
+  connection.query('INSERT INTO tfood2user (ftuCode, ftuMeal, ftuQuantity, ftuUser, ftuDate) VALUES (?, ?, ?, ?, ?)',
+    [code, meal, quantity, userId, date],
+    (err, results) => {
+      if (err) {
+        console.error('Fehler beim Einfügen der Lebensmittelinformationen:', err);
+        return res.status(500).json({ message: 'Fehler beim Speichern der Lebensmittelinformationen' });
+      }
+      res.status(201).json({ message: 'Lebensmittelinformationen erfolgreich gespeichert' });
+    });
 });
 
 app.get('/bmi/:userId', (req, res) => {
@@ -220,6 +229,48 @@ app.get('/weights/:userId', (req, res) => {
 });
 
 
+app.post('/change-password', (req, res) => {
+  const { oldPassword, newPassword, userId } = req.body;
+
+  connection.query('SELECT memPassword FROM tmember WHERE memKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      return res.status(500).json({ message: 'Server-Fehler beim Abrufen des Benutzers' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Benutzer nicht gefunden' });
+    }
+
+    const user = results[0];
+
+    bcrypt.compare(oldPassword, user.memPassword, (err, isMatch) => {
+      if (err) {
+        return res.status(500).json({ message: 'Fehler beim Vergleichen der Passwörter' });
+      }
+
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Altes Passwort ist falsch' });
+      }
+
+      bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+        if (err) {
+          return res.status(500).json({ message: 'Fehler beim Hashen des neuen Passworts' });
+        }
+
+        connection.query('UPDATE tmember SET memPassword = ? WHERE memKey = ?', [hash, userId], (err) => {
+          if (err) {
+            return res.status(500).json({ message: 'Fehler beim Aktualisieren des Passworts' });
+          }
+
+          res.status(200).json({ message: 'Passwort erfolgreich geändert' });
+        });
+      });
+    });
+  });
+});
+
+
 app.get('/calories/:userId', (req, res) => {
   const userId = req.params.userId;
 
@@ -242,8 +293,8 @@ app.get('/food2user/:userId/:date', (req, res) => {
     FROM tfood2user fu
     INNER JOIN tfood f ON fu.ftuCode = f.fodCode
     LEFT JOIN tmeal m ON fu.ftuMeal = m.mealKey
-    WHERE fu.ftuUser = ? AND DATE(fu.ftuDate) = ?`, 
-    [userId, date], 
+    WHERE fu.ftuUser = ? AND DATE(fu.ftuDate) = ?`,
+    [userId, date],
     (err, results) => {
       if (err) {
         console.error('Fehler bei der SQL-Abfrage:', err);
@@ -255,7 +306,97 @@ app.get('/food2user/:userId/:date', (req, res) => {
   );
 });
 
+app.get('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
 
+  connection.query(` 
+    SELECT fu.ftuKey, fu.ftuUser, fu.ftuDate, f.fodCode, f.fodName, m.mealName, fu.ftuQuantity, f.fodKcal, f.fodCarbs, f.fodProtein, f.fodFat
+    FROM tfood2user fu
+    INNER JOIN tfood f ON fu.ftuCode = f.fodCode
+    LEFT JOIN tmeal m ON fu.ftuMeal = m.mealKey
+    WHERE fu.ftuKey = ?`,
+    [ftuKey],
+    (err, results) => {
+      if (err) {
+        console.error('Fehler bei der SQL-Abfrage:', err);
+        res.status(500).send('Server-Fehler tfood2user');
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+app.get('/meal', (req, res) => {
+  connection.query('SELECT * FROM tmeal', (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Mahlzeiten');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+app.get('/food/:fodCode', (req, res) => {
+  const fodCode = req.params.fodCode;
+
+  connection.query('SELECT * FROM tfood WHERE fodCode = ?', [fodCode], (err, results) => {
+    if (err) {
+      console.error('Fehler bei der SQL-Abfrage:', err);
+      res.status(500).send('Server-Fehler Food');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.put('/food/:fodCode', (req, res) => {
+  const fodCode = req.params.fodCode;
+  const { foodName, kcal, carbs, protein, fat } = req.body;
+
+  connection.query('UPDATE tfood SET fodName = ?, fodKcal = ?, fodCarbs = ?, fodProtein = ?, fodFat = ? WHERE fodCode = ?',
+    [foodName, kcal, carbs, protein, fat, fodCode],
+    (err) => {
+      if (err) {
+        console.error('Fehler beim Aktualisieren der Lebensmittelinformationen:', err);
+        res.status(500).json({ message: 'Fehler beim Aktualisieren der Lebensmittelinformationen' });
+      } else {
+        res.status(200).json({ message: 'Lebensmittelinformationen erfolgreich aktualisiert' });
+      }
+    });
+});
+
+app.put('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
+  const { meal, quantity, date } = req.body;
+
+  connection.query('UPDATE tfood2user SET ftuMeal = ?, ftuQuantity = ?, ftuDate = ? WHERE ftuKey = ?',
+    [meal, quantity, date, ftuKey],
+    (err) => {
+      if (err) {
+        console.error('Fehler beim Aktualisieren der Lebensmittelinformationen:', err);
+        res.status(500).json({ message: 'Fehler beim Aktualisieren der Lebensmittelinformationen' });
+      } else {
+        res.status(200).json({ message: 'Lebensmittelinformationen erfolgreich aktualisiert' });
+      }
+    });
+});
+
+
+app.delete('/food2user/:ftuKey', (req, res) => {
+  const ftuKey = req.params.ftuKey;
+
+  connection.query('DELETE FROM tfood2user WHERE ftuKey = ?', [ftuKey], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Mahlzeit:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Mahlzeit' });
+    } else {
+      res.status(200).json({ message: 'Mahlzeit erfolgreich gelöscht' });
+    }
+  });
+});
 
 
 

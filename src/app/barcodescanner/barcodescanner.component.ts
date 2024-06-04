@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
-import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.component';
+import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
-import { Router } from '@angular/router';
-import { scan } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { DataService } from '../../services/data.service';
 
 
 @Component({
@@ -11,34 +11,66 @@ import { scan } from 'rxjs';
   templateUrl: './barcodescanner.component.html',
   styleUrl: './barcodescanner.component.scss'
 })
-export class BarcodescannerComponent {
-  @ViewChild(FoodInfoModalComponent, { static: false }) foodInfoModal!: FoodInfoModalComponent;
+export class BarcodescannerComponent implements OnInit {
+  @ViewChild(FoodInfoModalComponent) foodInfoModal!: FoodInfoModalComponent;
   @ViewChild('scanner', { static: false }) scanner!: ZXingScannerComponent;
 
-  allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
+  allowedFormats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
   showScanner: boolean = true;
   showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
   showBarcodeInfoModal: boolean = false;
   showExistingFoodModal: boolean = false;
+  username!: string;
+  isUpdating: boolean | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.username = this.authService.getUsernameFromToken();
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.username;
+  }
+
+  checkIfFoodExists(code: string) {
+    this.dataService.getFoodData(code).subscribe(
+      (response) => {
+        if (response && response.length > 0) {
+          this.showExistingFoodModal = true;
+          this.showFoodInfoModal = false;
+        } else {
+          if (this.foodInfoModal) {
+            this.foodInfoModal.code = code;
+            this.foodInfoModal.isUpdating = false;
+
+          }
+          this.showFoodInfoModal = true;
+        }
+      },
+      (error) => {
+        console.error('Barcode scan error:', error);
+        if (this.foodInfoModal) {
+          this.foodInfoModal.code = code;
+        }
+        this.showFoodInfoModal = true;
+      }
+    );
+  }
 
   onScanSuccess(event: any) {
     this.scannedData = event;
-    if (this.foodInfoModal) {
-      this.foodInfoModal.code = this.scannedData;
+    if (this.scannedData) {
+      this.checkIfFoodExists(this.scannedData);
     }
-    this.showFoodInfoModal = true;
   }
 
   onScanError(error: any) {
     console.error('Barcode scan error:', error);
   }
 
-  onFoodInfoSaved(foodInfo: any) {
-    console.log(this.scannedData);
-    console.log('Lebensmittelinformationen gespeichert:', foodInfo);
+  onFoodInfoSaved() {
     this.showFoodInfoModal = false;
     this.showExistingFoodModal = true;
   }
@@ -46,6 +78,12 @@ export class BarcodescannerComponent {
 
   openBarcodeInfoModal() {
     this.showBarcodeInfoModal = true;
+  }
+
+  openFoodInfoModalWithCode() {
+    this.showFoodInfoModal = true;
+    this.closeExistingFoodModal();
+    this.isUpdating = true
   }
 
   closeBarcodeInfoModal() {

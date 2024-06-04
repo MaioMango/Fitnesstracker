@@ -10,16 +10,27 @@ import { AuthService } from '../services/auth.service';
 export class BmiComponent implements OnInit {
   bmiForm: FormGroup = new FormGroup({});
   bmi: number = 0;
+  bmiCategory: string = '';
+  showBmiInfoModal: boolean = false;
+  username!: string;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-        this.bmiForm = this.formBuilder.group({
-      age: '',
+    this.bmiForm = this.formBuilder.group({
       height: '',
       weight: '',
-      date: new Date().toISOString().split('T')[0]
+      date: new Date().toISOString().split('T')[0],
     });
+    this.username = this.authService.getUsernameFromToken();
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.username;
   }
 
   calculateBMI(): void {
@@ -29,6 +40,19 @@ export class BmiComponent implements OnInit {
     const height = this.bmiForm.value.height / 100; // convert height from cm to m
     const weight = this.bmiForm.value.weight;
     this.bmi = parseFloat((weight / (height * height)).toFixed(2));
+    this.bmiCategory = this.getBmiCategory(this.bmi);
+  }
+
+  getBmiCategory(bmi: number): string {
+    if (bmi < 18.5) {
+      return 'Untergewicht';
+    } else if (bmi >= 18.5 && bmi < 25) {
+      return 'Normalgewicht';
+    } else if (bmi >= 25 && bmi <= 29.9) {
+      return 'Übergewicht -> Präadipositas';
+    } else {
+      return 'Übergewicht -> Adipositas';
+    }
   }
 
   save(): void {
@@ -39,15 +63,16 @@ export class BmiComponent implements OnInit {
 
     const userId = this.authService.getIdFromToken();
     const bmi = this.bmi;
+    const category = this.bmiCategory;
     const selectedDate = this.bmiForm.value.date;
 
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
-  
+
     const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
-    const bmiData = { userId, bmi, date:formattedDate };
+    const bmiData = { userId, bmi, category, date: formattedDate };
 
     this.http.post<any>('http://localhost:3000/bmi', bmiData).subscribe({
       next: (response) => {
@@ -57,5 +82,13 @@ export class BmiComponent implements OnInit {
         console.error('Fehler beim Speichern des BMI:', error);
       },
     });
+  }
+
+  openBmiInfoModal() {
+    this.showBmiInfoModal = true;
+  }
+
+  closeBmiInfoModal() {
+    this.showBmiInfoModal = false;
   }
 }

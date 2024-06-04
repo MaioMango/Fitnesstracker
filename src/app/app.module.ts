@@ -18,13 +18,19 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { RegisterComponent } from './register/register.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { FoodInfoModalComponent } from './food-info-modal/food-info-modal.component';
-import { ExistingFoodModalComponent } from './existing-food-modal/existing-food-modal.component';
-import { BarcodeInfoModalComponent } from './barcode-info-modal/barcode-info-modal.component';
+import { FoodInfoModalComponent } from './barcodescanner/food-info-modal/food-info-modal.component';
+import { ExistingFoodModalComponent } from './barcodescanner/existing-food-modal/existing-food-modal.component';
+import { BarcodeInfoModalComponent } from './barcodescanner/barcode-info-modal/barcode-info-modal.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { jwtDecode } from "jwt-decode";
 import { ProfileComponent } from './profile/profile.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { CookieBannerComponent } from './cookie-banner/cookie-banner.component';
+import { CalorieInfoModalComponent } from './caloriecalculator/calorie-info-modal/calorie-info-modal.component';
+import { BmiInfoModalComponent } from './bmi/bmi-info-modal/bmi-info-modal.component';
+import { PasswordComponent } from './password/password.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -42,7 +48,11 @@ import { GoogleChartsModule } from 'angular-google-charts';
     BarcodescannerComponent,
     FoodInfoModalComponent,
     ExistingFoodModalComponent,
-    BarcodeInfoModalComponent
+    BarcodeInfoModalComponent,
+    CookieBannerComponent,
+    CalorieInfoModalComponent,
+    BmiInfoModalComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +63,12 @@ import { GoogleChartsModule } from 'angular-google-charts';
     FormsModule,
     ZXingScannerModule,
     JwtModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

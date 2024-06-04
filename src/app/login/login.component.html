@@ -17,16 +17,22 @@
         </div>
         <div class="form-group row mt-4 mb-4">
           <div class="col-sm-3">
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn btn-primary w-100" [disabled]="!cookiesAccepted">Login</button>
           </div>
           <div class="col-sm-9 align-link">
-            <span>Noch keinen Account? <a href="/register">Hier registrieren</a></span>
+            <span>Noch keinen Account? <a [routerLink]="['/register']">Hier registrieren</a></span>
           </div>
         </div>
       </form>
     </div>
   </div>
+  <div class="alert alert-warning" *ngIf="!cookiesAccepted">
+    Bitte akzeptieren Sie zuerst die Cookies, um sich einzuloggen.
+  </div>
 </div>
+
+<app-cookie-banner (cookiesAccepted)="onCookiesAccepted($event)" *ngIf="!cookiesAccepted"></app-cookie-banner>
+
 <!-- TODO: Toast kommt nur einmal -->
 <ngb-toast id="loginToast" class="bg-danger text-light" header="Fehler" [hidden]="!showToast">
   {{specificError}}

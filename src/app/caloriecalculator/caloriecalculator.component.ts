@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
@@ -8,10 +8,11 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './caloriecalculator.component.html',
   styleUrl: './caloriecalculator.component.scss'
 })
-export class CaloriecalculatorComponent {
+export class CaloriecalculatorComponent implements OnInit{
   calorieForm: FormGroup = new FormGroup({});
   calories: number = 0;
-
+  showCalorieInfoModal: boolean = false;
+  username: string = '';
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -23,6 +24,11 @@ export class CaloriecalculatorComponent {
       activity: '1.2',
       date: new Date().toISOString().split('T')[0]
     });
+    this.username = this.authService.getUsernameFromToken();
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.username;
   }
 
   calculateCalories(): void {
@@ -68,4 +74,13 @@ export class CaloriecalculatorComponent {
         console.error('Fehler beim Speichern der Kalorien:', error);
       },
     });  }
+
+
+    openCalorieInfoModal() {
+      this.showCalorieInfoModal = true;
+    }
+
+    closeCalorieInfoModal() {
+      this.showCalorieInfoModal = false;
+    }
 }

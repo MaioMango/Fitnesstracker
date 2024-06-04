@@ -1,33 +1,103 @@
 .container-fluid {
-    padding: 0 15px;
-  }
-  
-  .card {
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-title {
-    font-weight: bold;
-    font-size: larger;
-  }
-  
-  .card-text {
-    color: #555;
-  }
-  
-  .list-group-item {
-    border-radius: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  padding: 0 15px;
+}
 
-  .dropdown-item {
-    cursor: pointer !important;
-  }
-   .datepicker-width {
-    width: auto;
-   }
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-   h3 {
-    display: -webkit-box;
-   }
+.card-title {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.card-text {
+  color: #555;
+}
+
+.list-group-item {
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  cursor: pointer !important;
+}
+
+.datepicker-width {
+  width: auto;
+}
+
+h3 {
+  display: -webkit-box;
+}
+
+.health-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background-color: #ccc;
+  margin: 0 15px;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 35%;
+  max-height: 85%;
+  margin: 20vh auto;
+  text-align: left;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: -1vh;
+  right: 1vh;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.modal-body {
+  font-size: 16px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+h5 {
+  margin-bottom: 1rem;
+}
+
+.modal-footer {
+  margin-top: 1rem;
+}
+
+.modal-footer button {
+  margin-right: 1rem;
+}
+
+
+.text-success.card-text {
+  color: green !important;
+}
+
+.text-danger {
+  color: red !important;
+}

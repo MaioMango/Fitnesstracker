@@ -12,3 +12,9 @@ html, body {
    display: none;
  }
  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.password-snackbar {
+  margin-top: 90px !important; 
+}

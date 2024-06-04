@@ -1,0 +1,24 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="instructions">
+            <h5>Informationen zum Kalorienrechner:</h5>
+            <p>Mit dem Kalorienrechner können Sie berechnen, wie viele Kalorien Ihr Körper am Tag benötigt.</p>
+            <p>Der Rechner verwendet die Harris-Benedict-Formel, um den Grundumsatz (BMR) und den gesamten Kalorienbedarf basierend auf Ihrem Alter, Geschlecht, Gewicht, Grösse und Aktivitätsniveau zu berechnen:</p>
+            <ul>
+                <li><strong>Männer:</strong> BMR = 88,362 + (13,397 x Gewicht in kg) + (4,799 x Grösse in cm) - (5,677 x Alter in Jahren)</li>
+                <li><strong>Frauen:</strong> BMR = 447,593 + (9,247 x Gewicht in kg) + (3,098 x Grösse in cm) - (4,330 x Alter in Jahren)</li>
+            </ul>
+            <p>Der Gesamtbedarf wird durch Multiplikation des BMR mit einem Aktivitätsfaktor ermittelt:</p>
+            <ul>
+                <li>Sedentär (wenig bis keine Bewegung): BMR x 1,2</li>
+                <li>Leicht aktiv (leichte Bewegung/Sport 1-3 Tage die Woche): BMR x 1,375</li>
+                <li>Mässig aktiv (mässige Bewegung/Sport 3-5 Tage die Woche): BMR x 1,55</li>
+                <li>Sehr aktiv (intensive Bewegung/Sport 6-7 Tage die Woche): BMR x 1,725</li>
+                <li>Extrem aktiv (sehr intensive tägliche Bewegung/körperliche Arbeit): BMR x 1,9</li>
+            </ul>
+            <p><strong>Beachten Sie, dass diese Werte von den exakten Werten abweichen können, da verschiedene individuelle Faktoren wie Muskelmasse, Stoffwechselrate und Gesundheitszustand nicht berücksichtigt werden können.</strong></p>
+            <p *ngIf="!isLoggedIn()" >Um Ihre benötigten Kalorien zu speichern, müssen Sie sich  <a [routerLink]="['/register']">registrieren</a> und/oder <a [routerLink]="['/login']">einloggen</a>. Wenn Sie Ihren Wert gespeichert haben, wird er auf Ihrem Profil angezeigt.</p>
+        </div>
+    </div>
+</div>

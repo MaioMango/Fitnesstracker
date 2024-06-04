@@ -1,0 +1,31 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="instructions">
+      <h5>Informationen zum BMI Rechner:</h5>
+      <p>
+        Mit dem BMI-Rechner können Sie berechnen, ob Ihr Körpergewicht im
+        gesunden Bereich liegt. Der Body-Mass-Index (BMI) wird basierend auf
+        Ihrem Gewicht und Ihrer Grösse berechnet und gibt eine Einschätzung über
+        Ihren Gesundheitszustand in Bezug auf Ihr Körpergewicht.
+      </p>
+      <p>Die Berechnung des BMI erfolgt nach folgender Formel:</p>
+      <ul>
+        <li><strong>BMI = Gewicht (kg) / (Grösse (m) * Grösse (m))</strong></li>
+      </ul>
+      <p>Die BMI-Kategorien sind wie folgt definiert:</p>
+      <ul>
+        <li>Untergewicht: BMI &lt; 18,5</li>
+        <li>Normalgewicht: BMI 18,5 - 24,9</li>
+        <li>Übergewicht -> Präadipositas: BMI 25 - 29,9</li>
+        <li>Übergewicht -> Adipositas: BMI ≥ 30</li>
+      </ul>
+      <p *ngIf="!isLoggedIn()">
+        Um Ihre BMI-Werte zu speichern, müssen Sie sich
+        <a [routerLink]="['/register']">registrieren</a> und/oder
+        <a [routerLink]="['/login']">einloggen</a>. Wenn Sie Ihren Wert
+        gespeichert haben, wird er auf Ihrem Profil angezeigt.
+      </p>
+    </div>
+  </div>
+</div>
