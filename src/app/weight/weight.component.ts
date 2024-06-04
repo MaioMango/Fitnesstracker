@@ -9,6 +9,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./weight.component.scss']
 })
 export class WeightComponent implements OnInit {
+  SaveSuccess: boolean = false;
+  SaveFail: boolean = false;
   weightForm: FormGroup = new FormGroup({});
   chart: any = {
     chartType: 'LineChart',
@@ -68,9 +70,17 @@ export class WeightComponent implements OnInit {
       next: (response) => {
         console.log(response);
         this.loadWeightData(); // Daten neu laden nach dem Speichern
+        this.SaveSuccess = true;
+        setTimeout(() => {
+          this.SaveSuccess = false;
+        }, 3000);
       },
       error: (error) => {
         console.error('Fehler beim Speichern des Gewichts:', error);
+        this.SaveFail = true;
+        setTimeout(() => {
+          this.SaveFail = false;
+        }, 3000);
       },
     });
   }
