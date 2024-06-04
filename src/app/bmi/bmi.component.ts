@@ -13,6 +13,8 @@ export class BmiComponent implements OnInit {
   bmiCategory: string = '';
   showBmiInfoModal: boolean = false;
   username!: string;
+  SaveSuccess: boolean = false;
+  SaveFail: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,9 +79,17 @@ export class BmiComponent implements OnInit {
     this.http.post<any>('http://localhost:3000/bmi', bmiData).subscribe({
       next: (response) => {
         console.log(response);
+        this.SaveSuccess = true;
+        setTimeout(() => {
+          this.SaveSuccess = false;
+        }, 3000);
       },
       error: (error) => {
         console.error('Fehler beim Speichern des BMI:', error);
+        this.SaveFail = true;
+        setTimeout(() => {
+          this.SaveFail = false;
+        }, 3000);
       },
     });
   }
