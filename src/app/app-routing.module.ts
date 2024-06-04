@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 import { PasswordComponent } from './password/password.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -31,7 +32,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+    CommonModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
