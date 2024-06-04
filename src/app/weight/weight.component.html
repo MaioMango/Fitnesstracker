@@ -1,0 +1,42 @@
+<div class="container my-5">
+  <div *ngIf="SaveSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+  role="alert" style="z-index: 1050;">
+  <i class="fas fa-circle-check mx-2"></i>Speichern erfolgreich!
+  <button type="button" class="btn-close" aria-label="Close" (click)="SaveSuccess = false"></button>
+</div>
+
+<div *ngIf="SaveFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+  role="alert" style="z-index: 1050;">
+  <i class="fa-solid fa-triangle-exclamation mx-2"></i>Speichern fehlgeschlagen!
+  <button type="button" class="btn-close" aria-label="Close" (click)="SaveSuccess = false"></button>
+</div>
+  <h2>Gewicht erfassen</h2>
+  
+  <div class="weight-entry">
+    <form id="weightForm" [formGroup]="weightForm" ngNativeValidate>
+      <div class="form-group row mt-2">
+        <label for="weight" class="col-sm-3 col-form-label">Körpergewicht:</label>
+        <div class="col-sm-9">
+          <input type="double" id="weight" name="weight" formControlName="weight" class="form-control" placeholder="kg" required>
+        </div>
+      </div>
+    
+      <div class="form-group row mt-2">
+        <label for="date" class="col-sm-3 col-form-label">Datum:</label>
+        <div class="col-sm-9">
+          <input type="date" id="date" name="date" formControlName="date" class="form-control" required>
+        </div>
+      </div>
+    
+      <button type="submit" class="btn btn-primary" (click)="save()">Speichern</button>
+    </form>
+  </div>
+</div>
+
+<!--   <div class="weight-chart my-2">
+    <canvas id="weightChart" style="width: 100%; height: 15vh;"></canvas>
+  </div> -->
+
+  <div class="weight-chart my-2">
+    <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable" [columns]="chart.columns" [options]="chart.options"></google-chart>
+  </div>

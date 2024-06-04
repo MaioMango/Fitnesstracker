@@ -1,0 +1,39 @@
+<div class="container my-5">
+  <h2>Login</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <form (ngSubmit)="onLogin()">
+        <div class="form-group row mt-4">
+          <label for="login" class="col-sm-3 col-form-label">Benutzername</label>
+          <div class="col-sm-9">
+            <input type="text" id="login" class="form-control" [(ngModel)]="login" name="login" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4 mb-4">
+          <label for="password" class="col-sm-3 col-form-label">Passwort</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
+          </div>
+        </div>
+        <div class="form-group row mt-4 mb-4">
+          <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="!cookiesAccepted">Login</button>
+          </div>
+          <div class="col-sm-9 align-link">
+            <span>Noch keinen Account? <a [routerLink]="['/register']">Hier registrieren</a></span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="alert alert-warning" *ngIf="!cookiesAccepted">
+    Bitte akzeptieren Sie zuerst die Cookies, um sich einzuloggen.
+  </div>
+</div>
+
+<app-cookie-banner (cookiesAccepted)="onCookiesAccepted($event)" *ngIf="!cookiesAccepted"></app-cookie-banner>
+
+<!-- TODO: Toast kommt nur einmal -->
+<ngb-toast id="loginToast" class="bg-danger text-light" header="Fehler" [hidden]="!showToast">
+  {{specificError}}
+</ngb-toast>
