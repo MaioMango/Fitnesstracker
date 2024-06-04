@@ -16,7 +16,7 @@ export class BarcodescannerComponent implements OnInit {
   @ViewChild('scanner', { static: false }) scanner!: ZXingScannerComponent;
 
   allowedFormats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
-  showScanner: boolean = false; // Setzen Sie showScanner zunächst auf false
+  showScanner: boolean = false;
   showFoodInfoModal: boolean = false;
   scannedData: string | null = null;
   showBarcodeInfoModal: boolean = false;
@@ -28,10 +28,9 @@ export class BarcodescannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.authService.getUsernameFromToken();
-    this.requestCameraPermission(); // Rufen Sie die Methode auf, wenn die Komponente initialisiert wird
+    this.requestCameraPermission();
   }
 
-  // Diese Methode fragt die Kameraberechtigung ab und aktiviert den Scanner, wenn die Berechtigung erteilt wird
   requestCameraPermission(): void {
     if (navigator.permissions) {
       navigator.permissions.query({ name: 'camera' as PermissionName }).then(permissionStatus => {
