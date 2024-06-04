@@ -7,7 +7,7 @@
     <zxing-scanner #scanner [enable]="showScanner" [formats]="allowedFormats" (scanSuccess)="onScanSuccess($event)"
       (scanError)="onScanError($event)">
     </zxing-scanner>
-    <div *ngIf="showScanner" class="scan-area-overlay"></div>
+    <div class="scan-area-overlay"></div>
   </div>
 </div>
 <router-outlet></router-outlet>
