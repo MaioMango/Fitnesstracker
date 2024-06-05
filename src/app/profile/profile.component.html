@@ -37,19 +37,40 @@
           <hr />
           <div class="d-flex justify-content-around align-items-center health-stats">
             <div>
-              <p class="card-text"><strong><a [routerLink]="['/profile/bmi']">BMI:</a></strong> {{ currentBMI }}</p>
+            <p class="card-text">
+               <strong>
+                  <a *ngIf="!noBmiData" [routerLink]="['/profile/bmi']">BMI:</a>
+                  <span *ngIf="noBmiData">BMI:</span>
+               </strong> 
+               {{ noBmiData ? ' - ' : currentBMI }}
+            </p>
             </div>
             <div class="divider"></div>
             <div>
-              <p class="card-text"><strong>BMI-Kategorie:</strong> {{ currentCategory }}</p>
+              <p class="card-text">
+                <strong>BMI-Kategorie:</strong> 
+                {{ noBmiData ? '-' : currentCategory }}
+              </p>
             </div>
             <div class="divider"></div>
             <div>
-              <p class="card-text"><strong><a [routerLink]="['/profile/weight']">Aktuelles Gewicht:</a></strong> {{ currentWeight }}kg</p>
+              <p class="card-text">
+                <strong>
+                  <a *ngIf="!noWeightData" [routerLink]="['/profile/weight']">Aktuelles Gewicht:</a>
+                  <span *ngIf="noWeightData">Aktuelles Gewicht:</span>
+                </strong> 
+                {{ noWeightData ? ' - ' : currentWeight + ' kg' }}
+              </p>
             </div>
             <div class="divider"></div>
             <div>
-              <p class="card-text"><strong><a [routerLink]="['/profile/calories']">Empfohlene Kalorien:</a></strong> {{ recommendedCalories }}</p>
+              <p class="card-text">
+                <strong>
+                  <a *ngIf="!noCalorieData" [routerLink]="['/profile/calories']">Empfohlene Kalorien:</a>
+                  <span *ngIf="noCalorieData">Empfohlene Kalorien:</span>
+                </strong> 
+                {{ noCalorieData ? '-' : recommendedCalories }}
+              </p>
             </div>
             <div [ngClass]="getRemainingCaloriesColor(getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)))">
               <p class="mb-0"><strong>
