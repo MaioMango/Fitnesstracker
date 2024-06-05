@@ -27,7 +27,7 @@
 
 
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="card mb-4">
         <div class="card-body">
           <h3 class="card-title">
@@ -37,7 +37,7 @@
           <hr />
           <div class="d-flex justify-content-around align-items-center health-stats">
             <div>
-              <p class="card-text"><strong>BMI:</strong> {{ currentBMI }}</p>
+              <p class="card-text"><strong><a [routerLink]="['/profile/bmi']">BMI:</a></strong> {{ currentBMI }}</p>
             </div>
             <div class="divider"></div>
             <div>
@@ -45,11 +45,11 @@
             </div>
             <div class="divider"></div>
             <div>
-              <p class="card-text"><strong>Aktuelles Gewicht:</strong> {{ currentWeight }}kg</p>
+              <p class="card-text"><strong><a [routerLink]="['/profile/weight']">Aktuelles Gewicht:</a></strong> {{ currentWeight }}kg</p>
             </div>
             <div class="divider"></div>
             <div>
-              <p class="card-text"><strong>Empfohlene Kalorien:</strong> {{ recommendedCalories }}</p>
+              <p class="card-text"><strong><a [routerLink]="['/profile/calories']">Empfohlene Kalorien:</a></strong> {{ recommendedCalories }}</p>
             </div>
             <div [ngClass]="getRemainingCaloriesColor(getRemainingCalories(recommendedCalories, getTotalConsumedCalories(meals)))">
               <p class="mb-0"><strong>
@@ -65,7 +65,7 @@
   </div>
 
   <div class="row justify-content-center align-items-center mb-3">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am
         <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2"
           [(ngModel)]="selectedDate" name="selectedDate" (ngModelChange)="loadData()">:

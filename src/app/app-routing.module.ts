@@ -13,6 +13,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
 import { PasswordComponent } from './password/password.component';
 import { CommonModule } from '@angular/common';
+import { WeightChartComponent } from './profile/weight-chart/weight-chart.component';
+import { BmiChartComponent } from './profile/bmi-chart/bmi-chart.component';
+import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -26,6 +29,9 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/weight', component: WeightChartComponent },
+  { path: 'profile/bmi', component: BmiChartComponent },
+  { path: 'profile/calories', component: CaloriesChartComponent },
   { path: 'password', component: PasswordComponent },
   { path: '**', redirectTo: '' },
 
