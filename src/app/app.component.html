@@ -9,7 +9,7 @@
 
       <div class="collapse navbar-collapse" id="navbarNav" [ngClass]="{'collapse': isCollapsed}">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
+          <li *ngIf="isLoggedIn()" class="nav-item">
             <a class="nav-link" [routerLink]="['/barcodescanner']">Lebensmittelscanner</a>
           </li>
 
