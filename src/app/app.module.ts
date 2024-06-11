@@ -32,6 +32,9 @@ import { PasswordComponent } from './password/password.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManualBarcodescannerModalComponent } from './barcodescanner/manual-barcodescanner-modal/manual-barcodescanner-modal.component';
+import { WeightChartComponent } from './profile/weight-chart/weight-chart.component';
+import { BmiChartComponent } from './profile/bmi-chart/bmi-chart.component';
+import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { ManualBarcodescannerModalComponent } from './barcodescanner/manual-barc
     BmiInfoModalComponent,
     PasswordComponent,
     ManualBarcodescannerModalComponent,
+    WeightChartComponent,
+    BmiChartComponent,
+    CaloriesChartComponent,
   ],
   imports: [
     BrowserModule,

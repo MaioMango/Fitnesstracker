@@ -22,12 +22,24 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/bmi/${userId}`);
   }
 
+  getAllBmiData(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/bmis/${userId}`);
+  }
+
   getWeightData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/weight/${userId}`);
   }
 
+  getAllWeightData(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/weights/${userId}`);
+  }
+
   getCalorieData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/calories/${userId}`);
+  }
+
+  getAllCalorieData(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/allcalories/${userId}`);
   }
 
   getFoodData(foodCode: string): Observable<any> {

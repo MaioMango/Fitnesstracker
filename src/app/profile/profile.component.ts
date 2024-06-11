@@ -26,9 +26,12 @@ export class ProfileComponent implements OnInit {
   selectedDate: string = '';
   confirmPassword: string = '';
   currentBMI!: number;
+  noBmiData: boolean = false;
   currentCategory!: string;
   currentWeight!: number;
+  noWeightData: boolean = false;
   recommendedCalories!: number;
+  noCalorieData: boolean = false;
   foodName!: string;
   meals: any[] = [];
   showExistingFoodModal: boolean = false;
@@ -73,6 +76,10 @@ export class ProfileComponent implements OnInit {
     });
 
     this.dataService.getBmiData(this.userId).subscribe((bmiData) => {
+      if (bmiData.length === 0) {
+        this.noBmiData = true;
+        return;
+      }
       this.currentBMI = bmiData[0].bmi;
     });
 
@@ -81,10 +88,18 @@ export class ProfileComponent implements OnInit {
     });
 
     this.dataService.getWeightData(this.userId).subscribe((weightData) => {
+      if (weightData.length === 0) {
+        this.noWeightData = true;
+        return;
+      }
       this.currentWeight = weightData[0].weight;
     });
 
     this.dataService.getCalorieData(this.userId).subscribe((calorieData) => {
+      if (calorieData.length === 0) {
+        this.noCalorieData = true;
+        return;
+      }
       this.recommendedCalories = calorieData[0].calories;
     });
   }
@@ -116,6 +131,9 @@ export class ProfileComponent implements OnInit {
   } 
   
   getRemainingCalories(recommendedCalories: number, consumedCalories: number): number {
+    if (isNaN(consumedCalories) || isNaN(recommendedCalories)) {
+      return 0;
+    }
     return recommendedCalories - consumedCalories;
   }  
 

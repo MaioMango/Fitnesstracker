@@ -12,29 +12,6 @@ export class WeightComponent implements OnInit {
   SaveSuccess: boolean = false;
   SaveFail: boolean = false;
   weightForm: FormGroup = new FormGroup({});
-  chart: any = {
-    chartType: 'LineChart',
-    dataTable: [
-    ],
-    columns: ['Date', 'Weight'],
-    options: {
-      title: 'Gewichtsverlauf',
-      hAxis: { title: 'Datum' },
-      vAxis: { title: 'Gewicht (kg)' },
-      fontName: "Helvetica",
-      interpolateNulls: true,
-      explorer: { axis: "dragToZoom", keepInBounds: true },
-      curveType: "function",
-      legend: { position: "none" },
-      chartArea: { width: "80%", height: "80%" },
-      pointSize: 5,
-      colors: ["red", "#3366CC"],
-      chartType: 'LineChart',
-      dataTable: [],
-      width: 1200,
-      height: 600,
-    },
-  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +24,6 @@ export class WeightComponent implements OnInit {
       weight: '',
       date: new Date().toISOString().split('T')[0]
     });
-    this.loadWeightData();
   }
 
   save(): void {
@@ -68,9 +44,11 @@ export class WeightComponent implements OnInit {
 
     this.http.post<any>('http://localhost:3000/weight', weightData).subscribe({
       next: (response) => {
-        console.log(response);
-        this.loadWeightData(); // Daten neu laden nach dem Speichern
         this.SaveSuccess = true;
+        this.weightForm = this.formBuilder.group({
+          weight: '',
+          date: new Date().toISOString().split('T')[0]
+        });
         setTimeout(() => {
           this.SaveSuccess = false;
         }, 3000);
@@ -82,19 +60,6 @@ export class WeightComponent implements OnInit {
           this.SaveFail = false;
         }, 3000);
       },
-    });
-  }
-
-  loadWeightData(): void {
-    const userid = this.authService.getIdFromToken();
-    this.http.get<any[]>(`http://localhost:3000/weights/${userid}`).subscribe({
-      next: (response) => {
-        const chartData = response.map(entry => [new Date(entry.date), Number(entry.weight)]);
-        this.chart.dataTable = chartData;
-      },
-      error: (error) => {
-        console.error('Fehler beim Laden der Gewichtsdaten:', error);
-      }
     });
   }
 }
