@@ -11,11 +11,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-app.use((req, res, next) => {
-   console.log('Die IP-Adresse des Clients ist:', req.ip);
-   next();
- });
- 
+
 connection.connect((err) => {
   if (err) {
    console.log(process.env.HOST);
