@@ -33,10 +33,15 @@ h3 {
   display: -webkit-box;
 }
 
+.consumed-title {
+  flex-wrap: wrap;
+}
+
 .health-stats {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .divider {
@@ -46,58 +51,132 @@ h3 {
   margin: 0 15px;
 }
 
+// .modal-overlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.5);
+// }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
+// .modal-content {
+//   background-color: #fefefe;
+//   padding: 20px;
+//   border-radius: 15px;
+//   max-width: 35%;
+//   max-height: 85%;
+//   margin: 20vh auto;
+//   text-align: left;
+//   position: relative;
+// }
 
-.modal-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 35%;
-  max-height: 85%;
-  margin: 20vh auto;
-  text-align: left;
-  position: relative;
-}
+// .close {
+//   position: absolute;
+//   top: -1vh;
+//   right: 1vh;
+//   font-size: 35px;
+//   cursor: pointer;
+// }
 
-.close {
-  position: absolute;
-  top: -1vh;
-  right: 1vh;
-  font-size: 35px;
-  cursor: pointer;
-}
-
-.modal-body {
-  font-size: 16px;
-  line-height: 1;
-  margin-bottom: 10px;
-}
+// .modal-body {
+//   font-size: 16px;
+//   line-height: 1;
+//   margin-bottom: 10px;
+// }
 
 h5 {
   margin-bottom: 1rem;
 }
 
-.modal-footer {
-  margin-top: 1rem;
+// .modal-footer {
+//   margin-top: 1rem;
+// }
+
+// .modal-footer button {
+//   margin-right: 1rem;
+// }
+
+.card-text-recommended {
+  margin-left: 7px !important;
 }
 
-.modal-footer button {
-  margin-right: 1rem;
-}
-
-
-.text-success.card-text {
-  color: green !important;
-}
 
 .text-danger {
   color: red !important;
 }
+
+@media (min-width: 1000px) and (max-width: 1190px) {
+  .card-text {
+    font-size: 0.8rem;
+  }
+
+  .card-text-recommended {
+    font-size: 0.8rem;
+  }
+
+  .divider {
+    margin: 0 5px;
+  }
+}
+
+@media (min-width: 1190px) and (max-width: 1400px) {
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .card-text-recommended {
+    font-size: 0.9rem;
+  }
+
+  .divider {
+    margin: 0 2px;
+  }
+}
+
+
+@media (min-width: 400px) and (max-width: 1190px) {
+  .health-stats {
+    flex-direction: column;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+  }
+
+  .card-text-recommended {
+    font-size: 1rem;
+  }
+}
+
+
+  @media (max-width: 399px) {
+    .health-stats {
+      flex-direction: column;
+    }
+
+    .divider {
+      display: none;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+    }
+
+    .card-text {
+      font-size: 0.75rem;
+    }
+
+    .card-text-recommended {
+      font-size: 0.75rem;
+    }
+
+  }
