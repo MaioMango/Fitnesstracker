@@ -30,21 +30,13 @@
 }
 
 h3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: -webkit-box;
 }
 
 .health-stats {
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.stat-item {
-  flex: 1;
-  text-align: center;
-  margin-bottom: 10px;
 }
 
 .divider {
@@ -54,13 +46,6 @@ h3 {
   margin: 0 15px;
 }
 
-.d-flex {
-  display: flex !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
 
 .modal-overlay {
   position: fixed;
@@ -108,38 +93,11 @@ h5 {
   margin-right: 1rem;
 }
 
+
 .text-success.card-text {
   color: green !important;
 }
 
 .text-danger {
   color: red !important;
-}
-
-@media (max-width: 768px) {
-  .health-stats {
-    flex-direction: column;
-  }
-
-  .stat-item {
-    flex: 1 1 100%;
-    margin-bottom: 10px;
-  }
-
-  .divider {
-    display: none;
-  }
-
-  .datepicker-width {
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .card-title, .card-text {
-    text-align: center;
-  }
-
-  h3 {
-    flex-direction: column;
-  }
 }
