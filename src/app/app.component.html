@@ -12,23 +12,50 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/barcodescanner']">Lebensmittelscanner</a>
           </li>
-          <li class="nav-item">
+
+          <li *ngIf="!isLoggedIn()" class="nav-item">
             <a class="nav-link" [routerLink]="['/calories']">Kalorien</a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="isLoggedIn()" class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="caloriesDropdown" role="button" ngbDropdownToggle>
+              Kalorien
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="caloriesDropdown">
+              <a class="dropdown-item" [routerLink]="['/calories']">Erfassen</a>
+              <a class="dropdown-item" [routerLink]="['/profile/calories']">Diagramm</a>
+            </div>
+          </li>
+
+          <li *ngIf="!isLoggedIn()" class="nav-item">
             <a class="nav-link" [routerLink]="['/bmi']">BMI</a>
           </li>
-          <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link" [routerLink]="['/weight']">Gewicht</a>
+          <li *ngIf="isLoggedIn()" class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="bmiDropdown" role="button" ngbDropdownToggle>
+              BMI
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="bmiDropdown">
+              <a class="dropdown-item" [routerLink]="['/bmi']">Erfassen</a>
+              <a class="dropdown-item" [routerLink]="['/profile/bmi']">Diagramm</a>
+            </div>
           </li>
-          <li *ngIf="!isLoggedIn()">
+
+          <li *ngIf="isLoggedIn()" class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="weightDropdown" role="button" ngbDropdownToggle>
+              Gewicht
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="weightDropdown">
+              <a class="dropdown-item" [routerLink]="['/weight']">Erfassen</a>
+              <a class="dropdown-item" [routerLink]="['/profile/weight']">Diagramm</a>
+            </div>
+          </li>
+          <li *ngIf="!isLoggedIn()" class="nav-item">
             <a class="nav-link" [routerLink]="['/login']">Login/Registrieren</a>
           </li>
           <li *ngIf="isLoggedIn()" class="nav-item dropdown" ngbDropdown>
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" ngbDropdownToggle>
-              <i class="fas fa-user"></i>  {{ username }}
+              <i class="fas fa-user"></i> {{ username }}
             </a>
-            <div *ngIf="isLoggedIn()" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" ngbDropdownMenu>
               <a class="dropdown-item" [routerLink]="['/password']">Passwort ändern</a>
               <a class="dropdown-item" [routerLink]="['/profile']">Profil</a>
               <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
@@ -39,6 +66,7 @@
     </nav>
   </div>
 </header>
+
 
 <footer class="fixed-bottom bg-dark text-white text-center py-3">
   <span>
