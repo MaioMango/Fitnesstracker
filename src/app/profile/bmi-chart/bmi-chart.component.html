@@ -1,3 +1,39 @@
-<div class="weight-chart my-2">
-    <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable" [columns]="chart.columns" [options]="chart.options"></google-chart>
+<div class="container-fluid my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <div class="weight-chart my-2">
+            <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable"
+              [columns]="chart.columns" [options]="chart.options"></google-chart>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10 text-center">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="fas fa-weight"></i> Gewichts-Diagramm</h5>
+              <button class="btn btn-primary mt-2" (click)="navigateToChart('profile/weight')">Ansehen</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="fas fa-fire"></i> Kalorien-Diagramm</h5>
+              <button class="btn btn-primary mt-2" (click)="navigateToChart('profile/calories')">Ansehen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-secondary mt-4" (click)="navigateToProfile()"><i class="fas fa-arrow-left"></i> Zurück zum
+        Profil</button>
+    </div>
+  </div>
+</div>

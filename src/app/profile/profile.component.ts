@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 interface Meal {
   mealName: string;
@@ -50,7 +51,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -218,5 +220,9 @@ showFailMessage() {
 
   closeFoodInfoModal() {
     this.showFoodInfoModal = false;
+  }
+
+  navigateToChart(route: string): void {
+    this.router.navigate([route]);
   }
 }

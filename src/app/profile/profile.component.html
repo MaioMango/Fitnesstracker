@@ -39,7 +39,7 @@
             <div>
             <p class="card-text">
                <strong>
-                  <a *ngIf="!noBmiData" [routerLink]="['/profile/bmi']">BMI:</a>
+                  <a>BMI:</a>
                   <span *ngIf="noBmiData">BMI:</span>
                </strong> 
                {{ noBmiData ? ' - ' : currentBMI }}
@@ -56,7 +56,7 @@
             <div>
               <p class="card-text">
                 <strong>
-                  <a *ngIf="!noWeightData" [routerLink]="['/profile/weight']">Aktuelles Gewicht:</a>
+                  <a>Aktuelles Gewicht:</a>
                   <span *ngIf="noWeightData">Aktuelles Gewicht:</span>
                 </strong> 
                 {{ noWeightData ? ' - ' : currentWeight + ' kg' }}
@@ -66,7 +66,7 @@
             <div>
               <p class="card-text">
                 <strong>
-                  <a *ngIf="!noCalorieData" [routerLink]="['/profile/calories']">Empfohlene Kalorien:</a>
+                  <a>Empfohlene Kalorien:</a>
                   <span *ngIf="noCalorieData">Empfohlene Kalorien:</span>
                 </strong> 
                 {{ noCalorieData ? '-' : recommendedCalories }}
@@ -85,7 +85,38 @@
     </div>
   </div>
 
-  <div class="row justify-content-center align-items-center mb-3">
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10 text-center">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="fas fa-chart-line"></i> Gewichts-Diagramm</h5>
+              <button class="btn btn-primary mt-2" (click)="navigateToChart('profile/weight')">Ansehen</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="fas fa-weight"></i> BMI-Diagramm</h5>
+              <button class="btn btn-primary mt-2" (click)="navigateToChart('profile/bmi')">Ansehen</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="fas fa-fire"></i> Kalorien-Diagramm</h5>
+              <button class="btn btn-primary mt-2" (click)="navigateToChart('profile/calories')">Ansehen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center align-items-center mb-5">
     <div class="col-md-10">
       <h3 class="mb-3"><i class="fas fa-utensils"></i> Konsumierte Lebensmittel am
         <input type="date" id="selectedDate" class="form-control form-control-md datepicker-width mx-2"
