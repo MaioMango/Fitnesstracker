@@ -47,13 +47,45 @@ export class CaloriecalculatorComponent implements OnInit{
     }
 
     this.calories = Math.round(bmr * formData.activity);
+    this.calorieForm = this.formBuilder.group({
+      age: '',
+      gender: 'Male',
+      weight: '',
+      height: '',
+      activity: '1.2',
+      date: new Date().toISOString().split('T')[0]
+    });
+  }
+
+  calculateCalorieswithoutClear(): void {
+    if (!this.calorieForm.valid) {
+      return;
+    }
+    const formData = this.calorieForm.value;
+
+    let bmr: number;
+    if (formData.gender === 'Male') {
+      bmr = 88.362 + (13.397 * formData.weight) + (4.799 * formData.height) - (5.677 * formData.age);
+    } else {
+      bmr = 447.593 + (9.247 * formData.weight) + (3.098 * formData.height) - (4.330 * formData.age);
+    }
+
+    this.calories = Math.round(bmr * formData.activity);
+    this.calorieForm = this.formBuilder.group({
+      age: '',
+      gender: 'Male',
+      weight: '',
+      height: '',
+      activity: '1.2',
+      date: new Date().toISOString().split('T')[0]
+    });
   }
 
   save(): void {
     if (!this.calorieForm.valid) {
       return;
     }
-    this.calculateCalories();
+    this.calculateCalorieswithoutClear();
 
     const userId = this.authService.getIdFromToken();
     const calories = this.calories;
@@ -72,6 +104,14 @@ export class CaloriecalculatorComponent implements OnInit{
       next: (response) => {
         console.log(response);
         this.SaveSuccess = true;
+        this.calorieForm = this.formBuilder.group({
+          age: '',
+          gender: 'Male',
+          weight: '',
+          height: '',
+          activity: '1.2',
+          date: new Date().toISOString().split('T')[0]
+        });
         setTimeout(() => {
           this.SaveSuccess = false;
         }, 3000);
