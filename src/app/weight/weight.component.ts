@@ -45,6 +45,10 @@ export class WeightComponent implements OnInit {
     this.http.post<any>('http://localhost:3000/weight', weightData).subscribe({
       next: (response) => {
         this.SaveSuccess = true;
+        this.weightForm = this.formBuilder.group({
+          weight: '',
+          date: new Date().toISOString().split('T')[0]
+        });
         setTimeout(() => {
           this.SaveSuccess = false;
         }, 3000);

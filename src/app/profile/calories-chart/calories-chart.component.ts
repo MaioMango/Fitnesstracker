@@ -14,7 +14,7 @@ export class CaloriesChartComponent implements OnInit{
     chartType: 'LineChart',
     dataTable: [
     ],
-    columns: ['Date', 'calories'],
+    columns: ['Date', 'Kalorien'],
     options: {
       title: 'Kalorienverlauf',
       hAxis: { title: 'Datum' },
@@ -46,9 +46,15 @@ export class CaloriesChartComponent implements OnInit{
 
   loadCalorieData(): void {
     const userId = this.authService.getIdFromToken();
-    this.dataService.getCalorieData(userId).subscribe((response) => {
-        const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => [new Date(entry.date), Number(entry.weight)]);
+    this.dataService.getAllCalorieData(userId).subscribe((response) => {
+      console.log(response);
+        if (response && response.length > 0) {
+            const chartData = response.map((entry: { date: string | number | Date; calories: any; }) => {
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                return [formattedDate, Number(entry.calories)];
+            });
         this.chart.dataTable = chartData;
-      });
+      }});
   }
 }

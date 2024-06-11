@@ -15,7 +15,7 @@ export class BmiChartComponent implements OnInit{
     ],
     columns: ['Date', 'BMI'],
     options: {
-      title: 'Gewichtsverlauf',
+      title: 'BMI-Verlauf',
       hAxis: { title: 'Datum' },
       vAxis: { title: 'BMI' },
       fontName: "Helvetica",
@@ -46,9 +46,15 @@ export class BmiChartComponent implements OnInit{
 
   loadBMIData(): void {
     const userId = this.authService.getIdFromToken();
-    this.dataService.getBmiData(userId).subscribe((response) => {
-        const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => [new Date(entry.date), Number(entry.weight)]);
+    this.dataService.getAllBmiData(userId).subscribe((response) => {
+      console.log(response);
+        if (response && response.length > 0) {
+            const chartData = response.map((entry: { date: string | number | Date; bmi: any; }) => {
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                return [formattedDate, Number(entry.bmi)];
+            });
         this.chart.dataTable = chartData;
-      });
+      }});
   }
 }

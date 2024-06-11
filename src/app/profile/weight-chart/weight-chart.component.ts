@@ -44,7 +44,8 @@ export class WeightChartComponent implements OnInit {
 
   loadWeightData(): void {
     const userId = this.authService.getIdFromToken();
-    this.dataService.getWeightData(userId).subscribe((response) => {
+    this.dataService.getAllWeightData(userId).subscribe((response) => {
+      console.log(response);
         if (response && response.length > 0) {
             const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => {
                 const date = new Date(entry.date);
