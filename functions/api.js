@@ -13,6 +13,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
+   console.log(process.env.HOST);
     console.error('Fehler bei der Verbindung zur Datenbank:', err);
   } else {
     console.log('Verbindung zur MySQL-Datenbank hergestellt.');
