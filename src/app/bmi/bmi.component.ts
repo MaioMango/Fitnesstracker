@@ -43,6 +43,21 @@ export class BmiComponent implements OnInit {
     const weight = this.bmiForm.value.weight;
     this.bmi = parseFloat((weight / (height * height)).toFixed(2));
     this.bmiCategory = this.getBmiCategory(this.bmi);
+    this.bmiForm = this.formBuilder.group({
+      height: '',
+      weight: '',
+      date: new Date().toISOString().split('T')[0],
+    });
+  }
+
+  calculateBMIwithoutClear(): void {
+    if (!this.bmiForm.valid) {
+      return;
+    }
+    const height = this.bmiForm.value.height / 100; // convert height from cm to m
+    const weight = this.bmiForm.value.weight;
+    this.bmi = parseFloat((weight / (height * height)).toFixed(2));
+    this.bmiCategory = this.getBmiCategory(this.bmi);
   }
 
   getBmiCategory(bmi: number): string {
@@ -61,7 +76,7 @@ export class BmiComponent implements OnInit {
     if (!this.bmiForm.valid) {
       return;
     }
-    this.calculateBMI();
+    this.calculateBMIwithoutClear();
 
     const userId = this.authService.getIdFromToken();
     const bmi = this.bmi;
@@ -80,6 +95,11 @@ export class BmiComponent implements OnInit {
       next: (response) => {
         console.log(response);
         this.SaveSuccess = true;
+        this.bmiForm = this.formBuilder.group({
+          height: '',
+          weight: '',
+          date: new Date().toISOString().split('T')[0],
+        });
         setTimeout(() => {
           this.SaveSuccess = false;
         }, 3000);
