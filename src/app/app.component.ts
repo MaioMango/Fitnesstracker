@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import axios from 'axios';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,8 @@ export class AppComponent {
   constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit() {
+    const response = axios.get('http://www.geoplugin.net/json.gp');
+    console.log('Ihre IP-Adresse ist:', response);
     const cookiesState = localStorage.getItem('cookiesAccepted');
     if (cookiesState === 'true') {
      this.cookieBannerVisible = false;
