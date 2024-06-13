@@ -272,3 +272,12 @@ h5 {
   }
 
 }
+
+.title-date-container {
+  background-color: #fff;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10vh;
+  z-index: 1000;
+  padding-top: 2vh;
+}
