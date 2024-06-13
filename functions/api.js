@@ -1,6 +1,8 @@
 const mysql = require('mysql2');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
+
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connection = mysql.createConnection({
@@ -11,22 +13,31 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-
-connection.connect((err) => {
-  if (err) {
-   console.log(process.env.HOST);
-    console.error('Fehler bei der Verbindung zur Datenbank:', err);
-  } else {
-    console.log('Verbindung zur MySQL-Datenbank hergestellt.');
-
-    connection.query('SELECT * FROM test', (err, results) => {
-      if (err) {
-        console.error('Fehler bei der SQL-Abfrage:', err);
-      } else {
-        console.log(results);
-      }
-    });
+const getIP = async () => {
+  try {
+    const response = await axios.get('http://www.geoplugin.net/json.gp');
+    console.log('Ihre IP-Adresse ist:', response.data.geoplugin_request);
+  } catch (error) {
+    console.error('Fehler beim Abrufen der IP-Adresse:', error);
   }
+};
+
+getIP().then(() => {
+  connection.connect((err) => {
+    if (err) {
+      console.error('Fehler bei der Verbindung zur Datenbank:', err);
+    } else {
+      console.log('Verbindung zur MySQL-Datenbank hergestellt.');
+
+      connection.query('SELECT * FROM test', (err, results) => {
+        if (err) {
+          console.error('Fehler bei der SQL-Abfrage:', err);
+        } else {
+          console.log(results);
+        }
+      });
+    }
+  });
 });
 
 module.exports = connection;
