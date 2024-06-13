@@ -1,60 +1,90 @@
 .container {
-    max-width: 80vh; 
-    margin: 20vh auto;
-    background-color: #fefefe;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 80vh;
+  margin: 20vh auto;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+}
+
+input.form-control,
+select.form-control {
+  height: calc(2.25rem + 2px);
+  width: 100%;
+}
+
+#result {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+
+.info-icon {
+  font-size: 23px;
+  cursor: pointer;
+}
+
+
+.info-icon:hover::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.text-success.card-text {
+  color: green !important;
+}
+
+.text-danger {
+  color: red !important;
+}
+
+
+@media (max-width: 520px) {
+  .container {
+    max-width: 40vh;
   }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
+
   .form-group {
-    margin-bottom: 2rem; 
+    margin-bottom: 0.5rem;
   }
-  
-  label {
-    margin-bottom: 0.5rem; 
-    font-weight: normal;
-  }
-  
-  input.form-control,
-  select.form-control {
-    height: calc(2.25rem + 2px); 
-    width: 100%; 
-  }
-  
-  #result {
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
 
-  .info-icon {
-    font-size: 23px;
-    cursor: pointer;
+  .col-sm-6 {
+    width: auto;
   }
-  
+}
 
-  .info-icon:hover::after {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
+@media (max-width: 720px) and (min-width: 520px) {
+  .container {
+    max-width: 60vh;
   }
-  .text-success.card-text {
-    color: green !important;
+
+  .form-group {
+    margin-bottom: 0.5rem;
   }
-  
-  .text-danger {
-    color: red !important;
+
+  .col-sm-6 {
+    width: auto;
   }
+}

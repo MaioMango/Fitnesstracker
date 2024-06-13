@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-weight-chart',
@@ -26,36 +27,47 @@ export class WeightChartComponent implements OnInit {
       chartArea: { width: '80%', height: '80%' },
       pointSize: 5,
       colors: ['red', '#3366CC'],
-      chartType: 'LineChart',
-      dataTable: [],
-      width: 1200,
-      height: 600,
+      width: 1450,
+      height: 400,
+      titleTextStyle: {
+        fontSize: 24,
+        bold: true,
+        color: '#000'
+      }
     },
-  };
+};
 
-  constructor(
-    private dataService: DataService,
-    private authService: AuthService
-  ) {}
+constructor(
+  private dataService: DataService,
+  private authService: AuthService,
+  private router: Router
+) { }
 
-  ngOnInit(): void {
-    this.loadWeightData();
-  }
+ngOnInit(): void {
+  this.loadWeightData();
+}
 
-  loadWeightData(): void {
-    const userId = this.authService.getIdFromToken();
-    this.dataService.getAllWeightData(userId).subscribe((response) => {
-      console.log(response);
-        if (response && response.length > 0) {
-            const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => {
-                const date = new Date(entry.date);
-                const formattedDate = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                return [formattedDate, Number(entry.weight)];
-            });
-            this.chart.dataTable = chartData;
-        } else {
-            this.chart = null;
-        }
-    });
+loadWeightData(): void {
+  const userId = this.authService.getIdFromToken();
+  this.dataService.getAllWeightData(userId).subscribe((response) => {
+    console.log(response);
+    if (response && response.length > 0) {
+      const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => {
+        const date = new Date(entry.date);
+        return [date, Number(entry.weight)];
+      });
+      this.chart.dataTable = chartData;
+    } else {
+      this.chart = null;
+    }
+  });
+}
+
+navigateToChart(chartType: string): void {
+  this.router.navigate([chartType]);
+}
+
+navigateToProfile(): void {
+  this.router.navigate(['profile']);
 }
 }
