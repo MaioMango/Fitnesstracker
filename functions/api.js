@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const serverless = require('serverless-http');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -440,3 +441,5 @@ app.delete('/food2user/:ftuKey', (req, res) => {
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
 });
+
+module.exports.handler = serverless(app);
