@@ -35,6 +35,8 @@ import { ManualBarcodescannerModalComponent } from './barcodescanner/manual-barc
 import { WeightChartComponent } from './profile/weight-chart/weight-chart.component';
 import { BmiChartComponent } from './profile/bmi-chart/bmi-chart.component';
 import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../../environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.
     JwtModule,
     GoogleChartsModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
     provideAnimationsAsync()

@@ -36,9 +36,10 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: 'https://fitnesstracker-test-2a700.firebaseapp.com',  
   credentials: true
 }));
+
 app.use(bodyParser.json());
 
 app.get('/users', (req, res) => {
@@ -108,7 +109,6 @@ app.post('/login', (req, res) => {
         return res.status(400).json({ message: 'Ungültige Anmeldeinformationen' });
       }
 
-      // Erstellen Sie ein JWT-Token
       const token = jwt.sign({ id: user.memKey, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
       console.log('Token:', token);
       res.status(200).json({ message: 'Login erfolgreich', token });
