@@ -42,7 +42,7 @@ export class WeightComponent implements OnInit {
     const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
     const weightData = { userid, weight, date: formattedDate };
 
-    this.http.post<any>('https://64.226.119.7:3000/weight', weightData).subscribe({
+    this.http.post<any>('http://64.226.119.7:3000/weight', weightData).subscribe({
       next: (response) => {
         this.SaveSuccess = true;
         this.weightForm = this.formBuilder.group({

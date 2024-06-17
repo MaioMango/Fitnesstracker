@@ -91,7 +91,7 @@ export class BmiComponent implements OnInit {
     const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
     const bmiData = { userId, bmi, category, date: formattedDate };
 
-    this.http.post<any>('https://64.226.119.7:3000/bmi', bmiData).subscribe({
+    this.http.post<any>('http://64.226.119.7:3000/bmi', bmiData).subscribe({
       next: (response) => {
         console.log(response);
         this.SaveSuccess = true;

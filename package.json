@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start_backend": "node src/server.js",
-    "start_all": "concurrently \"node src/server.js\" \"ng serve --host 64.226.119.7 --ssl\""
+    "start_all": "concurrently \"node src/server.js\" \"ng serve --host 64.226.119.7\""
   },
   "private": true,
   "dependencies": {
