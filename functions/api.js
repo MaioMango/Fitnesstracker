@@ -442,5 +442,5 @@ app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
 });
 
-app.use('/.netlify/functions/api', router);
+app.use('/.netlify/functions/api', app);
 module.exports.handler = serverless(app);
