@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connection = mysql.createConnection({
-  host: process.env.HOST,
-  port: process.env.PORT,
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  host: process.env.HOSTTEST,
+  port: process.env.PORTTEST,
+  user: process.env.USERTEST,
+  password: process.env.PASSWORDTEST,
+  database: process.env.DATABASETEST,
 });
 
 connection.connect((err) => {
@@ -36,7 +36,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: 'http://64.226.119.7:4200',
   credentials: true
 }));
 app.use(bodyParser.json());
