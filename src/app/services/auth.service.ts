@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://64.226.119.7:3000'; 
+  private apiUrl = 'https://64.226.119.7:3000'; 
 
   constructor(private http: HttpClient) {}
 
