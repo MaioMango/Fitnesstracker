@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../../services/data.service';
 
@@ -19,18 +19,26 @@ export class CaloriecalculatorComponent implements OnInit{
 
   ngOnInit(): void {
     this.calorieForm = this.formBuilder.group({
-      age: '',
-      gender: 'Male',
-      weight: '',
-      height: '',
-      activity: '1.2',
-      date: new Date().toISOString().split('T')[0]
+      age: ['', Validators.required],
+      gender: ['Male', Validators.required],
+      weight: ['', [Validators.required, Validators.min(4)]],
+      height: ['', [Validators.required, Validators.min(70)]],
+      activity: ['1.2', Validators.required],
+      date: [new Date().toISOString().split('T')[0], Validators.required]
     });
     this.username = this.authService.getUsernameFromToken();
   }
 
   isLoggedIn(): boolean {
     return !!this.username;
+  }
+
+
+  checkNegativeValue(fieldName: string) {
+    const field = this.calorieForm.get(fieldName);
+    if (field && field.value < 0) {
+      field.setValue(1);
+    }
   }
 
   calculateCalories(): void {

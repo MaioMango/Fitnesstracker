@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../../services/data.service';
 @Component({
@@ -24,11 +24,18 @@ export class BmiComponent implements OnInit {
 
   ngOnInit(): void {
     this.bmiForm = this.formBuilder.group({
-      height: '',
-      weight: '',
-      date: new Date().toISOString().split('T')[0],
+      height: ['', [Validators.required, Validators.min(70)]],
+      weight: ['', [Validators.required, Validators.min(4)]],
+      date: [new Date().toISOString().split('T')[0], Validators.required]
     });
     this.username = this.authService.getUsernameFromToken();
+  }
+
+  checkNegativeValue(fieldName: string) {
+    const field = this.bmiForm.get(fieldName);
+    if (field && field.value < 0) {
+      field.setValue(1);
+    }
   }
 
   isLoggedIn(): boolean {

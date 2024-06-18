@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../../services/data.service';
 
@@ -21,9 +21,16 @@ export class WeightComponent implements OnInit {
 
   ngOnInit(): void {
     this.weightForm = this.formBuilder.group({
-      weight: '',
-      date: new Date().toISOString().split('T')[0]
+      weight: ['', [Validators.required, Validators.min(4)]],
+      date: [new Date().toISOString().split('T')[0], Validators.required]
     });
+  }
+
+  checkNegativeValue(fieldName: string) {
+    const field = this.weightForm.get(fieldName);
+    if (field && field.value < 0) {
+      field.setValue(4);
+    }
   }
 
   save(): void {

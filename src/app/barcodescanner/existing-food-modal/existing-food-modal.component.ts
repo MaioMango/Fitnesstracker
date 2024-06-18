@@ -58,6 +58,13 @@ export class ExistingFoodModalComponent implements OnInit {
     this.loadAllData();
   }
 
+  checkNegativeValue(fieldName: string) {
+    const field = this.existingFoodForm.get(fieldName);
+    if (field && field.value < 0) {
+      field.setValue(0);
+    }
+  }
+
   loadAllData() {
     this.dataService.getMealData().subscribe((data) => {
       this.meals = data;

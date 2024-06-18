@@ -19,16 +19,20 @@ export class FoodInfoModalComponent {
 
   ngOnInit(): void {
     this.foodInfoForm = this.formBuilder.group({
-      foodName: '',
-      kcal: 0,
-      carbs: 0,
-      protein: 0,
-      fat: 0
+      foodName: ['', Validators.required],
+      kcal: [0, [Validators.required, Validators.min(0)]],
+      carbs: [0, [Validators.required, Validators.min(0)]],
+      protein: [0, [Validators.required, Validators.min(0)]],
+      fat: [0, [Validators.required, Validators.min(0)]]
     });
 
     if (this.code) {
       this.loadData();
     }
+  }
+
+  onSubmit() {
+    this.save();
   }
 
   closeModal() {
@@ -55,6 +59,13 @@ export class FoodInfoModalComponent {
     }
   }
 
+  checkNegativeValue(fieldName: string) {
+    const field = this.foodInfoForm.get(fieldName);
+    if (field && field.value < 0) {
+      field.setValue(0);
+    }
+  }
+  
   save() {
     const foodData = {
       foodName: this.foodInfoForm.value.foodName,
