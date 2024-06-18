@@ -36,7 +36,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/favicon.png",
-              "favicon.png"
+              "src/favicon.png"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
@@ -105,7 +105,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/favicon.png",
-              "favicon.png"
+              "src/favicon.png"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
