@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../services/auth.service';
 
@@ -17,8 +16,7 @@ export class PasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private dataService: DataService, 
-    private authService: AuthService,
-    private snackBar: MatSnackBar
+    private authService: AuthService
   ) { 
     this.passwordForm = this.fb.group({
       oldPassword: ['', [Validators.required]],
