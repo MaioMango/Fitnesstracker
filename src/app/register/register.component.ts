@@ -18,8 +18,7 @@ export class RegisterComponent {
   onRegister() { 
     this.showToast = false; 
     this.authService.register(this.login, this.password).subscribe(
-      response => {
-        console.log('Registrierung erfolgreich:', response);
+     () => {
 
         this.router.navigate(['/login']);
       },

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { DataService } from '../../services/data.service';
 @Component({
   selector: 'app-bmi',
   templateUrl: './bmi.component.html',
@@ -17,8 +17,8 @@ export class BmiComponent implements OnInit {
   SaveFail: boolean = false;
 
   constructor(
+    private dataService: DataService,
     private formBuilder: FormBuilder,
-    private http: HttpClient,
     private authService: AuthService
   ) { }
 
@@ -90,10 +90,8 @@ export class BmiComponent implements OnInit {
 
     const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
     const bmiData = { userId, bmi, category, date: formattedDate };
-
-    this.http.post<any>('https://64.226.119.7:3000/bmi', bmiData).subscribe({
-      next: (response) => {
-        console.log(response);
+    this.dataService.saveBMIData(bmiData).subscribe({
+      next: () => {
         this.SaveSuccess = true;
         this.bmiForm = this.formBuilder.group({
           height: '',
