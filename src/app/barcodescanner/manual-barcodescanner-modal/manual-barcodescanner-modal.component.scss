@@ -35,3 +35,79 @@
     font-size: 35px;
     cursor: pointer;
   }
+
+  @media (min-width: 1000px) and (max-width: 1300px) {
+    .modal-content {
+      max-width: 55%;
+    }
+  }
+  
+  
+  @media (min-width: 315px) {
+    .modal-footer {
+      display: flex;
+    }
+  
+    .modal-footer-sm {
+      display: none;
+    }
+  
+  }
+  
+  @media (max-width: 314px) {
+    .modal-footer {
+      display: none;
+    }
+  
+    .modal-footer-sm {
+      display: flex;
+      justify-content: flex-end;
+    }
+  
+  }
+  
+  @media (max-width: 1000px) {
+    .modal-content {
+      width: 90%;
+      max-width: 90%;
+      max-height: 77vh;
+      margin: 12vh auto;
+      padding: 15px;
+    }
+  
+    .modal-body {
+      font-size: 0.875rem;
+      line-height: 1;
+    }
+  
+    label {
+      line-height: 0.2;
+    }
+  
+    .form-group {
+      margin-bottom: 10px;
+    }
+  
+    .form-control {
+      font-size: 0.875rem;
+    }
+  
+    h5 {
+      font-size: 1rem;
+      margin-bottom: 1vh;
+    }
+  
+    .close {
+      font-size: 2rem;
+    }
+  
+    .dropdown-arrow {
+      background-size: 6px 8px;
+    }
+  
+    .form-group.row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  
+  }
