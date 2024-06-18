@@ -1,8 +1,11 @@
 const mysql = require('mysql2');
 const path = require('path');
+const fs = require('fs');
 const https = require('https');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+const port = 3000;
 
 const connection = mysql.createConnection({
   host: process.env.HOSTTEST,
@@ -439,6 +442,6 @@ server.listen(port, () => {
   console.log("server starting on port : " + port)
 });
 
-app.listen(3000, () => {
+/* app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
-});
+}); */
