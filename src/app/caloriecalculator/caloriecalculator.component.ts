@@ -100,7 +100,7 @@ export class CaloriecalculatorComponent implements OnInit{
   
     const calorieData = { userId, calories, date: formattedDate };
 
-    this.http.post<any>('http://64.226.119.7:3000/calories', calorieData).subscribe({
+    this.http.post<any>('https://64.226.119.7:3000/calories', calorieData).subscribe({
       next: (response) => {
         console.log(response);
         this.SaveSuccess = true;

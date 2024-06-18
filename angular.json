@@ -33,7 +33,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.png",
+              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -68,6 +68,11 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "sslKey": "private.key",
+            "sslCert": "certificate.crt",
+            "ssl": true
+            },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
@@ -95,7 +100,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.png",
+              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
