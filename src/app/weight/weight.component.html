@@ -19,7 +19,7 @@
           <i class="fas fa-info-circle info-icon" title="Ein 1-jähriges Kind wiegt im Schnitt 4200 Gramm. Deshalb muss das Gewicht mindestens 4 kg betragen."></i>
         </label>
         <div class="col-sm-9">
-          <input type="double" id="weight" name="weight" formControlName="weight" class="form-control" placeholder="kg" required (input)="checkNegativeValue('weight')">
+          <input type="number" id="weight" name="weight" formControlName="weight" class="form-control" placeholder="kg" required (input)="checkNegativeValue('weight')">
           <div *ngIf="weightForm.get('weight')?.errors?.['min'] && weightForm.get('weight')?.touched" class="text-danger">
             Das Gewicht muss mindestens 4 kg betragen.
           </div>
