@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-weight',
@@ -15,7 +15,7 @@ export class WeightComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
+    private dataService: DataService,
     private authService: AuthService
   ) {}
 
@@ -42,8 +42,8 @@ export class WeightComponent implements OnInit {
     const formattedDate = `${selectedDate}T${hours}:${minutes}:${seconds}`;
     const weightData = { userid, weight, date: formattedDate };
 
-    this.http.post<any>('http://localhost:3000/weight', weightData).subscribe({
-      next: (response) => {
+    this.dataService.saveWeightData(weightData).subscribe({
+      next: () => {
         this.SaveSuccess = true;
         this.weightForm = this.formBuilder.group({
           weight: '',

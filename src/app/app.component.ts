@@ -51,7 +51,6 @@ export class AppComponent {
   logout() {
     this.authService.logout().subscribe(
       (response) => {
-        console.log('Logout erfolgreich:', response);
         this.username = '';
         this.router.navigate(['/login']);
       },

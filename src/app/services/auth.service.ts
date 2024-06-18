@@ -14,7 +14,6 @@ export class AuthService {
   login(login: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { login, password }).pipe(
       tap((response: any) => {
-        console.log('Response:', response);
         localStorage.setItem('jwt', response.token);
       })
     );
@@ -22,8 +21,7 @@ export class AuthService {
   
   logout(): Observable<any> {
     return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
-      tap((response) => {
-        console.log('Logout erfolgreich:', response);
+      tap(() => {
         localStorage.removeItem('jwt'); 
       }),
       catchError((error) => {

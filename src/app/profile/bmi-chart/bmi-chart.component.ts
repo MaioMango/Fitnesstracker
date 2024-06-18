@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../../services/data.service';
@@ -55,7 +54,6 @@ export class BmiChartComponent implements OnInit {
   loadBMIData(): void {
     const userId = this.authService.getIdFromToken();
     this.dataService.getAllBmiData(userId).subscribe((response) => {
-      console.log(response);
       if (response && response.length > 0) {
         const chartData = response.map((entry: { date: string | number | Date; bmi: any; }) => {
           const date = new Date(entry.date);

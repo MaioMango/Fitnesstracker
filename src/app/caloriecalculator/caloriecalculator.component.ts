@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-caloriecalculator',
@@ -15,7 +15,7 @@ export class CaloriecalculatorComponent implements OnInit{
   username: string = '';
   SaveSuccess: boolean = false;
   SaveFail: boolean = false;
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder, private dataService: DataService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.calorieForm = this.formBuilder.group({
@@ -100,9 +100,8 @@ export class CaloriecalculatorComponent implements OnInit{
   
     const calorieData = { userId, calories, date: formattedDate };
 
-    this.http.post<any>('http://localhost:3000/calories', calorieData).subscribe({
-      next: (response) => {
-        console.log(response);
+   this.dataService.saveCalorieData(calorieData).subscribe({
+      next: () => {
         this.SaveSuccess = true;
         this.calorieForm = this.formBuilder.group({
           age: '',

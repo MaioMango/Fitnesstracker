@@ -26,6 +26,10 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/bmis/${userId}`);
   }
 
+  saveBMIData(bmiData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/bmi`, bmiData);
+  }
+
   getWeightData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/weight/${userId}`);
   }
@@ -34,12 +38,21 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/weights/${userId}`);
   }
 
+  saveWeightData(weightData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/weight`, weightData);
+  }
+
+
   getCalorieData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/calories/${userId}`);
   }
 
   getAllCalorieData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/allcalories/${userId}`);
+  }
+
+  saveCalorieData(calorieData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/calories`, calorieData);
   }
 
   getFoodData(foodCode: string): Observable<any> {
