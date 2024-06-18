@@ -69,7 +69,6 @@ const saltRounds = 10;
 
 app.post('/register', (req, res) => {
   const { login, password } = req.body;
-  console.log(login);
   connection.query('SELECT * FROM tmember WHERE memLogin = ?', [login], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Server-Fehler register' });
@@ -121,7 +120,6 @@ app.post('/login', (req, res) => {
 
       // Erstellen Sie ein JWT-Token
       const token = jwt.sign({ id: user.memKey, username: user.memLogin }, 'your-secret-key', { expiresIn: '1h' });
-      console.log('Token:', token);
       res.status(200).json({ message: 'Login erfolgreich', token });
     });
   });
