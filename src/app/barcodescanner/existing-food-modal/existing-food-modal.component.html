@@ -54,6 +54,12 @@
           <button *ngIf="ftuKey" type="submit" class="btn btn-primary">Aktualisieren</button>
           <button *ngIf="!ftuKey" type="submit" class="btn btn-primary">Speichern</button>    
         </div>
+        <div class="modal-footer-sm">
+          <button type="button" class="btn btn-sm btn-warning" (click)="editFood()"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button type="button" class="btn btn-sm btn-secondary mx-3" (click)="closeModal()"><i class="fa-solid fa-ban"></i></button>
+          <button *ngIf="ftuKey" type="submit" class="btn btn-sm btn-primary"><i class="fa-regular fa-floppy-disk"></i></button>
+          <button *ngIf="!ftuKey" type="submit" class="btn btn-sm btn-primary"><i class="fa-regular fa-floppy-disk"></i></button>    
+        </div>
         <div class="alert alert-warning my-4" *ngIf="showMessage">
           Bitte tragen Sie einen Wert im Gramm/ml-Feld ein.
         </div>

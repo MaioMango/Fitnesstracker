@@ -36,3 +36,30 @@
     margin-bottom: 3vh;
   }
   
+  @media (max-width: 800px) {
+    .modal-content {
+      width: 90%;
+      max-width: 90%;
+      max-height: 77vh;
+      margin: 12vh auto;
+    }
+  
+    .instructions {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+  
+    h5 {
+      margin-bottom: 2vh;
+      font-size: medium !important;
+    }
+  
+    .close {
+      position: absolute;
+      top: -1vh;
+      right: 1vh;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+  }

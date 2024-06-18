@@ -46,3 +46,31 @@
 .text-danger {
   color: red !important;
 }
+
+@media (max-width: 520px) {
+  .container {
+    max-width: 40vh;
+  }
+
+  .form-group {
+    margin-bottom: 0.5rem;
+  }
+
+  .col-sm-6 {
+    width: auto;
+  }
+}
+
+@media (max-width: 720px) and (min-width: 520px) {
+  .container {
+    max-width: 60vh;
+  }
+
+  .form-group {
+    margin-bottom: 0.5rem;
+  }
+
+  .col-sm-6 {
+    width: auto;
+  }
+}
