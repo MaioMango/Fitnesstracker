@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const path = require('path');
+const https = require('https');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -26,6 +27,13 @@ connection.connect((err) => {
     });
   }
 });
+
+var key = fs.readFileSync(__dirname + '/../private.key');
+var cert = fs.readFileSync(__dirname + '/../certificate.crt');
+var options = {
+  key: key,
+  cert: cert
+};
 
 module.exports = connection;
 
@@ -425,6 +433,11 @@ app.delete('/food2user/:ftuKey', (req, res) => {
 });
 
 
+var server = https.createServer(options, app);
+
+server.listen(port, () => {
+  console.log("server starting on port : " + port)
+});
 
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');
