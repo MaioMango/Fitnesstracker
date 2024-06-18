@@ -17,16 +17,26 @@
   </h2>
   <form ngNativeValidate [formGroup]="bmiForm" class="bmi-form mt-4">
     <div class="form-group row mt-4">
-      <label for="height" class="col-sm-3 col-form-label">Grösse:</label>
+      <label for="height" class="col-sm-3 col-form-label">Grösse:
+        <i class="fas fa-info-circle weight-info-icon" title="Ein 1-jähriges Kind ist im Schnitt 80cm gross. Deshalb muss die Grösse mindestens 70cm betragen."></i>
+      </label>
       <div class="col-sm-9">
-        <input type="number" id="height" placeholder="cm" formControlName="height" class="form-control" required />
+        <input type="number" id="height" placeholder="cm" formControlName="height" class="form-control" required (input)="checkNegativeValue('height')"/>
+        <div *ngIf="bmiForm.get('height')?.errors?.['min'] && bmiForm.get('height')?.touched" class="text-danger">
+          Die Grösse muss mindestens 70 cm betragen.
+        </div>
       </div>
     </div>
 
     <div class="form-group row mt-4 mb-4">
-      <label for="weight" class="col-sm-3 col-form-label">Gewicht:</label>
+      <label for="weight" class="col-sm-3 col-form-label">Gewicht:
+        <i class="fas fa-info-circle weight-info-icon" title="Ein 1-jähriges Kind wiegt im Schnitt 4200 Gramm. Deshalb muss das Gewicht mindestens 4 kg betragen."></i>
+      </label>
       <div class="col-sm-9">
-        <input type="double" id="weight" placeholder="kg" formControlName="weight" class="form-control" required />
+        <input type="number" id="weight" placeholder="kg" formControlName="weight" class="form-control" required (input)="checkNegativeValue('weight')"/>
+        <div *ngIf="bmiForm.get('weight')?.errors?.['min'] && bmiForm.get('weight')?.touched" class="text-danger">
+          Das Gewicht muss mindestens 4 kg betragen.
+        </div>
       </div>
     </div>
 

@@ -9,7 +9,7 @@
 <div *ngIf="SaveFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
   role="alert" style="z-index: 1050;">
   <i class="fa-solid fa-triangle-exclamation mx-2"></i>Speichern fehlgeschlagen!
-  <button type="button" class="btn-close" aria-label="Close" (click)="SaveSuccess = false"></button>
+  <button type="button" class="btn-close" aria-label="Close" (click)="SaveFail = false"></button>
 </div>
 
   <h2 class="text-center">Kalorienrechner <i class="fas fa-info-circle info-icon" title="Info" (click)="openCalorieInfoModal()"></i></h2>
@@ -17,7 +17,7 @@
     <div class="form-group row mt-4">
       <label for="age" class="col-sm-3 col-form-label">Alter:</label>
       <div class="col-sm-9">
-        <input type="number" id="age" name="age" class="form-control" formControlName="age" required>
+        <input type="number" id="age" name="age" class="form-control" formControlName="age" required (input)="checkNegativeValue('age')">
       </div>
     </div>
 
@@ -36,16 +36,26 @@
     </div>
 
     <div class="form-group row mt-4">
-      <label for="height" class="col-sm-3 col-form-label">Grösse:</label>
+      <label for="height" class="col-sm-3 col-form-label">Grösse:
+        <i class="fas fa-info-circle weight-info-icon" title="Ein 1-jähriges Kind ist im Schnitt 80cm gross. Deshalb muss die Grösse mindestens 70cm betragen."></i>
+      </label>
       <div class="col-sm-9">
-        <input type="number" id="height" name="height" placeholder="cm" class="form-control" formControlName="height" required>
+        <input type="number" id="height" name="height" placeholder="cm" class="form-control" formControlName="height" min="70" required (input)="checkNegativeValue('height')">
+        <div *ngIf="calorieForm.get('height')?.errors?.['min'] && calorieForm.get('height')?.touched" class="text-danger">
+          Die Grösse muss mindestens 70 cm betragen.
+        </div>
       </div>
     </div>
 
     <div class="form-group row mt-4">
-      <label for="weight" class="col-sm-3 col-form-label">Gewicht:</label>
+      <label for="weight" class="col-sm-3 col-form-label">Gewicht:
+        <i class="fas fa-info-circle weight-info-icon" title="Ein 1-jähriges Kind wiegt im Schnitt 4200 Gramm. Deshalb muss das Gewicht mindestens 4 kg betragen."></i>
+      </label>
       <div class="col-sm-9">
-        <input type="double" id="weight" name="weight" placeholder="kg" class="form-control" formControlName="weight" required>
+        <input type="number" id="weight" name="weight" placeholder="kg" class="form-control" formControlName="weight" min="4" required (input)="checkNegativeValue('weight')">
+        <div *ngIf="calorieForm.get('weight')?.errors?.['min'] && calorieForm.get('weight')?.touched" class="text-danger">
+          Das Gewicht muss mindestens 4 kg betragen.
+        </div>
       </div>
     </div>
 

@@ -39,6 +39,9 @@ select.form-control {
   cursor: pointer;
 }
 
+.info-icon:hover {
+  color: #007bff;
+}
 
 .info-icon:hover::after {
   position: absolute;
@@ -58,6 +61,16 @@ select.form-control {
 
 .text-danger {
   color: red !important;
+}
+
+.weight-info-icon {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #007bff;
+}
+
+.weight-info-icon:hover {
+  color: #0056b3;
 }
 
 

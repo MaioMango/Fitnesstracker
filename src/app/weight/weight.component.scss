@@ -47,6 +47,17 @@
   color: red !important;
 }
 
+.info-icon {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #007bff;
+}
+
+.info-icon:hover {
+  color: #0056b3;
+}
+
+
 @media (max-width: 520px) {
   .container {
     max-width: 40vh;
