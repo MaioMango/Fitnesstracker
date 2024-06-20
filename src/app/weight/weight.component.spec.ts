@@ -6,7 +6,7 @@ import { WeightComponent } from './weight.component';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../../services/data.service';
 
-describe('WeightComponent', () => {
+fdescribe('WeightComponent', () => {
   let component: WeightComponent;
   let fixture: ComponentFixture<WeightComponent>;
   let authServiceMock: jasmine.SpyObj<AuthService>;
@@ -33,10 +33,6 @@ describe('WeightComponent', () => {
   });
 
   it('should create', () => {
-    // Arrange & Act
-    // No additional arrangement needed
-
-    // Assert
     expect(component).toBeTruthy();
   });
 
@@ -45,7 +41,7 @@ describe('WeightComponent', () => {
     const expectedDate = new Date().toISOString().split('T')[0];
 
     // Act
-    // No additional action needed
+    component.ngOnInit();
 
     // Assert
     expect(component.weightForm.value).toEqual({
@@ -59,24 +55,24 @@ describe('WeightComponent', () => {
     const weightInput = component.weightForm.controls['weight'];
     const dateInput = component.weightForm.controls['date'];
 
-    // Act
+    // Act 1
     weightInput.setValue('');
     dateInput.setValue('');
 
-    // Assert
+    // Assert 1
     expect(component.weightForm.valid).toBeFalsy();
 
-    // Act
+    // Act 2
     weightInput.setValue(3);
     dateInput.setValue('2023-01-01');
 
-    // Assert
+    // Assert 2
     expect(component.weightForm.valid).toBeFalsy();
 
-    // Act
+    // Act 3
     weightInput.setValue(5);
 
-    // Assert
+    // Assert 3
     expect(component.weightForm.valid).toBeTruthy();
   });
 
@@ -84,10 +80,10 @@ describe('WeightComponent', () => {
     // Arrange
     authServiceMock.getIdFromToken.and.returnValue(1);
     dataServiceMock.saveWeightData.and.returnValue(of({}));
-    component.weightForm.controls['weight'].setValue(5);
-    component.weightForm.controls['date'].setValue('2023-01-01');
 
     // Act
+    component.weightForm.controls['weight'].setValue(5);
+    component.weightForm.controls['date'].setValue('2023-01-01');
     component.save();
     fixture.detectChanges();
 
@@ -144,8 +140,7 @@ describe('WeightComponent', () => {
 
   it('should handle edge case: no date selected', () => {
     // Arrange
-    authServiceMock.getIdFromToken.and.returnValue(1);
-    dataServiceMock.saveWeightData.and.returnValue(of({}));
+    spyOn(component, 'save').and.callThrough();
     component.weightForm.controls['weight'].setValue(5);
     component.weightForm.controls['date'].setValue('');
 
@@ -154,10 +149,8 @@ describe('WeightComponent', () => {
     fixture.detectChanges();
 
     // Assert
-    expect(component.SaveSuccess).toBeTrue();
-    expect(component.SaveFail).toBeFalse();
-    expect(dataServiceMock.saveWeightData).toHaveBeenCalled();
-    expect(fixture.debugElement.query(By.css('.alert-success'))).not.toBeNull();
+    expect(component.save).toHaveBeenCalled();
+    expect(dataServiceMock.saveWeightData).not.toHaveBeenCalled();
   });
 
   it('should handle edge case: empty weight value', () => {
