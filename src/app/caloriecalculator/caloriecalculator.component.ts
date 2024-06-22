@@ -12,6 +12,7 @@ export class CaloriecalculatorComponent implements OnInit{
   calorieForm: FormGroup = new FormGroup({});
   calories: number = 0;
   showCalorieInfoModal: boolean = false;
+  showActivityInfoModal: boolean = false;
   username: string = '';
   SaveSuccess: boolean = false;
   SaveFail: boolean = false;
@@ -140,4 +141,13 @@ export class CaloriecalculatorComponent implements OnInit{
     closeCalorieInfoModal() {
       this.showCalorieInfoModal = false;
     }
+
+    openActivityInfoModal() {
+      this.showActivityInfoModal = true;
+    }
+  
+    closeActivityInfoModal() {
+      this.showActivityInfoModal = false;
+    }
+    
 }

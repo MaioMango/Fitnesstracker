@@ -60,7 +60,9 @@
     </div>
 
     <div class="form-group row mt-4">
-      <label for="activity" class="col-sm-3 col-form-label">Aktivitätslevel:</label>
+      <label for="activity" class="col-sm-3 col-form-label">Aktivitätslevel:
+        <i class="fas fa-info-circle activity-info-icon" title="Info zu Aktivitätslevel" (click)="openActivityInfoModal()"></i>
+      </label>
       <div class="col-sm-9">
         <select id="activity" name="activity" class="form-control form-select" formControlName="activity">
           <option value="1.2" title="wenig bis keine Bewegung">Sedentär</option>
@@ -92,3 +94,4 @@
   <p *ngIf="calories" class="text-center mt-4">Benötigte Kalorien pro Tag: {{ calories }}</p>
 </div>
 <app-calorie-info-modal *ngIf="showCalorieInfoModal" (closeModalEvent)="closeCalorieInfoModal()"></app-calorie-info-modal>
+<app-activity-info-modal *ngIf="showActivityInfoModal" (closeModalEvent)="closeActivityInfoModal()"></app-activity-info-modal>

@@ -35,6 +35,7 @@ import { ManualBarcodescannerModalComponent } from './barcodescanner/manual-barc
 import { WeightChartComponent } from './profile/weight-chart/weight-chart.component';
 import { BmiChartComponent } from './profile/bmi-chart/bmi-chart.component';
 import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.component';
+import { ActivityInfoModalComponent } from './caloriecalculator/activity-info-modal/activity-info-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { CaloriesChartComponent } from './profile/calories-chart/calories-chart.
     WeightChartComponent,
     BmiChartComponent,
     CaloriesChartComponent,
+    ActivityInfoModalComponent,
   ],
   imports: [
     BrowserModule,

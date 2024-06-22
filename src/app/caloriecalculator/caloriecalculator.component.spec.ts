@@ -131,5 +131,20 @@ fdescribe('CaloriecalculatorComponent', () => {
     expect(component.SaveFail).toBeTrue();
   });
 
+  it('should open the activity info modal when info icon is clicked', () => {
+    spyOn(component, 'openActivityInfoModal');
+    const infoIcon = fixture.nativeElement.querySelector('.activity-info-icon');
+    infoIcon.click();
+    fixture.detectChanges();
+    expect(component.openActivityInfoModal).toHaveBeenCalled();
+    expect(component.showActivityInfoModal).toBeTrue();
+  });
+  
+  it('should close the activity info modal when closeModalEvent is emitted', () => {
+    component.showActivityInfoModal = true;
+    component.closeActivityInfoModal();
+    fixture.detectChanges();
+    expect(component.showActivityInfoModal).toBeFalse();
+  });
 
 });
