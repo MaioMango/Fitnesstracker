@@ -310,6 +310,7 @@ app.get('/allcalories/:userId', (req, res) => {
   });
 });
 
+
 app.get('/food2user/:userId/:date', (req, res) => {
   const userId = req.params.userId;
   const date = req.params.date;
@@ -425,7 +426,7 @@ app.delete('/food2user/:ftuKey', (req, res) => {
 });
 
 
-app.delete('/deleteBmis/:userId', (req, res) => {
+app.delete('/deletebmis/:userId', (req, res) => {
   const userId = req.params.userId;
 
   connection.query('DELETE FROM tbmi WHERE userKey = ?', [userId], (err, results) => {
@@ -438,7 +439,7 @@ app.delete('/deleteBmis/:userId', (req, res) => {
   });
 });
 
-app.delete('/deleteWeights/:userId', (req, res) => {
+app.delete('/deleteweights/:userId', (req, res) => {
   const userId = req.params.userId;
 
   connection.query('DELETE FROM tweight WHERE userkey = ?', [userId], (err, results) => {
@@ -452,7 +453,7 @@ app.delete('/deleteWeights/:userId', (req, res) => {
 });
 
 
-app.delete('/deleteCalories/:userId', (req, res) => {
+app.delete('/deletecalories/:userId', (req, res) => {
   const userId = req.params.userId;
 
   connection.query('DELETE FROM tcalories WHERE userKey = ?', [userId], (err, results) => {
@@ -461,6 +462,19 @@ app.delete('/deleteCalories/:userId', (req, res) => {
       res.status(500).json({ message: 'Fehler beim Löschen der Kalorien-Daten' });
     } else {
       res.status(200).json({ message: 'Kalorien-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+app.delete('/deleteprofile/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tmember WHERE memKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen des Profils:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen des Profils' });
+    } else {
+      res.status(200).json({ message: 'Profil erfolgreich gelöscht' });
     }
   });
 });

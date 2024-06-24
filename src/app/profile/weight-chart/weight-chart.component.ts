@@ -9,8 +9,10 @@ import { Router } from '@angular/router';
   styleUrl: './weight-chart.component.scss',
 })
 export class WeightChartComponent implements OnInit {
+  userId!: number;
   showConfirmDeleteModal: boolean = false;
-
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [],
@@ -45,6 +47,7 @@ constructor(
 ) { }
 
 ngOnInit(): void {
+  this.userId = this.authService.getIdFromToken();
   this.loadWeightData();
 }
 
@@ -68,7 +71,24 @@ openDeleteConfirmation() {
 }
 
 deleteData() {
-  
+  if (this.userId) {
+    this.showConfirmDeleteModal = false;
+    this.dataService.deleteWeightData(this.userId).subscribe(() => {
+      this.loadWeightData();
+      this.deleteSuccess = true;
+      setTimeout(() => {
+      this.deleteSuccess = false;
+      }, 3000);
+    }, (error) => {
+      this.deleteFail = true;
+      setTimeout(() => {
+      this.deleteSuccess = false;
+      }, 3000);
+      console.error('Fehler beim Löschen der Daten:', error);
+    });
+  } else {
+    console.error('Fehler: userId ist null oder undefined');
+  }
 }
 
 cancelDelete() {

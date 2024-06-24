@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class BmiChartComponent implements OnInit {
   showConfirmDeleteModal: boolean = false;
   userId!: number;
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
 
   chart: any = {
     chartType: 'LineChart',
@@ -77,14 +79,14 @@ export class BmiChartComponent implements OnInit {
       this.showConfirmDeleteModal = false;
       this.dataService.deleteBMIData(this.userId).subscribe(() => {
         this.loadBMIData();
-        // this.deleteSuccess = true;
+        this.deleteSuccess = true;
         setTimeout(() => {
-          // this.deleteSuccess = false;
+        this.deleteSuccess = false;
         }, 3000);
       }, (error) => {
-        // this.deleteFail = true;
+        this.deleteFail = true;
         setTimeout(() => {
-          // this.deleteSuccess = false;
+        this.deleteSuccess = false;
         }, 3000);
         console.error('Fehler beim Löschen der Daten:', error);
       });

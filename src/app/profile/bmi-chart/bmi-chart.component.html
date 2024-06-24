@@ -64,3 +64,15 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+role="alert" style="z-index: 1050;">
+<i class="fas fa-circle-check mx-2"></i>Löschen erfolgreich!
+<button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+</div>
+
+<div *ngIf="deleteFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+role="alert" style="z-index: 1050;">
+<i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+<button type="button" class="btn-close" aria-label="Close" (click)="deleteFail = false"></button>
+</div>

@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
   styleUrl: './calories-chart.component.scss'
 })
 export class CaloriesChartComponent implements OnInit {
+  userId!: number;
   showConfirmDeleteModal: boolean = false;
-
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [
@@ -50,6 +52,7 @@ export class CaloriesChartComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.userId = this.authService.getIdFromToken();
     this.loadCalorieData();
   }
 
@@ -72,7 +75,24 @@ export class CaloriesChartComponent implements OnInit {
   }
   
   deleteData() {
-    
+    if (this.userId) {
+      this.showConfirmDeleteModal = false;
+      this.dataService.deleteCalorieData(this.userId).subscribe(() => {
+        this.loadCalorieData();
+        this.deleteSuccess = true;
+        setTimeout(() => {
+        this.deleteSuccess = false;
+        }, 3000);
+      }, (error) => {
+        this.deleteFail = true;
+        setTimeout(() => {
+        this.deleteSuccess = false;
+        }, 3000);
+        console.error('Fehler beim Löschen der Daten:', error);
+      });
+    } else {
+      console.error('Fehler: userId ist null oder undefined');
+    }
   }
   
   cancelDelete() {

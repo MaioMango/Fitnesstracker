@@ -31,7 +31,7 @@ export class DataService {
   }
 
   deleteBMIData(userId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/deleteBmis/${userId}`);
+    return this.http.delete<any>(`${this.apiUrl}/deletebmis/${userId}`);
   }
 
   getWeightData(userId: number): Observable<any> {
@@ -47,7 +47,7 @@ export class DataService {
   }
 
   deleteWeightData(userId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/deleteWeights/${userId}`);
+    return this.http.delete<any>(`${this.apiUrl}/deleteweights/${userId}`);
   }
 
   getCalorieData(userId: number): Observable<any> {
@@ -63,7 +63,7 @@ export class DataService {
   }
 
   deleteCalorieData(userId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/deleteCalories/${userId}`);
+    return this.http.delete<any>(`${this.apiUrl}/deletecalories/${userId}`);
   }
 
   getFoodData(foodCode: string): Observable<any> {
@@ -92,6 +92,10 @@ export class DataService {
 
   deleteFood2UserData(ftuKey: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/food2user/${ftuKey}`);
+  }
+
+  deleteProfileData(ftuKey: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteprofile/${ftuKey}`);
   }
 
   changePassword(data: any): Observable<any> {
