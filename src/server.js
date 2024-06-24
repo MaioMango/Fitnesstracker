@@ -425,6 +425,47 @@ app.delete('/food2user/:ftuKey', (req, res) => {
 });
 
 
+app.delete('/deleteBmis/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tbmi WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Bmi-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Bmi-Daten' });
+    } else {
+      res.status(200).json({ message: 'Bmi-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+app.delete('/deleteWeights/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tweight WHERE userkey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Gewichts-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Gewichts-Daten' });
+    } else {
+      res.status(200).json({ message: 'Gewichts-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+
+app.delete('/deleteCalories/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tcalories WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Kalorien-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Kalorien-Daten' });
+    } else {
+      res.status(200).json({ message: 'Kalorien-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+
 
 app.listen(3000, () => {
   console.log('Express-Server läuft auf Port 3000');

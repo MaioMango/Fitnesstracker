@@ -30,6 +30,10 @@ export class DataService {
     return this.http.post<any>(`${this.apiUrl}/bmi`, bmiData);
   }
 
+  deleteBMIData(userId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteBmis/${userId}`);
+  }
+
   getWeightData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/weight/${userId}`);
   }
@@ -42,6 +46,9 @@ export class DataService {
     return this.http.post<any>(`${this.apiUrl}/weight`, weightData);
   }
 
+  deleteWeightData(userId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteWeights/${userId}`);
+  }
 
   getCalorieData(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/calories/${userId}`);
@@ -53,6 +60,10 @@ export class DataService {
 
   saveCalorieData(calorieData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/calories`, calorieData);
+  }
+
+  deleteCalorieData(userId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteCalories/${userId}`);
   }
 
   getFoodData(foodCode: string): Observable<any> {

@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrl: './weight-chart.component.scss',
 })
 export class WeightChartComponent implements OnInit {
+  showConfirmDeleteModal: boolean = false;
+
   chart: any = {
     chartType: 'LineChart',
     dataTable: [],
@@ -59,6 +61,18 @@ loadWeightData(): void {
       this.chart = null;
     }
   });
+}
+
+openDeleteConfirmation() {
+  this.showConfirmDeleteModal = true;
+}
+
+deleteData() {
+  
+}
+
+cancelDelete() {
+  this.showConfirmDeleteModal = false;
 }
 
 navigateToChart(chartType: string): void {

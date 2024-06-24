@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './calories-chart.component.scss'
 })
 export class CaloriesChartComponent implements OnInit {
+  showConfirmDeleteModal: boolean = false;
+
   chart: any = {
     chartType: 'LineChart',
     dataTable: [
@@ -65,6 +67,18 @@ export class CaloriesChartComponent implements OnInit {
     });
   }
 
+  openDeleteConfirmation() {
+    this.showConfirmDeleteModal = true;
+  }
+  
+  deleteData() {
+    
+  }
+  
+  cancelDelete() {
+    this.showConfirmDeleteModal = false;
+  }
+  
   navigateToChart(chartType: string): void {
     this.router.navigate([chartType]);
   }

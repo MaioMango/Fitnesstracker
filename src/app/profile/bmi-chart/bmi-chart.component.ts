@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrl: './bmi-chart.component.scss'
 })
 export class BmiChartComponent implements OnInit {
+  showConfirmDeleteModal: boolean = false;
+  userId!: number;
+
   chart: any = {
     chartType: 'LineChart',
     dataTable: [
@@ -47,8 +50,8 @@ export class BmiChartComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.userId = this.authService.getIdFromToken();
     this.loadBMIData();
-
   }
 
   loadBMIData(): void {
@@ -65,6 +68,35 @@ export class BmiChartComponent implements OnInit {
     });
   }
 
+  openDeleteConfirmation() {
+    this.showConfirmDeleteModal = true;
+  }
+  
+  deleteData() {
+    if (this.userId) {
+      this.showConfirmDeleteModal = false;
+      this.dataService.deleteBMIData(this.userId).subscribe(() => {
+        this.loadBMIData();
+        // this.deleteSuccess = true;
+        setTimeout(() => {
+          // this.deleteSuccess = false;
+        }, 3000);
+      }, (error) => {
+        // this.deleteFail = true;
+        setTimeout(() => {
+          // this.deleteSuccess = false;
+        }, 3000);
+        console.error('Fehler beim Löschen der Daten:', error);
+      });
+    } else {
+      console.error('Fehler: userId ist null oder undefined');
+    }
+  }
+
+  cancelDelete() {
+    this.showConfirmDeleteModal = false;
+  }
+  
   navigateToChart(chartType: string): void {
     this.router.navigate([chartType]);
   }
