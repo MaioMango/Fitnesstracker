@@ -4,7 +4,8 @@
       <div class="card shadow-sm mb-4">
         <div class="card-body text-center">
           <div class="weight-chart my-2">
-            <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable"
+            <h1 *ngIf="!chartHasData">Keine Daten verfügbar</h1>
+            <google-chart *ngIf="chartHasData" [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable"
               [columns]="chart.columns" [options]="chart.options"></google-chart>
           </div>
         </div>

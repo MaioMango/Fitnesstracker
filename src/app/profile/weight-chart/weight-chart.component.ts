@@ -13,6 +13,7 @@ export class WeightChartComponent implements OnInit {
   showConfirmDeleteModal: boolean = false;
   deleteSuccess: boolean = false;
   deleteFail: boolean = false;
+  chartHasData: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [],
@@ -55,13 +56,15 @@ loadWeightData(): void {
   const userId = this.authService.getIdFromToken();
   this.dataService.getAllWeightData(userId).subscribe((response) => {
     if (response && response.length > 0) {
+      this.chartHasData = true;
       const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => {
         const date = new Date(entry.date);
         return [date, Number(entry.weight)];
       });
       this.chart.dataTable = chartData;
     } else {
-      this.chart = null;
+      this.chart.dataTable = [["",0]];
+      this.chartHasData = false;
     }
   });
 }
@@ -78,9 +81,6 @@ deleteData() {
       this.deleteSuccess = true;
       setTimeout(() => {
       this.deleteSuccess = false;
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate(['/profile/weight']);
-      });
       }, 3000);
     }, (error) => {
       this.deleteFail = true;
