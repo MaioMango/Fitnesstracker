@@ -7,7 +7,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class ManualBarcodescannerModalComponent {
   @Output() closeModalEvent = new EventEmitter<void>();
-  // @Output() saveManualBarcodeEvent = new EventEmitter<void>();
   @Output() saveManualBarcodeEvent = new EventEmitter<string>();
 
   manualBarcodeInput!: string;

@@ -12,6 +12,7 @@ import { FoodInfoModalComponent } from '../food-info-modal/food-info-modal.compo
 export class ExistingFoodModalComponent implements OnInit {
   @Output() closeModalEvent = new EventEmitter<void>();
   @Output() closeModalAfterUpdateEvent = new EventEmitter<void>();
+  @Output() closeModalAfterSaveEvent = new EventEmitter<void>();
   @Output() failedEditEvent = new EventEmitter<void>();
   @Output() saveFoodEvent = new EventEmitter<any>();
   @Output() editFoodEvent = new EventEmitter<any>();
@@ -198,6 +199,10 @@ export class ExistingFoodModalComponent implements OnInit {
     this.closeModalAfterUpdateEvent.emit();
   }
 
+  closeModalAfterSave() {
+    this.closeModalAfterSaveEvent.emit();
+  }
+
   save() {
     const selectedDate = this.existingFoodForm.value.date;
 
@@ -218,7 +223,7 @@ export class ExistingFoodModalComponent implements OnInit {
     if (foodData.quantity > 0) {
       this.dataService.saveFood2UserData(foodData).subscribe(
         () => {
-          this.closeModal();
+          this.closeModalAfterSave();
         },
         (error) => {
           console.error('Fehler beim Speichern der Daten:', error);

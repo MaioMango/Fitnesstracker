@@ -27,6 +27,8 @@ export class BarcodescannerComponent implements OnInit {
   showManualBarcodeModal: boolean = false;
   username!: string;
   isUpdating: boolean | null = null;
+  saveSuccess: boolean = false;
+  saveFail: boolean = false;
 
   constructor(private authService: AuthService, private dataService: DataService) { }
 
@@ -74,7 +76,14 @@ export class BarcodescannerComponent implements OnInit {
     console.error('Barcode scan error:', error);
   }
 
-  onFoodInfoSaved() {
+  showFailMessage() {
+    this.saveFail = true;
+    setTimeout(() => {
+      this.saveFail = false;
+    }, 3000);
+  }
+
+  onFoodInfoSaved(state: boolean) {
     this.showFoodInfoModal = false;
     this.showExistingFoodModal = true;
   }
@@ -105,6 +114,14 @@ export class BarcodescannerComponent implements OnInit {
 
   closeExistingFoodModal() {
     this.showExistingFoodModal = false;
+  }
+
+  closeExistingFoodModalAfterSave() {
+    this.showExistingFoodModal = false;
+    this.saveSuccess = true;
+    setTimeout(() => {
+      this.saveSuccess = false;
+    }, 3000); 
   }
 
   closeManualBarcodeInputModal() {
