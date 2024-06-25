@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './weight-chart.component.scss',
 })
 export class WeightChartComponent implements OnInit {
+  userId!: number;
+  showConfirmDeleteModal: boolean = false;
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
+  chartHasData: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [],
@@ -43,6 +48,7 @@ constructor(
 ) { }
 
 ngOnInit(): void {
+  this.userId = this.authService.getIdFromToken();
   this.loadWeightData();
 }
 
@@ -50,15 +56,46 @@ loadWeightData(): void {
   const userId = this.authService.getIdFromToken();
   this.dataService.getAllWeightData(userId).subscribe((response) => {
     if (response && response.length > 0) {
+      this.chartHasData = true;
       const chartData = response.map((entry: { date: string | number | Date; weight: any; }) => {
         const date = new Date(entry.date);
         return [date, Number(entry.weight)];
       });
       this.chart.dataTable = chartData;
     } else {
-      this.chart = null;
+      this.chart.dataTable = [["",0]];
+      this.chartHasData = false;
     }
   });
+}
+
+openDeleteConfirmation() {
+  this.showConfirmDeleteModal = true;
+}
+
+deleteData() {
+  if (this.userId) {
+    this.showConfirmDeleteModal = false;
+    this.dataService.deleteWeightData(this.userId).subscribe(() => {
+      this.loadWeightData();
+      this.deleteSuccess = true;
+      setTimeout(() => {
+      this.deleteSuccess = false;
+      }, 3000);
+    }, (error) => {
+      this.deleteFail = true;
+      setTimeout(() => {
+      this.deleteSuccess = false;
+      }, 3000);
+      console.error('Fehler beim Löschen der Daten:', error);
+    });
+  } else {
+    console.error('Fehler: userId ist null oder undefined');
+  }
+}
+
+cancelDelete() {
+  this.showConfirmDeleteModal = false;
 }
 
 navigateToChart(chartType: string): void {

@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
   showExistingFoodModal: boolean = false;
   showFoodInfoModal: boolean = false;
   showConfirmDeleteModal: boolean = false;
+  showConfirmDeleteProfileModal: boolean = false;
   deleteSuccess: boolean = false;
   deleteFail: boolean = false;
   editSuccess: boolean = false;
@@ -182,8 +183,50 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  openDeleteConfirmation() {
+    this.showConfirmDeleteModal = true;
+  }
+
+  openDeleteProfileConfirmation() {
+    this.showConfirmDeleteProfileModal = true;
+  }
+  
+  deleteData() {
+    if (this.userId) {
+      this.showConfirmDeleteProfileModal = false;
+      this.dataService.deleteProfileData(this.userId).subscribe(() => {
+        this.loadData();
+        this.deleteSuccess = true;
+        setTimeout(() => {
+          this.deleteSuccess = false;
+          this.authService.logout().subscribe(
+          (response) => {
+            this.username = '';
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            console.error('Fehler beim Logout:', error);
+          }
+        );
+        }, 3000);
+      }, (error) => {
+        this.deleteFail = true;
+        setTimeout(() => {
+        this.deleteSuccess = false;
+        }, 3000);
+        console.error('Fehler beim Löschen der Daten:', error);
+      });
+    } else {
+      console.error('Fehler: userId ist null oder undefined');
+    }
+  }
+  
   cancelDelete() {
     this.showConfirmDeleteModal = false;
+  }
+
+  cancelProfileDelete() {
+    this.showConfirmDeleteProfileModal = false;
   }
 
 showFailMessage() {

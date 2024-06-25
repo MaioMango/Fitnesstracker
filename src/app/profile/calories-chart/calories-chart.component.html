@@ -4,7 +4,8 @@
       <div class="card shadow-sm mb-4">
         <div class="card-body text-center">
           <div class="weight-chart my-2">
-            <google-chart [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable"
+            <h1 *ngIf="!chartHasData">Keine Daten verfügbar</h1>
+            <google-chart *ngIf="chartHasData" [title]="chart.title" [type]="chart.chartType" [data]="chart.dataTable"
               [columns]="chart.columns" [options]="chart.options"></google-chart>
           </div>
         </div>
@@ -32,7 +33,47 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-secondary mt-4 mb-5" (click)="navigateToProfile()"><i class="fas fa-arrow-left"></i> Zurück zum Profil</button>
+      <div class="row mt-4 mb-5 justify-content-center">
+        <div class="col-12 col-sm-auto mb-2 mb-md-0">
+          <button class="btn btn-danger" (click)="openDeleteConfirmation()"><i class="fas fa-trash-alt"></i> Alle Daten löschen</button>
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button class="btn btn-secondary" (click)="navigateToProfile()"><i class="fas fa-arrow-left"></i> Zurück zum Profil</button>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="showConfirmDeleteModal" class="modal-overlay" (click)="cancelDelete()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="cancelDelete()">&times;</span>
+    <h5 class="modal-title">Löschen bestätigen</h5>
+    <div class="modal-body">
+      Möchten Sie wirklich <strong>alle erfassten Daten</strong> löschen?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary mx-2" (click)="cancelDelete()">Abbrechen</button>
+      <button type="button" class="btn btn-danger mx-2" (click)="deleteData()">Löschen</button>
+    </div>
+    <div class="modal-footer-sm">
+      <button type="button" class="btn btn-sm btn-secondary mx-2" (click)="cancelDelete()"><i
+          class="fa-solid fa-ban"></i></button>
+      <button type="button" class="btn btn-danger mx-2" (click)="deleteData()"><i
+          class="fas fa-trash-alt"></i></button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+role="alert" style="z-index: 1050;">
+<i class="fas fa-circle-check mx-2"></i>Löschen erfolgreich!
+<button type="button" class="btn-close" aria-label="Close" (click)="deleteSuccess = false"></button>
+</div>
+
+<div *ngIf="deleteFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+role="alert" style="z-index: 1050;">
+<i class="fa-solid fa-triangle-exclamation mx-2"></i>Löschen fehlgeschlagen!
+<button type="button" class="btn-close" aria-label="Close" (click)="deleteFail = false"></button>
 </div>

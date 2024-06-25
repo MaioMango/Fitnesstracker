@@ -319,6 +319,7 @@ app.get('/allcalories/:userId', (req, res) => {
   });
 });
 
+
 app.get('/food2user/:userId/:date', (req, res) => {
   const userId = req.params.userId;
   const date = req.params.date;
@@ -433,6 +434,59 @@ app.delete('/food2user/:ftuKey', (req, res) => {
   });
 });
 
+
+app.delete('/deletebmis/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tbmi WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Bmi-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Bmi-Daten' });
+    } else {
+      res.status(200).json({ message: 'Bmi-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+app.delete('/deleteweights/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tweight WHERE userkey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Gewichts-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Gewichts-Daten' });
+    } else {
+      res.status(200).json({ message: 'Gewichts-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+
+app.delete('/deletecalories/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tcalories WHERE userKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen der Kalorien-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen der Kalorien-Daten' });
+    } else {
+      res.status(200).json({ message: 'Kalorien-Daten erfolgreich gelöscht' });
+    }
+  });
+});
+
+app.delete('/deleteprofile/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query('DELETE FROM tmember WHERE memKey = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen des Profils:', err);
+      res.status(500).json({ message: 'Fehler beim Löschen des Profils' });
+    } else {
+      res.status(200).json({ message: 'Profil erfolgreich gelöscht' });
+    }
+  });
+});
 
 var server = https.createServer(options, app);
 

@@ -29,10 +29,6 @@
   width: auto;
 }
 
-h3 {
-  display: -webkit-box;
-}
-
 .consumed-title {
   flex-wrap: wrap;
 }
@@ -276,7 +272,6 @@ h5 {
 
 .title-date-container {
   background-color: #fff;
-  position: -webkit-sticky;
   position: sticky;
   top: 10vh;
   z-index: 1;

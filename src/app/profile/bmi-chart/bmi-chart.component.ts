@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './bmi-chart.component.scss'
 })
 export class BmiChartComponent implements OnInit {
+  showConfirmDeleteModal: boolean = false;
+  userId!: number;
+  deleteSuccess: boolean = false;
+  deleteFail: boolean = false;
+  chartHasData: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [
@@ -47,24 +52,57 @@ export class BmiChartComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.userId = this.authService.getIdFromToken();
     this.loadBMIData();
-
   }
 
   loadBMIData(): void {
     const userId = this.authService.getIdFromToken();
     this.dataService.getAllBmiData(userId).subscribe((response) => {
       if (response && response.length > 0) {
+        this.chartHasData = true;
         const chartData = response.map((entry: { date: string | number | Date; bmi: any; }) => {
           const date = new Date(entry.date);
           const formattedDate = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
           return [formattedDate, Number(entry.bmi)];
         });
         this.chart.dataTable = chartData;
+      } else {
+        this.chart.dataTable = [["",0]];
+        this.chartHasData = false;
       }
     });
   }
 
+  openDeleteConfirmation() {
+    this.showConfirmDeleteModal = true;
+  }
+  
+  deleteData() {
+    if (this.userId) {
+      this.showConfirmDeleteModal = false;
+      this.dataService.deleteBMIData(this.userId).subscribe(() => {
+        this.loadBMIData();
+        this.deleteSuccess = true;
+        setTimeout(() => {
+          this.deleteSuccess = false;
+        }, 3000);
+      }, (error) => {
+        this.deleteFail = true;
+        setTimeout(() => {
+        this.deleteSuccess = false;
+        }, 3000);
+        console.error('Fehler beim Löschen der Daten:', error);
+      });
+    } else {
+      console.error('Fehler: userId ist null oder undefined');
+    }
+  }
+
+  cancelDelete() {
+    this.showConfirmDeleteModal = false;
+  }
+  
   navigateToChart(chartType: string): void {
     this.router.navigate([chartType]);
   }
