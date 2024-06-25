@@ -13,7 +13,7 @@ export class BmiChartComponent implements OnInit {
   userId!: number;
   deleteSuccess: boolean = false;
   deleteFail: boolean = false;
-
+  chartHasData: boolean = false;
   chart: any = {
     chartType: 'LineChart',
     dataTable: [
@@ -60,12 +60,16 @@ export class BmiChartComponent implements OnInit {
     const userId = this.authService.getIdFromToken();
     this.dataService.getAllBmiData(userId).subscribe((response) => {
       if (response && response.length > 0) {
+        this.chartHasData = true;
         const chartData = response.map((entry: { date: string | number | Date; bmi: any; }) => {
           const date = new Date(entry.date);
           const formattedDate = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
           return [formattedDate, Number(entry.bmi)];
         });
         this.chart.dataTable = chartData;
+      } else {
+        this.chart.dataTable = [["",0]];
+        this.chartHasData = false;
       }
     });
   }
@@ -82,9 +86,6 @@ export class BmiChartComponent implements OnInit {
         this.deleteSuccess = true;
         setTimeout(() => {
           this.deleteSuccess = false;
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this.router.navigate(['/profile/bmi']);
-          });
         }, 3000);
       }, (error) => {
         this.deleteFail = true;
