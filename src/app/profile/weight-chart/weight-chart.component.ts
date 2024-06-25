@@ -78,6 +78,9 @@ deleteData() {
       this.deleteSuccess = true;
       setTimeout(() => {
       this.deleteSuccess = false;
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate(['/profile/weight']);
+      });
       }, 3000);
     }, (error) => {
       this.deleteFail = true;

@@ -82,6 +82,9 @@ export class CaloriesChartComponent implements OnInit {
         this.deleteSuccess = true;
         setTimeout(() => {
         this.deleteSuccess = false;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate(['/profile/calories']);
+        });
         }, 3000);
       }, (error) => {
         this.deleteFail = true;

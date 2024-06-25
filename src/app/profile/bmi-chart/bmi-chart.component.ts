@@ -81,7 +81,10 @@ export class BmiChartComponent implements OnInit {
         this.loadBMIData();
         this.deleteSuccess = true;
         setTimeout(() => {
-        this.deleteSuccess = false;
+          this.deleteSuccess = false;
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/profile/bmi']);
+          });
         }, 3000);
       }, (error) => {
         this.deleteFail = true;

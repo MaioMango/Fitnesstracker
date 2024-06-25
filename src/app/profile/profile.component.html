@@ -3,7 +3,7 @@
 
   <div class="row mt-4 mb-5 justify-content-center">
     <div class="col-12 col-sm-auto mb-2 mb-md-0">
-      <button class="btn btn-danger" (click)="openDeleteProfileConfirmation()"><i class="fas fa-trash-alt"></i> Alle Daten löschen</button>
+      <button class="btn btn-danger" (click)="openDeleteProfileConfirmation()"><i class="fas fa-trash-alt"></i> Profil löschen</button>
     </div>
   </div>
   <div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
@@ -220,7 +220,7 @@
     <span class="close" (click)="cancelProfileDelete()">&times;</span>
     <h5 class="modal-title">Löschen bestätigen</h5>
     <div class="modal-body">
-      Möchten Sie wirklich <strong>alle erfassten Daten</strong> löschen?
+      Möchten Sie wirklich das <strong>Profil</strong> löschen?
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary mx-2" (click)="cancelProfileDelete()">Abbrechen</button>

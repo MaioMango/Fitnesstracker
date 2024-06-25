@@ -198,7 +198,16 @@ export class ProfileComponent implements OnInit {
         this.loadData();
         this.deleteSuccess = true;
         setTimeout(() => {
-        this.deleteSuccess = false;
+          this.deleteSuccess = false;
+          this.authService.logout().subscribe(
+          (response) => {
+            this.username = '';
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            console.error('Fehler beim Logout:', error);
+          }
+        );
         }, 3000);
       }, (error) => {
         this.deleteFail = true;
