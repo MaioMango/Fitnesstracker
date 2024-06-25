@@ -1,19 +1,41 @@
 <div class="container my-5">
-  <h2 class="text-center">Lebensmittelscanner <i class="fas fa-info-circle info-icon" title="Info" (click)="openBarcodeInfoModal()"></i></h2>
+
+
+  <div *ngIf="saveSuccess" class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fas fa-circle-check mx-2"></i>Speichern erfolgreich!
+    <button type="button" class="btn-close" aria-label="Close" (click)="saveSuccess = false"></button>
+  </div>
+
+  <div *ngIf="saveFail" class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3"
+    role="alert" style="z-index: 1050;">
+    <i class="fa-solid fa-triangle-exclamation mx-2"></i>Speichern fehlgeschlagen!
+    <button type="button" class="btn-close" aria-label="Close" (click)="saveFail = false"></button>
+  </div>
+
+
+  <h2 class="text-center">Lebensmittelscanner <i class="fas fa-info-circle info-icon" title="Info"
+      (click)="openBarcodeInfoModal()"></i></h2>
   <p class="text-center">Scannen Sie hier den Barcode von Ihrem verzehrten Lebensmittel und fügen Sie es anschliessend
     Ihrer Liste der konsumierten Nahrungsmittel hinzu, um
     den Überblick über Ihre aufgenommenen Kalorien zu behalten:</p>
-    <p class="text-center">Scanner funktioniert nicht? <a class="plain-text-button" (click)="openManualBarcodeInputModal()">Barcode manuell eingeben</a></p>
-    <div class="scanner-container text-center">
+  <p class="text-center">Scanner funktioniert nicht? <a class="plain-text-button"
+      (click)="openManualBarcodeInputModal()">Barcode manuell eingeben</a></p>
+  <div class="scanner-container text-center">
     <zxing-scanner #scanner [enable]="showScanner" [formats]="allowedFormats" (scanSuccess)="onScanSuccess($event)"
       (scanError)="onScanError($event)">
     </zxing-scanner>
     <div class="scan-area-overlay"></div>
   </div>
-  
+
 </div>
 <router-outlet></router-outlet>
-<app-manual-barcodescanner-modal *ngIf="showManualBarcodeModal" (closeModalEvent)="closeManualBarcodeInputModal()" (saveManualBarcodeEvent)="onManualBarcodeSaved($event)"></app-manual-barcodescanner-modal>
-<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved()" (closeModalEvent)="closeFoodInfoModal()" [isUpdating]="isUpdating" [code]="scannedData"></app-food-info-modal>
-<app-barcode-info-modal *ngIf="showBarcodeInfoModal" (closeModalEvent)="closeBarcodeInfoModal()"></app-barcode-info-modal>
-<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (editFoodEvent)="openFoodInfoModalWithCode()" (closeModalEvent)="closeExistingFoodModal()" [code]="scannedData"></app-existing-food-modal>
+<app-manual-barcodescanner-modal *ngIf="showManualBarcodeModal" (closeModalEvent)="closeManualBarcodeInputModal()"
+  (saveManualBarcodeEvent)="onManualBarcodeSaved($event)"></app-manual-barcodescanner-modal>
+<app-food-info-modal *ngIf="showFoodInfoModal" (foodInfoSaved)="onFoodInfoSaved($event)"
+  (closeModalEvent)="closeFoodInfoModal()" [isUpdating]="isUpdating" [code]="scannedData"></app-food-info-modal>
+<app-barcode-info-modal *ngIf="showBarcodeInfoModal"
+  (closeModalEvent)="closeBarcodeInfoModal()"></app-barcode-info-modal>
+<app-existing-food-modal *ngIf="showExistingFoodModal && isLoggedIn()" (editFoodEvent)="openFoodInfoModalWithCode()"
+  (closeModalEvent)="closeExistingFoodModal()" (closeModalAfterSaveEvent)="closeExistingFoodModalAfterSave()"
+  (failedEditEvent)="showFailMessage()" [code]="scannedData"></app-existing-food-modal>
