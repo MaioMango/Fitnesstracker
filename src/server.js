@@ -46,7 +46,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: 'https://64.226.119.7:4200',
   credentials: true
 }));
 app.use(bodyParser.json());
