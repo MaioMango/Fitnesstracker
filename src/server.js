@@ -205,7 +205,7 @@ app.get('/bmi/:userId', (req, res) => {
 app.get('/bmis/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  connection.query('SELECT * FROM tbmi WHERE userKey = ? ORDER BY date DESC', [userId], (err, results) => {
+  connection.query('SELECT * FROM tbmi WHERE userKey = ? ORDER BY date ASC', [userId], (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
       res.status(500).send('Server-Fehler BMI');
@@ -300,7 +300,7 @@ app.get('/calories/:userId', (req, res) => {
 app.get('/allcalories/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  connection.query('SELECT * FROM tcalories WHERE userKey = ? ORDER BY date DESC', [userId], (err, results) => {
+  connection.query('SELECT * FROM tcalories WHERE userKey = ? ORDER BY date ASC', [userId], (err, results) => {
     if (err) {
       console.error('Fehler bei der SQL-Abfrage:', err);
       res.status(500).send('Server-Fehler Kalorien');
