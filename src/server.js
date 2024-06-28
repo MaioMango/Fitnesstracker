@@ -36,6 +36,13 @@ pool.getConnection((err, connection) => {
   }
 });
 
+var key = fs.readFileSync(__dirname + '/../private.key');
+var cert = fs.readFileSync(__dirname + '/../certificate.crt');
+var options = {
+  key: key,
+  cert: cert
+};
+
 module.exports = pool;
 
 
@@ -691,8 +698,12 @@ app.delete('/deleteprofile/:userId', (req, res) => {
   });
 });
 
+var server = https.createServer(options, app);
 
-
-app.listen(3000, () => {
-  console.log('Express-Server läuft auf Port 3000');
+server.listen(port, () => {
+  console.log("server starting on port : " + port)
 });
+
+/* app.listen(3000, () => {
+  console.log('Express-Server läuft auf Port 3000');
+}); */
